@@ -1,32 +1,44 @@
 import QtQuick 2.8
 import QtQuick.Window 2.2
-import QtQuick.Controls 2.1
+import QtSensors 5.9
+import QtQuick.Controls 2.2
+import user.Speech 1.0
 
-ApplicationWindow{
+Window{
     id: mainWnd
     width: 500
     height: 500
     visible: true
+    Speech{
+    	id: speech
+    
+    }
+
     ListModel {
         id: _itemModel
         ListElement {
-            name: "apple"
+        	name: "사과"
+            img_name: "apple"
             back_file_name : "qrc/image/card_back.jpg"
         }
         ListElement {
-            name: "tomato"
+       		name: "토마토" 
+            img_name: "tomato"
             back_file_name : "qrc/image/card_back.jpg"
         }
         ListElement {
-            name: "pineapple"
+         	name: "파인애플"	
+            img_name: "pineapple"
             back_file_name : "qrc/image/card_back.jpg"
         }
         ListElement {
-            name: "grape"
+        	name:"포도"
+            img_name: "grape"
             back_file_name : "qrc/image/card_back.jpg"
         }
         ListElement {
-            name: "orange"
+        	name: "오렌지"
+            img_name: "orange"
             back_file_name : "qrc/image/card_back.jpg"
         }
     }
@@ -37,11 +49,15 @@ ApplicationWindow{
     }
     ListView {
         id: _listView
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: parent.width /2
+        height: parent.height
+//        anchors.fill: parent
         model: _itemModel
 
         delegate: Flipable {
-            property string front_img_path: name + ".jpg" 
+            property string front_img_path: img_name + ".jpg" 
             property bool flipped: true
 
             id: _cardWnd
@@ -57,23 +73,28 @@ ApplicationWindow{
             	    anchors.fill: parent
             	    source: "qrc:/image/" + front_img_path
             	    fillMode: Image.PreserveAspectFit
-		}
+				}
             }
             back: Rectangle {
             	anchors.fill: parent
             	anchors.margins: 10
             	color: "black"
-		Image {
-		    anchors.fill: parent
-		    source: "qrc:/image/card_back.jpg"
-		}
+				Image {
+					anchors.fill: parent
+					source: "qrc:/image/card_back.jpg"
+					Text {
+						anchors.centerIn: parent
+						text: name
+						font.pointSize: parent.width /10 
+					}
+				}
             } 
 
             MouseArea {
                 anchors.fill: parent
                 onClicked:{ 
                     console.log("clicked " + front_img_path)
-		    _cardWnd.flipped = !_cardWnd.flipped 
+					_cardWnd.flipped = !_cardWnd.flipped 
                 }
             }
 
@@ -108,6 +129,14 @@ ApplicationWindow{
             }
         }
 
+    }
+    ComboBox{
+    	anchors.top: parent.top
+    	anchors.left: parent.right
+    	width: parent.width /2
+    	height: parent.height
+    	model: Speech.languageModel 
+    
     }
 
 }
