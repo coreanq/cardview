@@ -130,13 +130,23 @@ Window{
         }
 
     }
-    ComboBox{
+    ListView{
     	anchors.top: parent.top
-    	anchors.left: parent.right
+    	anchors.left: _listView.right
     	width: parent.width /2
     	height: parent.height
+    	
+//    	model : ["banana", "apple", "coconut"]
     	model: Speech.languageModel 
-    
+			delegate: Rectangle {
+			height: 25
+			width: 100
+			color: "black"
+			Text { text: modelData }
+		}
+		Component.onCompleted: {
+			console.log( Speech.languageModel)	
+		}
     }
 
 }

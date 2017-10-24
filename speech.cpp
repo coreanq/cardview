@@ -44,10 +44,9 @@
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
-    m_speech(0)
+    m_speech(0), 
+	m_languageModel(QStringList() << "test" << "test2")
 {
-	m_languageModel = new QStringListModel(this);
-    QLoggingCategory::setFilterRules(QStringLiteral("qt.speech.tts=true \n qt.speech.tts.*=true"));
     foreach (QString engine, QTextToSpeech::availableEngines()){
 //    	qDebug() << engine;
 		engineSelected(engine);
@@ -55,8 +54,13 @@ Speech::Speech(QObject *parent)
 	}
 }
 QStringListModel *Speech::languageModel()
+
 {
-	return m_languageModel;
+	return &m_languageModel;
+}
+void Speech::setLanguageModel(const QStringListModel *model)
+{
+
 }
 
 void Speech::speak()
@@ -124,7 +128,8 @@ void Speech::engineSelected(QString engineName)
 //        if (locale.name() == current.name())
 //            current = locale;
     }
-//    m_languageModel.setStringList(names);
+    m_languageModel.setStringList(names);
+    emit languageModelChanged();
 //    setRate(ui.rate->value());
 //    setPitch(ui.pitch->value());
 //    setVolume(ui.volume->value());
