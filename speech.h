@@ -58,9 +58,6 @@ class Speech : public QObject
 public:
     Speech(QObject *parent = 0);
     
-    QStringListModel* languageModel();
-    
-    void setLanguageModel(const QStringListModel* model);
    
    	// copy, assign 생성자 delete 속성  제거  
     Speech &operator =( Speech &obj ) {return obj;}
@@ -72,6 +69,8 @@ signals:
 	void languageModelChanged();
 
 public slots:
+    QStringListModel* languageModel();
+    void setLanguageModel(const QStringListModel* model);
     void speak();
     void stop();
 

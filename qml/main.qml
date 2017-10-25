@@ -11,7 +11,10 @@ Window{
     visible: true
     Speech{
     	id: speech
-    
+    	Component.onCompleted: { 
+    		console.log("speech completed")
+		}
+		
     }
 
     ListModel {
@@ -130,6 +133,7 @@ Window{
         }
 
     }
+
     ListView{
     	anchors.top: parent.top
     	anchors.left: _listView.right
@@ -137,15 +141,18 @@ Window{
     	height: parent.height
     	
 //    	model : ["banana", "apple", "coconut"]
-    	model: Speech.languageModel 
-			delegate: Rectangle {
+    	model: speech.languageModel
+        delegate: Rectangle {
 			height: 25
-			width: 100
-			color: "black"
-			Text { text: modelData }
+			width: parent.width
+			Text { 
+                anchors.fill: parent
+                text: modelData 
+                font.pointSize: 25
+            }
 		}
 		Component.onCompleted: {
-			console.log( Speech.languageModel)	
+			console.log( speech.languageModel.stringList())	
 		}
     }
 
