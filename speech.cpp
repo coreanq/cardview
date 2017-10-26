@@ -52,21 +52,17 @@ Speech::Speech(QObject *parent)
 		engineSelected(engine);
 		break;
 	}
+    
+    // qmlStandardItemdModel 의 경우 header 를 가지고 user role 을 생성함 
     QStringList headers;
     headers << "first" << "second";
-    // header 를 추가해야 qml 에서 인식 가능함 
-    m_languageModel->appendRow(QStandardItem("Test1"));
-    m_languageModel->appendRow(QStandardItem("Test2"));
+    m_languageModel->setHorizontalHeaderLabels(headers);
+    m_languageModel->applyRoles(); // model header to user role 
 }
-QStringListModel* Speech::languageModel()
+QmlStandardItemModel* Speech::languageModel()
 {
-	return &m_languageModel;
+	return m_languageModel;
 }
-void Speech::setLanguageModel(const QStringListModel *model)
-{
-
-}
-
 void Speech::speak()
 {
     m_speech->say("Hello world");
@@ -120,19 +116,17 @@ void Speech::engineSelected(QString engineName)
 //    // Populate the languages combobox before connecting its signal.
     QVector<QLocale> locales = m_speech->availableLocales();
     QLocale current = m_speech->locale();
-    QStringList names;
     foreach (const QLocale &locale, locales) {
         QString name(QString("%1 (%2)")
                      .arg(QLocale::languageToString(locale.language()))
                      .arg(QLocale::countryToString(locale.country())));
 //        QVariant localeVariant(locale);
-        names.append(name);
+        m_languageModel->appendRow(new QStandardItem(name) );
         qDebug() << name;
 //        ui.language->addItem(name, localeVariant);
 //        if (locale.name() == current.name())
 //            current = locale;
     }
-    m_languageModel.setStringList(names);
     emit languageModelChanged();
 //    setRate(ui.rate->value());
 //    setPitch(ui.pitch->value());

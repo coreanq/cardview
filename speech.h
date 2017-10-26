@@ -52,21 +52,21 @@
 class Speech : public QObject
 {
     Q_OBJECT
-    
+    Q_PROPERTY(QmlStandardItemModel* languageModel READ languageModel WRITE setLanguageModel NOTIFY languageModelChanged) 
 public:
     Speech(QObject *parent = 0);
    	// copy, assign 생성자 delete 속성  제거  
     Speech &operator =( Speech &obj ) {return obj;}
     Speech(const Speech & obj) {}
-    
-    Q_INVOKABLE QStringListModel* languageModel();
+
+    QmlStandardItemModel* languageModel();
+    void setLanguageModel(QmlStandardItemModel* model) { m_languageModel = model;}
 
 signals:
 	void languageModelChanged();
 
 public slots:
     
-    void setLanguageModel(const QStringListModel* model);
     void speak();
     void stop();
 

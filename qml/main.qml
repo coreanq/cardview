@@ -133,17 +133,24 @@ Window{
     	height: parent.height
     	
 //    	model : ["banana", "apple", "coconut"]
-        model: { return cppInterface.languageModel()}
+        model: cppInterface.languageModel
         delegate: Rectangle {
 			height: 25
 			width: parent.width
-			Text { 
-                anchors.fill: parent
-                text: modelData 
-                font.pointSize: 25
+            Row {
+              Text { 
+                        text: first 
+                        font.pointSize: 15
+                    }
+              Text { 
+                        text: second 
+                        font.pointSize: 15
+                    }
             }
+
 		}
 		Component.onCompleted: {
+            
 //			console.log( cppInterface.str() )	
 		}
     }
