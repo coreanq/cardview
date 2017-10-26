@@ -45,16 +45,20 @@
 Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0), 
-	m_languageModel(QStringList() << "test" << "test2")
+	m_languageModel(new QmlStandardItemModel() )
 {
     foreach (QString engine, QTextToSpeech::availableEngines()){
 //    	qDebug() << engine;
 		engineSelected(engine);
 		break;
 	}
+    QStringList headers;
+    headers << "first" << "second";
+    // header 를 추가해야 qml 에서 인식 가능함 
+    m_languageModel->appendRow(QStandardItem("Test1"));
+    m_languageModel->appendRow(QStandardItem("Test2"));
 }
-QStringListModel *Speech::languageModel()
-
+QStringListModel* Speech::languageModel()
 {
 	return &m_languageModel;
 }

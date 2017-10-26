@@ -47,29 +47,25 @@
 #include <QVector>
 #include <QString>
 #include <QStringList>
-#include <QStringListModel>
-#include <QStandardItemModel>
+#include "qml_interface_model/qmlstandarditemmodel.h"
 
 class Speech : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QStringListModel* languageModel READ languageModel WRITE setLanguageModel NOTIFY languageModelChanged) 
     
 public:
     Speech(QObject *parent = 0);
-    
-   
    	// copy, assign 생성자 delete 속성  제거  
     Speech &operator =( Speech &obj ) {return obj;}
     Speech(const Speech & obj) {}
     
-    
+    Q_INVOKABLE QStringListModel* languageModel();
 
 signals:
 	void languageModelChanged();
 
 public slots:
-    QStringListModel* languageModel();
+    
     void setLanguageModel(const QStringListModel* model);
     void speak();
     void stop();
@@ -86,7 +82,7 @@ public slots:
     void localeChanged(const QLocale &locale);
 
 private:
-	QStringListModel m_languageModel;
+	QmlStandardItemModel* m_languageModel;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
 };

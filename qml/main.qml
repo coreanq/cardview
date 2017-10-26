@@ -2,20 +2,12 @@ import QtQuick 2.8
 import QtQuick.Window 2.2
 import QtSensors 5.9
 import QtQuick.Controls 2.2
-import user.Speech 1.0
 
 Window{
     id: mainWnd
     width: 500
     height: 500
     visible: true
-    Speech{
-    	id: speech
-    	Component.onCompleted: { 
-    		console.log("speech completed")
-		}
-		
-    }
 
     ListModel {
         id: _itemModel
@@ -141,7 +133,7 @@ Window{
     	height: parent.height
     	
 //    	model : ["banana", "apple", "coconut"]
-    	model: speech.languageModel
+        model: { return cppInterface.languageModel()}
         delegate: Rectangle {
 			height: 25
 			width: parent.width
@@ -152,7 +144,7 @@ Window{
             }
 		}
 		Component.onCompleted: {
-			console.log( speech.languageModel.stringList())	
+//			console.log( cppInterface.str() )	
 		}
     }
 

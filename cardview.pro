@@ -4,7 +4,9 @@ QT += qml quick texttospeech
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    speech.cpp
+    speech.cpp \
+    qml_interface_model/qmlsortfilterproxymodel.cpp \
+    qml_interface_model/qmlstandarditemmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,4 +33,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    speech.h
+    speech.h \
+    qml_interface_model/qmlsortfilterproxymodel.h \
+    qml_interface_model/qmlstandarditemmodel.h
