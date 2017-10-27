@@ -61,11 +61,13 @@ Speech::Speech(QObject *parent)
 }
 QmlStandardItemModel* Speech::languageModel()
 {
-	return m_languageModel;
+    return m_languageModel;
 }
-void Speech::speak()
+
+void Speech::speak(QString sentence)
 {
-    m_speech->say("Hello world");
+    qDebug() << Q_FUNC_INFO;
+    m_speech->say(sentence);
 }
 void Speech::stop()
 {

@@ -61,13 +61,14 @@ public:
 
     QmlStandardItemModel* languageModel();
     void setLanguageModel(QmlStandardItemModel* model) { m_languageModel = model;}
+    
 
 signals:
 	void languageModelChanged();
 
 public slots:
     
-    void speak();
+    void speak(QString sentence);
     void stop();
 
     void setRate(int);

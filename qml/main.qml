@@ -88,9 +88,14 @@ Window{
             MouseArea {
                 anchors.fill: parent
                 onClicked:{ 
-                    console.log("clicked " + front_img_path)
+                    console.log("clicked " + name)
+                    cppInterface.speak(name)
+                }
+                onDoubleClicked: {
+                    console.log("double clicked " + front_img_path)
 					_cardWnd.flipped = !_cardWnd.flipped 
                 }
+                
             }
 
             transform: Rotation {
@@ -103,20 +108,20 @@ Window{
 
             states: [
                 State {
-		    name: "back"
-	            when: _cardWnd.flipped
-		    PropertyChanges { 
-			target: _rotationProcessing; angle: 180 
+                    name: "back"
+                    when: _cardWnd.flipped
+                    PropertyChanges { 
+                      target: _rotationProcessing; angle: 180 
                     }
                 },
                 State {
-		    name: "front"
-		    when: !_cardWnd.flipped
-		    PropertyChanges { 
-			target: _rotationProcessing; angle: 0 
-			
-		    }
-		}
+                    name: "front"
+                    when: !_cardWnd.flipped
+                    PropertyChanges { 
+                      target: _rotationProcessing; angle: 0 
+          
+                    }
+                }
             ]
 
             transitions: Transition {
@@ -138,19 +143,17 @@ Window{
 			height: 25
 			width: parent.width
             Row {
-              Text { 
-                        text: first 
-                        font.pointSize: 15
-                    }
-              Text { 
-                        text: second 
-                        font.pointSize: 15
-                    }
+                Text { 
+                    text: first 
+                    font.pointSize: 15
+                }
+                Text { 
+                    text: second 
+                    font.pointSize: 15
+                }
             }
-
 		}
 		Component.onCompleted: {
-            
 //			console.log( cppInterface.str() )	
 		}
     }
