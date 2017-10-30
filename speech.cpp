@@ -48,7 +48,7 @@ Speech::Speech(QObject *parent)
 	m_languageModel(new QmlStandardItemModel() )
 {
     foreach (QString engine, QTextToSpeech::availableEngines()){
-//    	qDebug() << engine;
+        qDebug() << "engine name" << engine;
 		engineSelected(engine);
 		break;
 	}
@@ -113,9 +113,7 @@ void Speech::engineSelected(QString engineName)
         m_speech = new QTextToSpeech(this);
     else
         m_speech = new QTextToSpeech(engineName, this);
-//    disconnect(ui.language, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::languageSelected);
-//    ui.language->clear();
-//    // Populate the languages combobox before connecting its signal.
+    // Populate the languages combobox before connecting its signal.
     QVector<QLocale> locales = m_speech->availableLocales();
     QLocale current = m_speech->locale();
     foreach (const QLocale &locale, locales) {
@@ -130,12 +128,6 @@ void Speech::engineSelected(QString engineName)
 //            current = locale;
     }
     emit languageModelChanged();
-//    setRate(ui.rate->value());
-//    setPitch(ui.pitch->value());
-//    setVolume(ui.volume->value());
-//    connect(ui.stopButton, &QPushButton::clicked, m_speech, &QTextToSpeech::stop);
-//    connect(ui.pauseButton, &QPushButton::clicked, m_speech, &QTextToSpeech::pause);
-//    connect(ui.resumeButton, &QPushButton::clicked, m_speech, &QTextToSpeech::resume);
 
 //    connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
 //    connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);

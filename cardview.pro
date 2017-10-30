@@ -1,7 +1,8 @@
 TEMPLATE = app
 
 QT += qml quick texttospeech
-CONFIG += c++11
+CONFIG += c++11 
+CONFIG += v-play
 
 SOURCES += main.cpp \
     speech.cpp \
@@ -36,3 +37,8 @@ HEADERS += \
     speech.h \
     qml_interface_model/qmlsortfilterproxymodel.h \
     qml_interface_model/qmlstandarditemmodel.h
+
+DISTFILES += \
+    qml/MainForm.ui.qml \
+    qml/main.qml \
+    qml/config.json

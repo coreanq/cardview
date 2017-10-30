@@ -15,5 +15,6 @@
         <file>image/orange.jpg</file>
         <file>image/pineapple.jpg</file>
         <file>image/tomato.jpg</file>
+        <file>qml/config.json</file>
     </qresource>
 </RCC>
