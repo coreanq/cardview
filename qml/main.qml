@@ -15,7 +15,9 @@ App{
     
     AdMobBanner{
         id: _ad
-        adUnitId: "ca-app-pub-1343411537040925~3583043750"
+//    appId: "ca-app-pub-1343411537040925~3583043750"
+        adUnitId: "ca-app-pub-1343411537040925/9502612510"
+        testDeviceIds: ["cf47d897bcd4218b7995db4268ed3083e0d5de1b"]
         anchors.top : parent.top
         width: parent.width
         height: 100

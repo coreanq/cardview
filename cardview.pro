@@ -13,32 +13,32 @@ SOURCES += main.cpp \
     main.cpp \
     speech.cpp
 
-RESOURCES += qml.qrc
+qmlFolder.source = qml
+DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+assetsFolder.source = assets
+DEPLOYMENTFOLDERS += assetsFolder
+RESOURCES += #    resources.qrc # uncomment for publishing
 
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
+# NOTE: for PUBLISHING, perform the following steps:
+# 1. comment the DEPLOYMENTFOLDERS += qmlFolder line above, to avoid shipping your qml files with the application (instead they get compiled to the app binary)
+# 2. uncomment the resources.qrc file inclusion and add any qml subfolders to the .qrc file; this compiles your qml files and js files to the app binary and protects your source code
+# 3. change the setMainQmlFile() call in main.cpp to the one starting with "qrc:/" - this loads the qml files from the resources
+# for more details see the "Deployment Guides" in the V-Play Documentation
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which as been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
+# during development, use the qmlFolder deployment because you then get shorter compilation times (the qml files do not need to be compiled to the binary but are just copied)
+# also, for quickest deployment on Desktop disable the "Shadow Build" option in Projects/Builds - you can then select "Run Without Deployment" from the Build menu in Qt Creator if you only changed QML files; this speeds up application start, because your app is not copied & re-compiled but just re-interpreted
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
+android {
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+    OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
+}
 ios {
-    QMAKE_INFO_PLIST = platform/ios/Info.plist
+    QMAKE_INFO_PLIST = ios/Project-Info.plist
+    OTHER_FILES += $$QMAKE_INFO_PLIST
+    VPLAY_PLUGINS += admob
 }
 
 HEADERS += \
@@ -52,5 +52,27 @@ HEADERS += \
 DISTFILES += \
     qml/main.qml \
     qml/config.json \
-    platform/ios/Info.plist
+    ios/Project-Info.plist \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    assets/apple.jpg \
+    assets/background.jpg \
+    assets/card_back.jpg \
+    assets/grape.jpg \
+    assets/orange.jpg \
+    assets/pineapple.jpg \
+    assets/tomato.jpg \
+    assets/add.png \
+    assets/card_back.png \
+    assets/click.png \
+    assets/computer.png \
+    assets/switch.png \
+    assets/wired.png
 
+# set application icons for win and macx
+win32 {
+    //RC_FILE += win/app_icon.rc
+}
+macx {
+    //ICON = macx/app_icon.icns
+}
