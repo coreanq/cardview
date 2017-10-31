@@ -34,31 +34,31 @@ App{
         ListElement {
         	name: "사과"
             img_name: "apple"
-            back_file_name : "qrc/image/card_back.jpg"
+            back_file_name : "assets/card_back.jpg"
         }
         ListElement {
        		name: "토마토" 
             img_name: "tomato"
-            back_file_name : "qrc/image/card_back.jpg"
+            back_file_name : "assets/card_back.jpg"
         }
         ListElement {
          	name: "파인애플"	
             img_name: "pineapple"
-            back_file_name : "qrc/image/card_back.jpg"
+            back_file_name : "assets/card_back.jpg"
         }
         ListElement {
         	name:"포도"
             img_name: "grape"
-            back_file_name : "qrc/image/card_back.jpg"
+            back_file_name : "assets/card_back.jpg"
         }
         ListElement {
         	name: "오렌지"
             img_name: "orange"
-            back_file_name : "qrc/image/card_back.jpg"
+            back_file_name : "assets/card_back.jpg"
         }
     }
     Image {
-        source: "../image/background.jpg"
+        source: "assets/background.jpg"
         anchors.fill: parent; clip: false
         z: -1
     }
@@ -87,7 +87,7 @@ App{
             	color: "black"
             	Image{
             	    anchors.fill: parent
-            	    source: "qrc:/image/" + front_img_path
+                    source: "assets/" + front_img_path
             	    fillMode: Image.PreserveAspectFit
 				}
             }
@@ -97,7 +97,7 @@ App{
             	color: "black"
 				Image {
 					anchors.fill: parent
-					source: "qrc:/image/card_back.jpg"
+                    source: "assets/card_back.jpg"
 					Text {
 						anchors.centerIn: parent
 						text: name

@@ -1,7 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick texttospeech
-CONFIG += c++11 
+QT += texttospeech
 CONFIG += v-play
 
 SOURCES += main.cpp \
