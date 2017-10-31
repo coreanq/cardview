@@ -7,7 +7,11 @@ CONFIG += v-play
 SOURCES += main.cpp \
     speech.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
-    qml_interface_model/qmlstandarditemmodel.cpp
+    qml_interface_model/qmlstandarditemmodel.cpp \
+    qml_interface_model/qmlsortfilterproxymodel.cpp \
+    qml_interface_model/qmlstandarditemmodel.cpp \
+    main.cpp \
+    speech.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,12 +37,20 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+ios {
+    QMAKE_INFO_PLIST = platform/ios/Info.plist
+}
+
 HEADERS += \
     speech.h \
     qml_interface_model/qmlsortfilterproxymodel.h \
-    qml_interface_model/qmlstandarditemmodel.h
+    qml_interface_model/qmlstandarditemmodel.h \
+    qml_interface_model/qmlsortfilterproxymodel.h \
+    qml_interface_model/qmlstandarditemmodel.h \
+    speech.h
 
 DISTFILES += \
-    qml/MainForm.ui.qml \
     qml/main.qml \
-    qml/config.json
+    qml/config.json \
+    platform/ios/Info.plist
+
