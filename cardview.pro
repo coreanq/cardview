@@ -10,6 +10,7 @@ SOURCES += main.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp
 
+INCLUDEPATH += ./assets
 qmlFolder.source = qml
 DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
 
@@ -70,5 +71,6 @@ DISTFILES += \
     assets/click.png \
     assets/computer.png \
     assets/switch.png \
-    assets/wired.png
+    assets/wired.png \
+    qml/Constant.qml
 

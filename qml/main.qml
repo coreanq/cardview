@@ -32,34 +32,35 @@ App{
     ListModel {
         id: _itemModel
         ListElement {
-        	name: "사과"
+            name: "사과"
             img_name: "apple"
-            back_file_name : "assets/card_back.jpg"
+            back_file_name : "card_back.jpg"
         }
         ListElement {
-       		name: "토마토" 
+            name: "토마토"
             img_name: "tomato"
-            back_file_name : "assets/card_back.jpg"
+            back_file_name : "card_back.jpg"
         }
         ListElement {
-         	name: "파인애플"	
+            name: "파인애플"
             img_name: "pineapple"
-            back_file_name : "assets/card_back.jpg"
+            back_file_name : "card_back.jpg"
         }
         ListElement {
-        	name:"포도"
+            name:"포도"
             img_name: "grape"
-            back_file_name : "assets/card_back.jpg"
+            back_file_name : "card_back.jpg"
         }
         ListElement {
-        	name: "오렌지"
+            name: "오렌지"
             img_name: "orange"
-            back_file_name : "assets/card_back.jpg"
+            back_file_name : "card_back.jpg"
         }
     }
     Image {
-        source: Qt.resolvedUrl("assets/background.jpg")
-        anchors.fill: parent; clip: false
+        source: "background.jpg"
+        anchors.fill: parent
+        clip: false
         z: -1
     }
     ListView {
@@ -82,28 +83,28 @@ App{
 
 
             front: Rectangle {
-            	anchors.fill: parent
-            	anchors.margins: 10
-            	color: "black"
-            	Image{
-            	    anchors.fill: parent
-                    source: Qt.resolvedUrl("assets/" + front_img_path)
-            	    fillMode: Image.PreserveAspectFit
-				}
+                anchors.fill: parent
+                anchors.margins: 10
+                color: "black"
+                Image{
+                    anchors.fill: parent
+                    source: "assets/" + front_img_path
+                    fillMode: Image.PreserveAspectFit
+                }
             }
             back: Rectangle {
-            	anchors.fill: parent
-            	anchors.margins: 10
-            	color: "black"
-				Image {
-					anchors.fill: parent
-                    source: Qt.resolvedUrl("assets/card_back.jpg")
-					Text {
-						anchors.centerIn: parent
-						text: name
-						font.pointSize: parent.width /10 
-					}
-				}
+                anchors.fill: parent
+                anchors.margins: 10
+                color: "black"
+                Image {
+                    anchors.fill: parent
+                    source: "assets/card_back.jpg"
+                    Text {
+                        anchors.centerIn: parent
+                        text: name
+                        font.pointSize: parent.width /10
+                    }
+                }
             } 
 
             MouseArea {
@@ -114,7 +115,7 @@ App{
                 }
                 onDoubleClicked: {
                     console.log("double clicked " + front_img_path)
-					_cardWnd.flipped = !_cardWnd.flipped 
+                    _cardWnd.flipped = !_cardWnd.flipped
                 }
                 
             }
@@ -140,7 +141,6 @@ App{
                     when: !_cardWnd.flipped
                     PropertyChanges { 
                       target: _rotationProcessing; angle: 0 
-          
                     }
                 }
             ]
@@ -162,19 +162,17 @@ App{
 //    	model : ["banana", "apple", "coconut"]
         model: cppInterface.languageModel
         delegate: Rectangle {
-			height: 25
-			width: parent.width
+            height: 25
+            width: parent.width
             Row {
                 Text { 
                     text: first 
                     font.pointSize: 15
                 }
             }
-		}
-		Component.onCompleted: {
-//			console.log( cppInterface.str() )	
-		}
+        }
+        Component.onCompleted: {
+//            console.log( cppInterface.str() )
+        }
     }
-
 }
-
