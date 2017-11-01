@@ -58,7 +58,7 @@ App{
         }
     }
     Image {
-        source: "assets/background.jpg"
+        source: Qt.resolvedUrl("assets/background.jpg")
         anchors.fill: parent; clip: false
         z: -1
     }
@@ -87,7 +87,7 @@ App{
             	color: "black"
             	Image{
             	    anchors.fill: parent
-                    source: "assets/" + front_img_path
+                    source: Qt.resolvedUrl("assets/" + front_img_path)
             	    fillMode: Image.PreserveAspectFit
 				}
             }
@@ -97,7 +97,7 @@ App{
             	color: "black"
 				Image {
 					anchors.fill: parent
-                    source: "assets/card_back.jpg"
+                    source: Qt.resolvedUrl("assets/card_back.jpg")
 					Text {
 						anchors.centerIn: parent
 						text: name

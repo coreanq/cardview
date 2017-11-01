@@ -8,9 +8,7 @@ SOURCES += main.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
-    qml_interface_model/qmlstandarditemmodel.cpp \
-    main.cpp \
-    speech.cpp
+    qml_interface_model/qmlstandarditemmodel.cpp
 
 qmlFolder.source = qml
 DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
@@ -38,6 +36,12 @@ ios {
     QMAKE_INFO_PLIST = ios/Project-Info.plist
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
+}
+win32 {
+    #RC_FILE += win/app_icon.rc
+}
+macx {
+    #ICON = macx/app_icon.icns
 }
 
 HEADERS += \
@@ -68,10 +72,3 @@ DISTFILES += \
     assets/switch.png \
     assets/wired.png
 
-# set application icons for win and macx
-win32 {
-    //RC_FILE += win/app_icon.rc
-}
-macx {
-    //ICON = macx/app_icon.icns
-}
