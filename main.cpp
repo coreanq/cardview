@@ -24,9 +24,15 @@ int main(int argc, char *argv[])
     QQmlContext* context = engine.rootContext();
     // qml load 전에 c++ interface 등록되야 함  
     context->setContextProperty("cppInterface", &speech);
-
-  //  QString qmlSource = "qrc/qml/main.qml";
-    QString qmlSource = "qml/main.qml"; //NOTE: uncomment for DEPLOYMENT
+    
+#ifdef QT_DEBUG    
+    QString qmlSource = "qml/Main.qml";  // for url type
+    context->setContextProperty("debug", true);
+#else
+    QString qmlSource = "qrc:/qml/Main.qml";  // for url type
+    // to check mode in qml
+    context->setContextProperty("debug", false);
+#endif
     vplay.setMainQmlFileName(qmlSource);
     
     engine.load(QUrl(vplay.mainQmlFileName()));

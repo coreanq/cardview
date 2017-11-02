@@ -1,5 +1,4 @@
 TEMPLATE = app
-
 QT += texttospeech
 CONFIG += v-play
 
@@ -9,14 +8,19 @@ SOURCES += main.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp
+    
+Debug {
+    #DEPLOYMENTFOLDERS 해당 리소스를 showdows 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
+    qmlFolder.source = qml
+    DEPLOYMENTFOLDERS += qmlFolder 
+    
+    assetsFolder.source = assets
+    DEPLOYMENTFOLDERS += assetsFolder
+}
+Release{
+    RESOURCES += assets.qrc 
+}
 
-INCLUDEPATH += ./assets
-qmlFolder.source = qml
-DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
-
-assetsFolder.source = assets
-DEPLOYMENTFOLDERS += assetsFolder
-RESOURCES += #    resources.qrc # uncomment for publishing
 
 # NOTE: for PUBLISHING, perform the following steps:
 # 1. comment the DEPLOYMENTFOLDERS += qmlFolder line above, to avoid shipping your qml files with the application (instead they get compiled to the app binary)
@@ -54,7 +58,6 @@ HEADERS += \
     speech.h
 
 DISTFILES += \
-    qml/main.qml \
     qml/config.json \
     ios/Project-Info.plist \
     android/AndroidManifest.xml \
@@ -72,5 +75,6 @@ DISTFILES += \
     assets/computer.png \
     assets/switch.png \
     assets/wired.png \
-    qml/Constant.qml
+    qml/Constant.qml \
+    qml/Main.qml
 

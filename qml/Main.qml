@@ -11,7 +11,8 @@ App{
     width: 500
     height: 500
     visible: true
-    licenseKey: "A6CD1FE2AE4B0FEDC0D829AF725D27976DFA256DE94F0951572F7611CF7D84CFE607D3B2766CB378A15D49057F2A450BDBF97841140BF0A56D53C1DB6D7FE4056019E5259A9C646A1564BB87BF6D1D3ACBD831FBA7142C4C2C17C1E55C1FE41276E6C4855C3D24F1DDC9EEC72342B3858A7C009562629656AA37483521032499BCBA3B3B830A9AB8F87AB09A820BE81D740B7834B84767113797346FE4AD499665C067736FBE508841A430F8EBFD762205FC3BB48E45354772C847057C682FACAD454F494F43AD9EC205115BBA0B14AFB850FBE150753BC5041DE5211766D85DA6969B7A3B6E5ACEF8C8918D5D7E462869F2983387171BED01D11FF0D32B5723959B46D513302C87BFC680489D672886790B544E5FDC7DC98253359B9E5DC310C6D0D3267B8741CC85EE0C1FBA17F3F44463A3948FD1BF3821EFCAEEE11DBC13"
+    licenseKey: "F4CE7E95FB0F41685E70FBAAD2E9121A39BB4D925E690B28A487EB4827385C264AA0179F456E20450A369513EFCA62196438091D5C28DB7051CAADBFE15548E1871CC064104993D5DFAABC4124C8E423234821A42DA370C0EBB9F8654C4A02687C9D396AEBA6F04B2E5732444AE61204DDECA7D5EA445BDC8E4FDAA161716423EDD5938793E39CDE5A50E856739618189A37EA478058DD9E1D6C67CFFE44DCD61644C230722F524D490AB771DFB8B255A2BAA8BA194EA7F4246CB5361F074CE820A38AF3A404AC374A1C4ACC13261219B7524EA4846BE22463287B54CDC2E7D1CE8FB57E0BECDD61A3CB2F7B56729BA1FB9F962EAA7CE1325F1C750BC2E22F449F8629CE9D32413952F1163AA734BF782CF2B6F76319F57DF9BC5995F833556E72703559654808C39E8E853C5319961EE36A9CE3D205DA23770D75BCACC833EA"
+    readonly property string assetsPath: "../assets/"
     
     AdMobBanner{
         id: _ad
@@ -33,32 +34,32 @@ App{
         id: _itemModel
         ListElement {
             name: "사과"
-            img_name: "apple"
-            back_file_name : "card_back.jpg"
+            front_img_name: "apple.jpg"
+            back_img_name : "card_back.jpg"
         }
         ListElement {
             name: "토마토"
-            img_name: "tomato"
-            back_file_name : "card_back.jpg"
+            front_img_name: "tomato.jpg"
+            back_img_name : "card_back.jpg"
         }
         ListElement {
             name: "파인애플"
-            img_name: "pineapple"
-            back_file_name : "card_back.jpg"
+            front_img_name: "pineapple.jpg"
+            back_img_name : "card_back.jpg"
         }
         ListElement {
             name:"포도"
-            img_name: "grape"
-            back_file_name : "card_back.jpg"
+            front_img_name: "grape.jpg"
+            back_img_name : "card_back.jpg"
         }
         ListElement {
             name: "오렌지"
-            img_name: "orange"
-            back_file_name : "card_back.jpg"
+            front_img_name: "orange.jpg"
+            back_img_name : "card_back.jpg"
         }
     }
     Image {
-        source: "background.jpg"
+        source: assetsPath + "background.jpg"
         anchors.fill: parent
         clip: false
         z: -1
@@ -74,8 +75,10 @@ App{
         model: _itemModel
 
         delegate: Flipable {
-            property string front_img_path: img_name + ".jpg" 
+            // Image 의 source 는 url type 이 필요 하므로 
             property bool flipped: true
+            Component.onCompleted: {
+            }
 
             id: _cardWnd
             width: _listView.width
@@ -88,7 +91,7 @@ App{
                 color: "black"
                 Image{
                     anchors.fill: parent
-                    source: "assets/" + front_img_path
+                    source: Qt.resolvedUrl(assetsPath + front_img_name)
                     fillMode: Image.PreserveAspectFit
                 }
             }
@@ -98,7 +101,7 @@ App{
                 color: "black"
                 Image {
                     anchors.fill: parent
-                    source: "assets/card_back.jpg"
+                    source: Qt.resolvedUrl(assetsPath + back_img_name)
                     Text {
                         anchors.centerIn: parent
                         text: name
@@ -114,7 +117,7 @@ App{
                     cppInterface.speak(name)
                 }
                 onDoubleClicked: {
-                    console.log("double clicked " + front_img_path)
+                    console.log("double clicked " + front_img_name)
                     _cardWnd.flipped = !_cardWnd.flipped
                 }
                 
