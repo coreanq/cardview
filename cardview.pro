@@ -13,13 +13,14 @@ Debug {
     #DEPLOYMENTFOLDERS 해당 리소스를 showdows 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
     qmlFolder.source = qml
     DEPLOYMENTFOLDERS += qmlFolder 
-    
+
     assetsFolder.source = assets
     DEPLOYMENTFOLDERS += assetsFolder
 }
 Release{
     RESOURCES += assets.qrc 
 }
+ios:
 
 
 # NOTE: for PUBLISHING, perform the following steps:
@@ -41,6 +42,14 @@ ios {
     QMAKE_INFO_PLIST = ios/Project-Info.plist
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
+
+    qmlFiles.files = $$files(qml/*.*)
+    qmlFiles.path = qml
+    QMAKE_BUNDLE_DATA += qmlFiles
+
+    assetsFiles.files = $$files(assets/*.*)
+    assetsFiles.path = assets
+    QMAKE_BUNDLE_DATA += assetsFiles
 }
 win32 {
     #RC_FILE += win/app_icon.rc
