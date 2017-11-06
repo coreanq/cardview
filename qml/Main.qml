@@ -69,113 +69,160 @@ App{
         clip: true
         anchors.left: parent.left
         anchors.bottom: _ad.top
-        width: parent.width /2
+        width: parent.width
         height: parent.height  - _ad.height
 //        anchors.fill: parent
         model: _itemModel
 
-        delegate: Flipable {
-            // Image 의 source 는 url type 이 필요 하므로 
-            property bool flipped: true
-            Component.onCompleted: {
-            }
-
-            id: _cardWnd
+        delegate: Flickable {
+            id: _listWnd
             width: _listView.width
-            height: _listView.height / 3
+            height: _listView.height - _ad.height
+            property bool maximized : false
 
-
-            front: Rectangle {
+            Rectangle {
+                id: _item
                 anchors.fill: parent
                 anchors.margins: 10
                 color: "black"
+                radius: 10
                 Image{
                     anchors.fill: parent
                     source: Qt.resolvedUrl(assetsPath + front_img_name)
                     fillMode: Image.PreserveAspectFit
                 }
-            }
-            back: Rectangle {
-                anchors.fill: parent
-                anchors.margins: 10
-                color: "black"
-                Image {
+                MouseArea {
                     anchors.fill: parent
-                    source: Qt.resolvedUrl(assetsPath + back_img_name)
-                    Text {
-                        anchors.centerIn: parent
-                        text: name
-                        font.pointSize: parent.width /10
-                    }
-                }
-            } 
+                    onClicked: {
+                        _item.maximized = true
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked:{ 
-                    console.log("clicked " + name)
-                    cppInterface.speak(name)
-                }
-                onDoubleClicked: {
-                    console.log("double clicked " + front_img_name)
-                    _cardWnd.flipped = !_cardWnd.flipped
-                }
+                    }
+                }//            states: [
+//                State {
+//                    name: "back"
+//                    when: _cardWnd.flipped
+//                    PropertyChanges {
+//                      target: _rotationProcessing; angle: 180
+//                    }
+//                },
+//                State {
+//                    name: "front"
+//                    when: !_cardWnd.flipped
+//                    PropertyChanges {
+//                      target: _rotationProcessing; angle: 0
+//                    }
+//                }
+//            ]
+
+//            transitions: Transition {
+//                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
+//            }
+            }
+        }
+
+
+//        Flipable {
+//            // Image 의 source 는 url type 이 필요 하므로
+//            property bool flipped: true
+//            Component.onCompleted: {
+//            }
+
+//            id: _cardWnd
+//            width: _listView.width
+//            height: _listView.height / 3
+
+
+//            front: Rectangle {
+//                anchors.fill: parent
+//                anchors.margins: 10
+//                color: "black"
+//                Image{
+//                    anchors.fill: parent
+//                    source: Qt.resolvedUrl(assetsPath + front_img_name)
+//                    fillMode: Image.PreserveAspectFit
+//                }
+//            }
+//            back: Rectangle {
+//                anchors.fill: parent
+//                anchors.margins: 10
+//                color: "black"
+//                Image {
+//                    anchors.fill: parent
+//                    source: Qt.resolvedUrl(assetsPath + back_img_name)
+//                    Text {
+//                        anchors.centerIn: parent
+//                        text: name
+//                        font.pointSize: parent.width /10
+//                    }
+//                }
+//            }
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked:{
+//                    console.log("clicked " + name)
+//                    cppInterface.speak(name)
+//                }
+//                onDoubleClicked: {
+//                    console.log("double clicked " + front_img_name)
+//                    _cardWnd.flipped = !_cardWnd.flipped
+//                }
                 
-            }
+//            }
 
-            transform: Rotation {
-                id: _rotationProcessing
-                origin.x: _cardWnd.width/2
-                origin.y: _cardWnd.height/2
-                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-                angle: 0    // the default angle
-            }
+//            transform: Rotation {
+//                id: _rotationProcessing
+//                origin.x: _cardWnd.width/2
+//                origin.y: _cardWnd.height/2
+//                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
+//                angle: 0    // the default angle
+//            }
 
-            states: [
-                State {
-                    name: "back"
-                    when: _cardWnd.flipped
-                    PropertyChanges { 
-                      target: _rotationProcessing; angle: 180 
-                    }
-                },
-                State {
-                    name: "front"
-                    when: !_cardWnd.flipped
-                    PropertyChanges { 
-                      target: _rotationProcessing; angle: 0 
-                    }
-                }
-            ]
+//            states: [
+//                State {
+//                    name: "back"
+//                    when: _cardWnd.flipped
+//                    PropertyChanges {
+//                      target: _rotationProcessing; angle: 180
+//                    }
+//                },
+//                State {
+//                    name: "front"
+//                    when: !_cardWnd.flipped
+//                    PropertyChanges {
+//                      target: _rotationProcessing; angle: 0
+//                    }
+//                }
+//            ]
 
-            transitions: Transition {
-                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
-            }
-        }
+//            transitions: Transition {
+//                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
+//            }
+//        }
 
     }
 
-    ListView{
-    	anchors.bottom: _ad.top
-    	anchors.left: _listView.right
-    	width: parent.width /2
-    	height: parent.height - _ad.height
-        clip: true
+//    ListView{
+//    	anchors.bottom: _ad.top
+//    	anchors.left: _listView.right
+//    	width: parent.width /2
+//    	height: parent.height - _ad.height
+//        clip: true
     	
-//    	model : ["banana", "apple", "coconut"]
-        model: cppInterface.languageModel
-        delegate: Rectangle {
-            height: 25
-            width: parent.width
-            Row {
-                Text { 
-                    text: first 
-                    font.pointSize: 15
-                }
-            }
-        }
-        Component.onCompleted: {
-//            console.log( cppInterface.str() )
-        }
-    }
+////    	model : ["banana", "apple", "coconut"]
+//        model: cppInterface.languageModel
+//        delegate: Rectangle {
+//            height: 25
+//            width: parent.width
+//            Row {
+//                Text {
+//                    text: first
+//                    font.pointSize: 15
+//                }
+//            }
+//        }
+//        Component.onCompleted: {
+////            console.log( cppInterface.str() )
+//        }
+//    }
 }

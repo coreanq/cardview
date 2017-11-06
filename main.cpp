@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
     context->setContextProperty("cppInterface", &speech);
     
 #ifdef QT_DEBUG    
-    QString qmlSource = "qml/Main.qml";  // for url type
+    QString qmlSource = "qml/main.qml";
     context->setContextProperty("debug", true);
 #else
-    QString qmlSource = "qrc:/qml/Main.qml";  // for url type
+    QString qmlSource = "qrc:/qml/main.qml";  // for url type
     // to check mode in qml
     context->setContextProperty("debug", false);
 #endif

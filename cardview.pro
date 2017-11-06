@@ -84,6 +84,6 @@ DISTFILES += \
     assets/computer.png \
     assets/switch.png \
     assets/wired.png \
-    qml/Constant.qml \
-    qml/Main.qml
+    qml/constant.qml \
+    qml/main.qml
 
