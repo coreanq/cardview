@@ -73,19 +73,19 @@ App{
         height: parent.height  - _ad.height
 //        anchors.fill: parent
         model: _itemModel
-        spacing: 10
-        snapMode: ListView.SnapToItem
+        spacing: 20
         delegate: Rectangle {
             property bool maximized : false
             id: _item
-            width: _listView.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
             height: (_listView.height - _ad.height) * 0.615
-            anchors.margins: 10
             color: "white"
         
             radius: 30
             onMaximizedChanged: {
-                _listView.setC
             }
 
             Image{
@@ -97,6 +97,7 @@ App{
                 anchors.fill: parent
                 onClicked: {
                     _item.maximized = !_item.maximized
+//                    _listView.currentIndex = _listView.indexAt(mouseX, mouseY)
 
                 }
             }
@@ -108,6 +109,8 @@ App{
                         target: _item
                         height: _mainWnd.height - _ad.height
                         radius: 0 
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
                     }
                     PropertyChanges {
                         target: _listView
@@ -121,16 +124,20 @@ App{
                         target: _item
                         height: undefined 
                         radius: undefined 
+                        anchors.leftMargin: undefined 
+                        anchors.rightMargin: undefined
                     }
                     PropertyChanges {
-                        target: _listView
+                        target: _item.ListView.view
                         interactive: undefined
                     }
+                    // Move the list so that this item is at the top.
+                    PropertyChanges { target: _item.ListView.view; explicit: true; contentY: _item.y }
                 }
             ]
 
             transitions: Transition {
-                NumberAnimation { target: _item; property: "height"; duration: 300; easing.type: Easing.OutQuad  }
+                NumberAnimation { target: _item; property: "x,contentY,radius,width,height"; duration: 500; easing.type: Easing.OutQuad  }
             }
         }
 
