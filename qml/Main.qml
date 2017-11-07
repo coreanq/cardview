@@ -15,7 +15,7 @@ App{
     
     AdMobBanner{
         id: _ad
-        visible: false
+        visible: true
 //    appId: "ca-app-pub-1343411537040925~3583043750"
         adUnitId: "ca-app-pub-1343411537040925/9502612510"
         testDeviceIds: ["cf47d897bcd4218b7995db4268ed3083e0d5de1b"]
@@ -77,11 +77,13 @@ App{
         delegate: Flickable {
             id: _listWnd
             width: _listView.width
-            height: _listView.height - _ad.height
+            height: (parent.height - _ad.height)
             property bool maximized : false
 
             Rectangle {
                 id: _item
+                width: _listView.width
+                height: (_listView.height) * 0.615
                 anchors.fill: parent
                 anchors.margins: 10
                 color: "black"
@@ -97,26 +99,31 @@ App{
                         _item.maximized = true
 
                     }
-                }//            states: [
-//                State {
-//                    name: "back"
-//                    when: _cardWnd.flipped
-//                    PropertyChanges {
-//                      target: _rotationProcessing; angle: 180
-//                    }
-//                },
-//                State {
-//                    name: "front"
-//                    when: !_cardWnd.flipped
-//                    PropertyChanges {
-//                      target: _rotationProcessing; angle: 0
-//                    }
-//                }
-//            ]
+                }
+                states: [
+                    State {
+                        name: "maximized"
+                        when: _itemWnd.maximized
+                        AnchorChanges {
+                            target: _item
+                            anchors.top: _listWnd.top
+                            anchors.bottom: _ad.top
+                        }
+                    },
+                    State {
+                        name: "nomalized"
+                        when: !_itemWnd.maximized
+                        AnchorChanges {
+                            target: _item
+                            anchors.top: _listWnd.top
+                            anchors.bottom: _ad.top
+                        }
+                    }
+            ]
 
-//            transitions: Transition {
-//                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
-//            }
+            transitions: Transition {
+                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
+            }
             }
         }
 

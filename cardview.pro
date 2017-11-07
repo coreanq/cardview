@@ -50,6 +50,7 @@ ios {
     assetsFiles.files = $$files(assets/*.*)
     assetsFiles.path = assets
     QMAKE_BUNDLE_DATA += assetsFiles
+    RESOURCES += assets.qrc
 }
 win32 {
     #RC_FILE += win/app_icon.rc
