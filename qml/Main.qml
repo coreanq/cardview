@@ -74,9 +74,11 @@ App{
 //        anchors.fill: parent
         model: _itemModel
         spacing: 20
+        
         delegate: Rectangle {
             property bool maximized : false
             id: _item
+            clip: true
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.leftMargin: 10
@@ -90,6 +92,8 @@ App{
 
             Image{
                 anchors.fill: parent
+                anchors.margins: 5
+                clip: true
                 source: Qt.resolvedUrl(assetsPath + front_img_name)
                 fillMode: Image.PreserveAspectFit
             }
@@ -105,23 +109,17 @@ App{
                 State {
                     name: "maximized"
                     when: _item.maximized
-                    PropertyChanges {
-                        target: _item
-                        height: _mainWnd.height - _ad.height
-                        radius: 0 
-                        anchors.leftMargin: 0
-                        anchors.rightMargin: 0
-                    }
-                    PropertyChanges {
-                        target: _listView
-                        interactive: false
-                    }
+                    PropertyChanges { target: _item; height: _item.ListView.view.height }
+                    PropertyChanges { target: _item; radius: 0; anchors.leftMargin: 0; anchors.rightMargin: 0 }
+                    // Move the list so that this item is at the top.
+                    PropertyChanges { target: _item.ListView.view; explicit: true; contentY: _item.y }
+                    PropertyChanges { target: _listView; interactive: false }
                 },
                 State {
                     name: "nomalized"
                     when: !_itemWnd.maximized
                     PropertyChanges {
-                        target: _item
+                        target: _item; 
                         height: undefined 
                         radius: undefined 
                         anchors.leftMargin: undefined 
@@ -130,14 +128,26 @@ App{
                     PropertyChanges {
                         target: _item.ListView.view
                         interactive: undefined
+                        contentY: undefined
                     }
-                    // Move the list so that this item is at the top.
-                    PropertyChanges { target: _item.ListView.view; explicit: true; contentY: _item.y }
                 }
             ]
 
             transitions: Transition {
-                NumberAnimation { target: _item; property: "x,contentY,radius,width,height"; duration: 500; easing.type: Easing.OutQuad  }
+                ParallelAnimation{
+                    NumberAnimation { 
+                        target: _item; 
+                        properties:"radius,height,anchors.leftMargin,anchors.rightMargin"; 
+                        duration: 300; 
+                        easing.type: Easing.OutQuad  
+                    }
+                    NumberAnimation { 
+                        target: _item.ListView.view; 
+                        properties:"contentY"
+                        duration: 300; 
+                        easing.type: Easing.OutQuad  
+                    }
+                }
             }
         }
 
