@@ -41,6 +41,7 @@
 
 #include "speech.h"
 #include <QDebug>
+#include <QNetworkReply>
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
@@ -52,6 +53,8 @@ Speech::Speech(QObject *parent)
 		engineSelected(engine);
 		break;
 	}
+    m_manager = new QNetworkAccessManager(this);
+    connect(m_manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(requestReceived(QNetworkReply*)));
     
     // qmlStandardItemdModel 의 경우 header 를 가지고 user role 을 생성함 
     QStringList headers;
@@ -63,7 +66,48 @@ QmlStandardItemModel* Speech::languageModel()
 {
     return m_languageModel;
 }
+void Speech::requestGet()
+{
+    qDebug() << Q_FUNC_INFO;
+    m_manager->get(QNetworkRequest(QUrl("http://edu-card.herokuapp.com/cards")));
+}
+void Speech::requestReceived(QNetworkReply *reply)
+{
+    reply->deleteLater();
 
+    if(reply->error() == QNetworkReply::NoError) {
+        // Get the http status code
+        int v = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        if (v >= 200 && v < 300) // Success
+        {
+             // Here we got the final reply 
+            QString replyText = reply->readAll();
+            qDebug() << Q_FUNC_INFO << replyText;
+            emit dataRecved(replyText);
+        } 
+        else if (v >= 300 && v < 400) // Redirection
+        {
+            // Get the redirection url
+            QUrl newUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+            // Because the redirection url can be relative, 
+            // we have to use the previous one to resolve it 
+            newUrl = reply->url().resolved(newUrl);
+
+            QNetworkAccessManager *manager = reply->manager();
+            QNetworkRequest redirection(newUrl);
+            QNetworkReply *newReply = manager->get(redirection);
+
+            return; // to keep the manager for the next request
+        } 
+    } 
+    else 
+    {
+        // Error
+        qDebug() << Q_FUNC_INFO;
+    }
+
+    reply->manager()->deleteLater();
+}
 void Speech::speak(QString sentence)
 {
     qDebug() << Q_FUNC_INFO;

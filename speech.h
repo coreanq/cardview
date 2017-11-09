@@ -47,6 +47,8 @@
 #include <QVector>
 #include <QString>
 #include <QStringList>
+#include <QNetworkAccessManager>
+
 #include "qml_interface_model/qmlstandarditemmodel.h"
 
 class Speech : public QObject
@@ -65,9 +67,12 @@ public:
 
 signals:
 	void languageModelChanged();
+	void dataRecved(QString msg);
 
 public slots:
     
+    void requestGet();
+    void requestReceived(QNetworkReply *reply);
     void speak(QString sentence);
     void stop();
 
@@ -86,6 +91,7 @@ private:
 	QmlStandardItemModel* m_languageModel;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
+    QNetworkAccessManager *m_manager = new QNetworkAccessManager(this);
 };
  Q_DECLARE_METATYPE(Speech)
 #endif

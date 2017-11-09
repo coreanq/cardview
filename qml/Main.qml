@@ -76,7 +76,6 @@ App{
         spacing: 20
         
         delegate: Rectangle {
-            property bool maximized : false
             id: _item
             clip: true
             anchors.left: parent.left
@@ -85,39 +84,58 @@ App{
             anchors.rightMargin: 10
             height: (_listView.height - _ad.height) * 0.615
             color: "white"
-        
             radius: 30
-            onMaximizedChanged: {
-            }
-
+            
             Image{
-                anchors.fill: parent
+                height: parent.width
+                
                 anchors.margins: 5
+                
                 clip: true
                 source: Qt.resolvedUrl(assetsPath + front_img_name)
                 fillMode: Image.PreserveAspectFit
+                Button {
+                    text: "click"
+                    visible: false
+                    anchors.centerIn: parent
+                    width: 100
+                    height: 100
+                    onClicked: {
+                        console.log("requesetGet clicked")
+                        cppInterface.requestGet()
+                    }
+                }
+            }
+            Button {
+                id: _item_close_btn
+                text: "X"
+                width: 20 
+                height: 20
+                anchors.right: parent.right
+                anchors.top: parent.top
+                onClicked: {
+                    _item.state = "normalized"
+                }
             }
             MouseArea {
+                id: _normal_mouse_area
                 anchors.fill: parent
                 onClicked: {
-                    _item.maximized = !_item.maximized
-//                    _listView.currentIndex = _listView.indexAt(mouseX, mouseY)
-
+                    _item.state = "maxmized"
                 }
             }
             states: [
                 State {
                     name: "maximized"
-                    when: _item.maximized
                     PropertyChanges { target: _item; height: _item.ListView.view.height }
                     PropertyChanges { target: _item; radius: 0; anchors.leftMargin: 0; anchors.rightMargin: 0 }
                     // Move the list so that this item is at the top.
                     PropertyChanges { target: _item.ListView.view; explicit: true; contentY: _item.y }
                     PropertyChanges { target: _listView; interactive: false }
+                    PropertyChanges { target: _normal_mouse_area ; visible: false }
                 },
                 State {
                     name: "nomalized"
-                    when: !_itemWnd.maximized
                     PropertyChanges {
                         target: _item; 
                         height: undefined 
@@ -130,6 +148,7 @@ App{
                         interactive: undefined
                         contentY: undefined
                     }
+                    PropertyChanges { target: _normal_mouse_area ; visible: true }
                 }
             ]
 
