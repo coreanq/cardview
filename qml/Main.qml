@@ -75,95 +75,102 @@ App{
         model: _itemModel
         spacing: 20
         
-        delegate: Rectangle {
-            id: _item
-            clip: true
+        delegate: Flickable {
+            id: _item_container
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.leftMargin: 10
             anchors.rightMargin: 10
             height: (_listView.height - _ad.height) * 0.615
-            color: "white"
-            radius: 30
-            
-            Image{
-                height: parent.width
-                
-                anchors.margins: 5
-                
-                clip: true
-                source: Qt.resolvedUrl(assetsPath + front_img_name)
-                fillMode: Image.PreserveAspectFit
-                Button {
-                    text: "click"
-                    visible: false
+
+            Rectangle {
+                id: _item
+                anchors.fill: parent
+                color: "white"
+                radius: 30
+
+                Image{
+                    height: parent.width
                     anchors.centerIn: parent
-                    width: 100
-                    height: 100
-                    onClicked: {
-                        console.log("requesetGet clicked")
-                        cppInterface.requestGet()
+                    clip: true
+                    source: Qt.resolvedUrl(assetsPath + front_img_name)
+                    fillMode: Image.PreserveAspectFit
+                    Button {
+                        text: "click"
+                        visible: false
+                        anchors.centerIn: parent
+                        width: 100
+                        height: 100
+                        onClicked: {
+                            console.log("requesetGet clicked")
+                            cppInterface.requestGet()
+                        }
                     }
                 }
-            }
-            Button {
-                id: _item_close_btn
-                text: "X"
-                width: 20 
-                height: 20
-                anchors.right: parent.right
-                anchors.top: parent.top
-                onClicked: {
-                    _item.state = "normalized"
+                Button {
+                    id: _item_close_btn
+                    text: "X"
+                    width: 20
+                    height: 20
+                    visible: false
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    onClicked: {
+                        _item_container.state = "normalized"
+                    }
+                }
+                MouseArea {
+                    id: _normalized_mouse_area
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("maxi")
+                        _item_container.state = "maximized"
+                    }
+                }
+                MouseArea {
+                    id: _maximized_mouse_area
+                    visible: false
+                    anchors.fill: parent
+                    z: -1
                 }
             }
-            MouseArea {
-                id: _normal_mouse_area
-                anchors.fill: parent
-                onClicked: {
-                    _item.state = "maxmized"
-                }
-            }
+
             states: [
                 State {
                     name: "maximized"
-                    PropertyChanges { target: _item; height: _item.ListView.view.height }
-                    PropertyChanges { target: _item; radius: 0; anchors.leftMargin: 0; anchors.rightMargin: 0 }
+                    PropertyChanges { target: _item_container; height: _item_container.ListView.view.height }
+                    PropertyChanges { target: _item_container; explicit: true; anchors.leftMargin: 0; anchors.rightMargin: 0 }
+                    PropertyChanges { target: _item; explicit: true; radius: 0}
                     // Move the list so that this item is at the top.
-                    PropertyChanges { target: _item.ListView.view; explicit: true; contentY: _item.y }
-                    PropertyChanges { target: _listView; interactive: false }
-                    PropertyChanges { target: _normal_mouse_area ; visible: false }
+                    PropertyChanges { target: _item_container.ListView.view; explicit: true; contentY: _item_container.y }
+                    PropertyChanges { target: _listView; explicit: true; interactive: false }
+                    PropertyChanges { target: _normalized_mouse_area ; explicit: true; visible: false }
+                    PropertyChanges { target: _maximized_mouse_area ; explicit: true; visible: true }
+                    PropertyChanges { target: _item_close_btn; explicit: true; visible: true }
                 },
                 State {
-                    name: "nomalized"
-                    PropertyChanges {
-                        target: _item; 
-                        height: undefined 
-                        radius: undefined 
-                        anchors.leftMargin: undefined 
-                        anchors.rightMargin: undefined
-                    }
-                    PropertyChanges {
-                        target: _item.ListView.view
-                        interactive: undefined
-                        contentY: undefined
-                    }
-                    PropertyChanges { target: _normal_mouse_area ; visible: true }
+                    name: "normalized"
                 }
             ]
 
             transitions: Transition {
                 ParallelAnimation{
                     NumberAnimation { 
-                        target: _item; 
-                        properties:"radius,height,anchors.leftMargin,anchors.rightMargin"; 
-                        duration: 300; 
+                        target: _item_container
+                        properties:"radius,height,anchors.leftMargin,anchors.rightMargin"
+                        duration: 300
                         easing.type: Easing.OutQuad  
                     }
-                    NumberAnimation { 
-                        target: _item.ListView.view; 
+                    NumberAnimation {
+                        target: _item
+                        properties:"radius"
+                        duration: 300
+                        easing.type: Easing.OutQuad
+                    }
+                    NumberAnimation {
+                        target: _item.ListView.view
                         properties:"contentY"
-                        duration: 300; 
+                        duration: 300
                         easing.type: Easing.OutQuad  
                     }
                 }
