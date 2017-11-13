@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     vplay.initialize(&engine);
     QQmlContext* context = engine.rootContext();
     // qml load 전에 c++ interface 등록되야 함  
-    context->setContextProperty("cppInterface", &speech);
+    context->setContextProperty("cppSpeech", &speech);
     
 #ifdef QT_DEBUG    
     QString qmlSource = "qml/main.qml";

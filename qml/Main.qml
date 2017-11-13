@@ -58,10 +58,10 @@ App{
             back_img_name : "card_back.jpg"
         }
     }
-    Image {
-        source: assetsPath + "background.jpg"
+    Rectangle {
+//        source: assetsPath + "background.jpg"
         anchors.fill: parent
-        clip: false
+        color: "lightgrey"
         z: -1
     }
     ListView {
@@ -79,9 +79,9 @@ App{
             id: _item_container
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            height: (_listView.height - _ad.height) * 0.615
+            anchors.margins: 20
+            height: _listView.height * 0.615
+            interactive: false
 
             Rectangle {
                 id: _item
@@ -90,7 +90,8 @@ App{
                 radius: 30
 
                 Image{
-                    height: parent.width
+                    id: _item_image
+                    height: parent.height
                     anchors.centerIn: parent
                     clip: true
                     source: Qt.resolvedUrl(assetsPath + front_img_name)
@@ -103,16 +104,36 @@ App{
                         height: 100
                         onClicked: {
                             console.log("requesetGet clicked")
-                            cppInterface.requestGet()
+                            cppSpeech.requestGet()
                         }
                     }
+                    MouseArea {
+                        id: _item_mouse_area
+                        visible: false
+                        anchors.fill: parent
+                        onClicked:{
+                            console.log("clicked " + name)
+                            cppSpeech.speak(name)
+                        }
+                    }
+                    Text{
+                        id: _item_text
+                        text: name
+                        visible: false
+                        anchors.bottom: parent.bottom
+                        anchors.margins: 20
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize: 30
+                    }
                 }
+
                 Button {
                     id: _item_close_btn
                     text: "X"
-                    width: 20
-                    height: 20
+                    width: 30
+                    height: 30
                     visible: false
+                    anchors.margins: 10
                     anchors.right: parent.right
                     anchors.top: parent.top
                     onClicked: {
@@ -138,9 +159,12 @@ App{
             states: [
                 State {
                     name: "maximized"
-                    PropertyChanges { target: _item_container; height: _item_container.ListView.view.height }
+                    PropertyChanges { target: _item_container; explicit: true; height: _item_container.ListView.view.height }
                     PropertyChanges { target: _item_container; explicit: true; anchors.leftMargin: 0; anchors.rightMargin: 0 }
+                    PropertyChanges { target: _item_container; explicit: true; interactive: true }
                     PropertyChanges { target: _item; explicit: true; radius: 0}
+                    PropertyChanges { target: _item_mouse_area; explicit: true; visible: true }
+                    PropertyChanges { target: _item_text; explicit: true; visible: true }
                     // Move the list so that this item is at the top.
                     PropertyChanges { target: _item_container.ListView.view; explicit: true; contentY: _item_container.y }
                     PropertyChanges { target: _listView; explicit: true; interactive: false }
@@ -158,20 +182,25 @@ App{
                     NumberAnimation { 
                         target: _item_container
                         properties:"radius,height,anchors.leftMargin,anchors.rightMargin"
-                        duration: 300
-                        easing.type: Easing.OutQuad  
+                        duration: 500
+                        easing.type: Easing.InOutBack
                     }
                     NumberAnimation {
                         target: _item
                         properties:"radius"
-                        duration: 300
-                        easing.type: Easing.OutQuad
+                        duration: 500
+                        easing.type: Easing.InOutBack
+                    }
+                    NumberAnimation {
+                        target: _item_text
+                        properties:"visible"
+                        duration: 1000
                     }
                     NumberAnimation {
                         target: _item.ListView.view
                         properties:"contentY"
-                        duration: 300
-                        easing.type: Easing.OutQuad  
+                        duration: 500
+                        easing.type: Easing.InOutBack
                     }
                 }
             }
@@ -257,7 +286,7 @@ App{
 //            }
 //        }
 
-    }
+//    }
 
 //    ListView{
 //    	anchors.bottom: _ad.top
@@ -282,4 +311,5 @@ App{
 ////            console.log( cppInterface.str() )
 //        }
 //    }
+    }
 }
