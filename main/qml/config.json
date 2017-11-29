@@ -1,0 +1,13 @@
+{
+    "_comment": [
+      "In the config.json file in the qml folder for desktop platforms, as identifier and versioncode.",
+      "In the Project-info.plist file in the ios folder, as CFBundleIdentifier and CFBundleVersion. Also see Set iOS Bundle Identifier.",
+      "In the AndroidManifest.xml file in the android folder, as manifest package="" and  android:versionCode="" attribute. Also see Set Android Package Identifier. "
+    ],
+    "title": "V-Play Plugins",
+    "identifier": "home.charles.cardview",
+    "orientation": "auto",
+    "versioncode": 10,
+    "versionname": "1.0",
+    "stage": "test"
+  }
