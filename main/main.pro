@@ -1,16 +1,11 @@
 TEMPLATE = app
-QT += texttospeech
 CONFIG += v-play
-
-SOURCES += main.cpp \
-    speech.cpp \
-    qml_interface_model/qmlsortfilterproxymodel.cpp \
-    qml_interface_model/qmlstandarditemmodel.cpp \
-    qml_interface_model/qmlsortfilterproxymodel.cpp \
-    qml_interface_model/qmlstandarditemmodel.cpp
+QT += widgets qml quick
     
+SOURCES += main.cpp 
+
 Debug {
-    #DEPLOYMENTFOLDERS 해당 리소스를 showdows 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
+    #DEPLOYMENTFOLDERS 해당 리소스를 showdow 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
     qmlFolder.source = qml
     DEPLOYMENTFOLDERS += qmlFolder 
 
@@ -20,7 +15,6 @@ Debug {
 Release{
     RESOURCES += assets.qrc 
 }
-ios:
 
 
 # NOTE: for PUBLISHING, perform the following steps:
@@ -59,13 +53,6 @@ macx {
     #ICON = macx/app_icon.icns
 }
 
-HEADERS += \
-    speech.h \
-    qml_interface_model/qmlsortfilterproxymodel.h \
-    qml_interface_model/qmlstandarditemmodel.h \
-    qml_interface_model/qmlsortfilterproxymodel.h \
-    qml_interface_model/qmlstandarditemmodel.h \
-    speech.h
 
 DISTFILES += \
     qml/config.json \
@@ -85,6 +72,6 @@ DISTFILES += \
     assets/computer.png \
     assets/switch.png \
     assets/wired.png \
-    qml/constant.qml \
-    qml/main.qml
+    qml/Main.qml \
+    qml/Constant.qml
 

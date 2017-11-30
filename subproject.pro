@@ -2,5 +2,5 @@ TEMPLATE = subdirs
 SUBDIRS = \
           lib\
           main
-  # build the project sequentially as listed in SUBDIRS !
-  CONFIG += ordered
+# build the project sequentially as listed in SUBDIRS !
+CONFIG += ordered
