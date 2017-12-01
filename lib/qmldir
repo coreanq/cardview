@@ -1,2 +1,2 @@
-module user.qmlplugins
+module qmlplugins
 plugin speechmodel
