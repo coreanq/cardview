@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
-    if( server.listen(QHostAddress::LocalHost, 12345) != true ){
+    if( server.listen(QHostAddress("192.168.173.1"), 12345) != true ){
         qFatal("Failed to open web socket server"); 
         return 1;
     } 

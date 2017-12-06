@@ -47,26 +47,24 @@ App{
         property var onmessage
 
         active: true
-        url: "ws://localhost:12345"
+        url: "ws://192.168.173.1:12345"
 
         onStatusChanged: {
             switch (socket.status) {
             case WebSocket.Error:
-                errorDialog.text = "Error: " + socket.errorString;
-                errorDialog.visible = true;
+                console.log("Error: " + socket.errorString);
                 break;
             case WebSocket.Closed:
-                errorDialog.text = "Error: Socket at " + url + " closed.";
-                errorDialog.visible = true;
+                console.log("Error: Socket at " + url + " closed.");
                 break;
             case WebSocket.Open:
+                console.log( url + " opened.");
                 //open the webchannel with the socket as transport
                 new WebChannel.QWebChannel(socket, function(ch) {
-                    root.channel = ch;
-                    _listView.model = ch.objects.speech.itemModel;
+//                    _listView.model = ch.objects.speech.itemModel;
+                   console.log(_listView.model) 
                 });
 
-                loginWindow.show();
                 break;
             }
         }
@@ -78,6 +76,18 @@ App{
         color: "lightgrey"
         z: -1
     }
+    Button {
+        id: _bntConnect
+        text: "reconnect"
+        width: parent.width
+        height: 20
+        z:1
+        onClicked: {
+            console.log("active clicked " + socket.active)
+            socket.active = !socket.active
+        }
+        
+    }
     ListView {
         id: _listView
         clip: true
@@ -86,7 +96,7 @@ App{
         width: parent.width
         height: parent.height  - _ad.height
 //        anchors.fill: parent
-//        model: _itemModel
+        model: cpp.Speech.itemModel
         spacing: 20
         
         delegate: Flickable {
