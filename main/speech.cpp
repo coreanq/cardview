@@ -46,7 +46,8 @@
 Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0), 
-	m_languageModel(new QmlStandardItemModel() )
+	m_languageModel(new QmlStandardItemModel() ),
+	m_itemModel(new QmlStandardItemModel() )
 {
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
@@ -61,10 +62,71 @@ Speech::Speech(QObject *parent)
     headers << "first" << "second";
     m_languageModel->setHorizontalHeaderLabels(headers);
     m_languageModel->applyRoles(); // model header to user role 
+#if 0  
+    ListModel {
+        id: _itemModel
+        ListElement {
+            name: "사과"
+            front_img_name: "apple.jpg"
+            back_img_name : "card_back.jpg"
+        }
+        ListElement {
+            name: "토마토"
+            front_img_name: "tomato.jpg"
+            back_img_name : "card_back.jpg"
+        }
+        ListElement {
+            name: "파인애플"
+            front_img_name: "pineapple.jpg"
+            back_img_name : "card_back.jpg"
+        }
+        ListElement {
+            name:"포도"
+            front_img_name: "grape.jpg"
+            back_img_name : "card_back.jpg"
+        }
+        ListElement {
+            name: "오렌지"
+            front_img_name: "orange.jpg"
+            back_img_name : "card_back.jpg"
+        }
+    }
+#endif
+    headers << "name" << "front_img_name" << "back_img_name";
+    m_itemModel->setHorizontalHeaderLabels(headers);
+    m_itemModel->applyRoles(); // model header to user role 
+    
+    QList<QStandardItem*> items;
+    
+//    items << new QStandardItem("토마토") << new QStandardItem("tomato.jpg") << new QStandardItem("card_back.jpg");
+//    m_itemModel->appendRow(items);
+//    items.clear();
+    
+    
+    items << new QStandardItem("사과") << new QStandardItem("apple.jpg") << new QStandardItem("card_back.jpg");
+    m_itemModel->appendRow(items);
+    items.clear();
+    
+    
+    items << new QStandardItem("파인애플") << new QStandardItem("pineapple.jpg") << new QStandardItem("card_back.jpg");
+    m_itemModel->appendRow(items);
+    items.clear();
+    
+    items << new QStandardItem("포도") << new QStandardItem("grape.jpg") << new QStandardItem("card_back.jpg");
+    m_itemModel->appendRow(items);
+    items.clear();
+    
+    items << new QStandardItem("오렌지") << new QStandardItem("orange.jpg") << new QStandardItem("card_back.jpg");
+    m_itemModel->appendRow(items);
+    items.clear();
 }
 QmlStandardItemModel* Speech::languageModel()
 {
     return m_languageModel;
+}
+QmlStandardItemModel* Speech::itemModel()
+{
+    return m_itemModel;
 }
 void Speech::requestGet()
 {

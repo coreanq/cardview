@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtSensors 5.9
 import QtQuick.Controls 2.2
 import QtWebSockets 1.0 
+import QtWebChannel 1.0
 import VPlayApps 1.0
 import VPlayPlugins 1.0
 import "qwebchannel.js"  as WebChannel
@@ -62,27 +63,7 @@ App{
                 //open the webchannel with the socket as transport
                 new WebChannel.QWebChannel(socket, function(ch) {
                     root.channel = ch;
-
-                    //connect to the changed signal of the userList property
-                    ch.objects.chatserver.userListChanged.connect(function(args) {
-                        mainUi.userlist.text = '';
-                        ch.objects.chatserver.userList.forEach(function(user) {
-                            mainUi.userlist.text += user + '\n';
-                        });
-                    });
-
-                    //connect to the newMessage signal
-                    ch.objects.chatserver.newMessage.connect(function(time, user, message) {
-                        var line = "[" + time + "] " + user + ": " + message + '\n';
-                        mainUi.chat.text = mainUi.chat.text + line;
-                    });
-
-                    //connect to the keep alive signal
-                    ch.objects.chatserver.keepAlive.connect(function(args) {
-                        if (loginName !== '')
-                            //and call the keep alive response method as an answer
-                            ch.objects.chatserver.keepAliveResponse(loginName);
-                    });
+                    _listView.model = ch.objects.speech.itemModel;
                 });
 
                 loginWindow.show();
@@ -91,34 +72,6 @@ App{
         }
     }
 
-    ListModel {
-        id: _itemModel
-        ListElement {
-            name: "사과"
-            front_img_name: "apple.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "토마토"
-            front_img_name: "tomato.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "파인애플"
-            front_img_name: "pineapple.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name:"포도"
-            front_img_name: "grape.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "오렌지"
-            front_img_name: "orange.jpg"
-            back_img_name : "card_back.jpg"
-        }
-    }
     Rectangle {
 //        source: assetsPath + "background.jpg"
         anchors.fill: parent
@@ -133,7 +86,7 @@ App{
         width: parent.width
         height: parent.height  - _ad.height
 //        anchors.fill: parent
-        model: _itemModel
+//        model: _itemModel
         spacing: 20
         
         delegate: Flickable {

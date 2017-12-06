@@ -53,7 +53,8 @@
 class Speech : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QmlStandardItemModel* languageModel READ languageModel WRITE setLanguageModel NOTIFY languageModelChanged) 
+    Q_PROPERTY(QmlStandardItemModel* languageModel READ languageModel NOTIFY languageModelChanged) 
+    Q_PROPERTY(QmlStandardItemModel* itemModel READ itemModel )
 public:
     Speech(QObject *parent = 0);
    	// copy, assign 생성자 delete 속성  제거  
@@ -61,7 +62,7 @@ public:
     Speech(const Speech & obj) {}
 
     QmlStandardItemModel* languageModel();
-    void setLanguageModel(QmlStandardItemModel* model) { m_languageModel = model;}
+    QmlStandardItemModel* itemModel();
     
 
 signals:
@@ -88,6 +89,7 @@ public slots:
 
 private:
 	QmlStandardItemModel* m_languageModel;
+	QmlStandardItemModel* m_itemModel;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
     QNetworkAccessManager *m_manager = new QNetworkAccessManager(this);
