@@ -2,9 +2,10 @@ import QtQuick 2.8
 import QtQuick.Window 2.2
 import QtSensors 5.9
 import QtQuick.Controls 2.2
+import QtWebSockets 1.0 
 import VPlayApps 1.0
-import VPlayPlugins 1.0 
-import qmlplugins 1.0
+import VPlayPlugins 1.0
+import "qwebchannel.js"  as WebChannel
 
 App{
 
@@ -12,11 +13,6 @@ App{
     visible: true
     licenseKey: "2295246592E1DC90A8F79AC5C38BC3FED4B97543419BB1E3F73B6799BE66308C1342E93AC3D85279A4F049BEEBC6217C6B56570617E15FA177454DCA65DFF992A12176D7494055F91762C62E20F6BF70685169CA49C90663AD242E70346AB5153CDA66D095A64CD9552DA8F24F6E6AC7357D23490329021B00CAACFAFFA1882F4F430EC1548A2FE131E8CD63EA732410D4D0085988C2845DB9E02382E23F03FAAF7142B91F7330499333921D7F3183173FCC0EE20590CAD6910A96B01214D163B70F037BC941818BE58ACC7AB9FD04C58BF0DB7C0C348154177DD4E697F605194F9EBF4C456A0A756F29846E24B763B58A22270D9A6DBB1BFCE63E6C6BBFFE729FF04F4948A5F1DEB0902F0E6B1394725F392B3BCC6B5C1AC599496C14A92C00D2FF4507E4D114F3931D485134090522D720BEE50570F557BB46E71B4BECDD94"
     readonly property string assetsPath: "../assets/"
-
-    Speech{
-
-        id: speech
-    }
 
     AdMobBanner{
         id: _ad
@@ -32,6 +28,66 @@ App{
             anchors.fill: parent
             color: "black"
             opacity: 0.5
+        }
+    }
+     WebSocket {
+        id: socket
+
+        // the following three properties/functions are required to align the QML WebSocket API
+        // with the HTML5 WebSocket API.
+        property var send: function(arg) {
+            sendTextMessage(arg);
+        }
+
+        onTextMessageReceived: {
+            onmessage({data: message});
+        }
+
+        property var onmessage
+
+        active: true
+        url: "ws://localhost:12345"
+
+        onStatusChanged: {
+            switch (socket.status) {
+            case WebSocket.Error:
+                errorDialog.text = "Error: " + socket.errorString;
+                errorDialog.visible = true;
+                break;
+            case WebSocket.Closed:
+                errorDialog.text = "Error: Socket at " + url + " closed.";
+                errorDialog.visible = true;
+                break;
+            case WebSocket.Open:
+                //open the webchannel with the socket as transport
+                new WebChannel.QWebChannel(socket, function(ch) {
+                    root.channel = ch;
+
+                    //connect to the changed signal of the userList property
+                    ch.objects.chatserver.userListChanged.connect(function(args) {
+                        mainUi.userlist.text = '';
+                        ch.objects.chatserver.userList.forEach(function(user) {
+                            mainUi.userlist.text += user + '\n';
+                        });
+                    });
+
+                    //connect to the newMessage signal
+                    ch.objects.chatserver.newMessage.connect(function(time, user, message) {
+                        var line = "[" + time + "] " + user + ": " + message + '\n';
+                        mainUi.chat.text = mainUi.chat.text + line;
+                    });
+
+                    //connect to the keep alive signal
+                    ch.objects.chatserver.keepAlive.connect(function(args) {
+                        if (loginName !== '')
+                            //and call the keep alive response method as an answer
+                            ch.objects.chatserver.keepAliveResponse(loginName);
+                    });
+                });
+
+                loginWindow.show();
+                break;
+            }
         }
     }
 
@@ -118,7 +174,7 @@ App{
                         anchors.fill: parent
                         onClicked:{
                             console.log("clicked " + name)
-                            speech.speak(name)
+                            //speech.speak(name)
                         }
                     }
                     Text{

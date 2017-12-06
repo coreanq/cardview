@@ -8,13 +8,39 @@ int main(int argc, char *argv[])
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
     
+#ifndef QT_DEBUG
+#include "webchannel_interface/websocketclientwrapper.h"
+#include "webchannel_interface/websockettransport.h"
+#include "speech.h"
+#include <QWebChannel>
+#include <QWebSocketServer>
+
+    QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
+    if( server.listen(QHostAddress::LocalHost, 12345) != true ){
+        qFatal("Failed to open web socket server"); 
+        return 1;
+    } 
+     // wrap WebSocket clients in QWebChannelAbstractTransport objects
+    WebSocketClientWrapper clientWrapper(&server);
+
+    // setup the channel
+    QWebChannel channel;
+    QObject::connect(&clientWrapper, &WebSocketClientWrapper::clientConnected,
+                     &channel, &QWebChannel::connectTo);
+
+    // publish it to the QWebChannel
+    Speech* speech = new Speech(&app);
+    channel.registerObject(QStringLiteral("speech"), speech);
+
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
     VPApplication vplay;
     // Use platform-specific fonts instead of V-Play's default font
     vplay.setPreservePlatformFonts(true);
     
-    // * qml 과 c++ 인터페이스 시 주의 사항  
+    // * qml 과 c++ 인터페이스 
     // qml 내부에서 해당 객체를 직접 선언해서 사용할 경우 qmlRegisterType 방식 사용
-    // qml 로 live coding 하기 위해서 qmlRegisterType 방식 사용하도록 함
 //     qmlRegisterType<Speech>("cpp.Speech", 1, 0, "Speech");
     
     QQmlApplicationEngine engine;

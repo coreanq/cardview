@@ -1,8 +1,13 @@
 TEMPLATE = app
 CONFIG += v-play
-QT += widgets qml quick
+QT += gui widgets qml quick websockets webchannel texttospeech
     
-SOURCES += main.cpp 
+SOURCES += main.cpp \ 
+    speech.cpp \
+    webchannel_interface/websocketclientwrapper.cpp \
+    webchannel_interface/websockettransport.cpp \
+    qml_interface_model/qmlsortfilterproxymodel.cpp \
+    qml_interface_model/qmlstandarditemmodel.cpp
 
 Debug {
     #DEPLOYMENTFOLDERS 해당 리소스를 showdow 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
@@ -74,4 +79,11 @@ DISTFILES += \
     assets/wired.png \
     qml/Main.qml \
     qml/Constant.qml
+
+HEADERS += \
+    speech.h \
+    webchannel_interface/websocketclientwrapper.h \
+    webchannel_interface/websockettransport.h \
+    qml_interface_model/qmlsortfilterproxymodel.h \
+    qml_interface_model/qmlstandarditemmodel.h
 
