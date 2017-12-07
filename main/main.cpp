@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     QQmlContext* context = engine.rootContext();
     
     Speech speech;
-    context->setContextProperty("cpp.Speech", &speech);
+    context->setContextProperty("cppSpeech", &speech);
     
 #ifdef QT_DEBUG    
     QString qmlSource = "qml/Main.qml";

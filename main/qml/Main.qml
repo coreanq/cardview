@@ -96,7 +96,7 @@ App{
         width: parent.width
         height: parent.height  - _ad.height
 //        anchors.fill: parent
-        model: cpp.Speech.itemModel
+        model: cppSpeech.itemModel
         spacing: 20
         
         delegate: Flickable {

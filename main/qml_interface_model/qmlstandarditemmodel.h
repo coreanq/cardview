@@ -9,6 +9,7 @@ class QmlStandardItemModel : public QStandardItemModel
 public:
     explicit QmlStandardItemModel(QObject *parent = 0);
     QVariant data(const QModelIndex &index, int role) const;
+//    void setText(const QString &text, QByteArray roleName);
     void applyRoles();
 
     QHash<int, QByteArray> roleNames() const;

@@ -16,10 +16,6 @@ void QmlStandardItemModel::applyRoles()
 //        qDebug()<< Q_FUNC_INFO << this->headerData(i, Qt::Horizontal);
     }
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    setRoleNames(m_roles);
-#endif
-
 }
 
 QHash<int, QByteArray> QmlStandardItemModel::roleNames() const

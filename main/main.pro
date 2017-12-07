@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += v-play
+CONFIG += v-play c++11
 QT += gui widgets qml quick websockets webchannel texttospeech
     
 SOURCES += main.cpp \ 
