@@ -54,7 +54,7 @@ class Speech : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QmlStandardItemModel* languageModel READ languageModel NOTIFY languageModelChanged) 
-    Q_PROPERTY(QmlStandardItemModel* itemModel READ itemModel )
+    Q_PROPERTY(QmlStandardItemModel* itemModel READ itemModel NOTIFY itemModelChanged)
 public:
     Speech(QObject *parent = 0);
    	// copy, assign 생성자 delete 속성  제거  
@@ -67,7 +67,8 @@ public:
 
 signals:
 	void languageModelChanged();
-	void dataRecved(QString msg);
+    void itemModelChanged();
+    void dataRecved(QString msg);
 
 public slots:
     
