@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <VPApplication>
-#include "speech.h" 
 
 int main(int argc, char *argv[])
 {
@@ -48,8 +47,9 @@ int main(int argc, char *argv[])
     vplay.initialize(&engine);
     QQmlContext* context = engine.rootContext();
     
-    Speech speech;
-    context->setContextProperty("cppSpeech", &speech);
+//#include "speech.h" 
+//    Speech speech;
+//    context->setContextProperty("cppSpeech", &speech);
     
 #ifdef QT_DEBUG    
     QString qmlSource = "qml/Main.qml";

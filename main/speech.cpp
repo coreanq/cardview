@@ -59,36 +59,6 @@ Speech::Speech(QObject *parent)
     
     // qmlStandardItemdModel 의 경우 header 를 가지고 user role 을 생성함 
     QStringList headers;
-#if 0  
-    ListModel {
-        id: _itemModel
-        ListElement {
-            name: "사과"
-            front_img_name: "apple.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "토마토"
-            front_img_name: "tomato.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "파인애플"
-            front_img_name: "pineapple.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name:"포도"
-            front_img_name: "grape.jpg"
-            back_img_name : "card_back.jpg"
-        }
-        ListElement {
-            name: "오렌지"
-            front_img_name: "orange.jpg"
-            back_img_name : "card_back.jpg"
-        }
-    }
-#endif
     headers << "name" << "front_img_name" << "back_img_name";
     m_itemModel->setHorizontalHeaderLabels(headers);
     m_itemModel->applyRoles(); // model header to user role 
@@ -124,6 +94,18 @@ QmlStandardItemModel* Speech::itemModel()
 {
     return m_itemModel;
 }
+void Speech::printModel()
+{
+    for ( int row = 0; row < m_itemModel->rowCount(); row ++ ){
+        auto row_data = QStringList();
+        for (int col = 0; col < m_itemModel->columnCount(); col ++ ){  
+            row_data << m_itemModel->item(row, col)->text(); 
+        }
+        qDebug() << row_data;
+        row_data.clear();
+    }
+}
+
 void Speech::requestGet()
 {
     qDebug() << Q_FUNC_INFO;

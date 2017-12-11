@@ -1,8 +1,8 @@
 TEMPLATE = app
-QT += gui widgets texttospeech websockets webchannel
+QT += widgets texttospeech websockets webchannel
 
 
-CONFIG += c++11 
+CONFIG += c++11 console 
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use

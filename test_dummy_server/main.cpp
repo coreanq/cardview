@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QWebChannel>
 #include <QWebSocketServer>
+#include <QDebug>
 
 #include "../main/webchannel_interface/websocketclientwrapper.h"
 #include "../main/webchannel_interface/websockettransport.h"
@@ -11,10 +12,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
-    if( server.listen(QHostAddress("192.168.173.1"), 12345) != true ){
+    if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
         qFatal("Failed to open web socket server"); 
         return 1;
     } 
+    qDebug() << server.serverAddress() ;
      // wrap WebSocket clients in QWebChannelAbstractTransport objects
     WebSocketClientWrapper clientWrapper(&server);
 
