@@ -46,8 +46,7 @@
 Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0), 
-	m_languageModel(new QmlStandardItemModel() ),
-	m_itemModel(new QmlStandardItemModel() )
+    m_languageModel(new QmlStandardItemModel() )
 {
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
@@ -56,7 +55,36 @@ Speech::Speech(QObject *parent)
 	}
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(requestReceived(QNetworkReply*)));
+    m_itemModel = "<root>"
+                        "<item>"
+                            "<name>apple</name>"
+                            "<front_img_name>apple.jpg</front_img_name>"
+                            "<back_img_name>card_back.jpg</back_img_name>"
+                        "</item>"
+                        "<item>"
+                            "<name>tomato</name>"
+                            "<front_img_name>tomato.jpg</front_img_name>"
+                            "<back_img_name>card_back.jpg</back_img_name>"
+                        "</item>"
+                        "<item>"
+                            "<name>pineapple</name>"
+                            "<front_img_name>pineapple.jpg</front_img_name>"
+                            "<back_img_name>card_back.jpg</back_img_name>"
+                        "</item>"
+                        "<item>"
+                            "<name>grape</name>"
+                            "<front_img_name>grape.jpg</front_img_name>"
+                            "<back_img_name>card_back.jpg</back_img_name>"
+                        "</item>"
+                        "<item>"
+                            "<name>orange</name>"
+                            "<front_img_name>orange.jpg</front_img_name>"
+                            "<back_img_name>card_back.jpg</back_img_name>"
+                        "</item>"
+                  "</root>"
+                  ;
     
+#if 0
     // qmlStandardItemdModel 의 경우 header 를 가지고 user role 을 생성함 
     QStringList headers;
     headers << "name" << "front_img_name" << "back_img_name";
@@ -84,26 +112,16 @@ Speech::Speech(QObject *parent)
     items << new QStandardItem("orange") << new QStandardItem("orange.jpg") << new QStandardItem("card_back.jpg");
     m_itemModel->appendRow(items);
     items.clear();
+#endif
     
 }
-QmlStandardItemModel* Speech::languageModel()
-{
-    return m_languageModel;
-}
-QmlStandardItemModel* Speech::itemModel()
+QString Speech::itemModel()
 {
     return m_itemModel;
 }
 void Speech::printModel()
 {
-    for ( int row = 0; row < m_itemModel->rowCount(); row ++ ){
-        auto row_data = QStringList();
-        for (int col = 0; col < m_itemModel->columnCount(); col ++ ){  
-            row_data << m_itemModel->item(row, col)->text(); 
-        }
-        qDebug() << row_data;
-        row_data.clear();
-    }
+    qDebug() << m_itemModel;
 }
 
 void Speech::requestGet()
