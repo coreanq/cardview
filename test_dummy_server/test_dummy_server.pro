@@ -17,19 +17,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    ../main/speech.cpp \
-    ../main/qml_interface_model/qmlsortfilterproxymodel.cpp \
-    ../main/qml_interface_model/qmlstandarditemmodel.cpp \
-    ../main/webchannel_interface/websocketclientwrapper.cpp \
-    ../main/webchannel_interface/websockettransport.cpp \
+    ../main/speech.cpp
     mainwindow.cpp
 
 HEADERS += \
     ../main/speech.h \
-    ../main/qml_interface_model/qmlsortfilterproxymodel.h \
-    ../main/qml_interface_model/qmlstandarditemmodel.h \
-    ../main/webchannel_interface/websocketclientwrapper.h \
-    ../main/webchannel_interface/websockettransport.h \
     mainwindow.h
 
 FORMS += \

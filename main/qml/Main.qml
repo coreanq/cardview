@@ -2,6 +2,7 @@ import QtQuick 2.8
 import QtQuick.Window 2.2
 import QtSensors 5.9
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.XmlListModel 2.0
 
 import QtWebSockets 1.0 
@@ -43,8 +44,8 @@ App{
       XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
       XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
     }
-    
-     WebSocket {
+
+    WebSocket {
         id: socket
 
         // the following three properties/functions are required to align the QML WebSocket API
@@ -94,7 +95,7 @@ App{
         id: _bntConnect
         text: "test"
         width: parent.width
-        height: 20
+        height: 30
         z:1
         onClicked: {
             console.log("active clicked " + socket.active)
@@ -125,18 +126,18 @@ App{
             Rectangle {
                 id: _item
                 anchors.fill: parent
-                color: "gray"
+                color: "white"
                 radius: 30
-
                 Image{
                     id: _item_image
-                    height: parent.height
                     anchors.centerIn: parent
+                    width: parent.width * 0.815
+                    height: parent.height * 0.815
+
                     clip: true
                     source: Qt.resolvedUrl(assetsPath + front_img_name)
                     fillMode: Image.PreserveAspectFit
-                    Button {
-                        text: "click"
+                    Button { text: "click"
                         visible: false
                         anchors.centerIn: parent
                         width: 100
@@ -149,22 +150,30 @@ App{
                         id: _item_mouse_area
                         visible: false
                         anchors.fill: parent
+                        Rectangle{
+                            anchors.fill: parent
+                            visible : false
+                            color: "black"
+                            opacity: 0.5
+                            z: 1
+                        }
+
                         onClicked:{
                             console.log("clicked " + name)
                             _mainWnd.cppSpeech.speak(name)
                         }
                     }
-                    Text{
+
+                }
+                Text{
                         id: _item_text
                         text: name
                         visible: false
                         anchors.bottom: parent.bottom
-                        anchors.margins: 20
                         anchors.horizontalCenter: parent.horizontalCenter
-                        font.pointSize: 30
-                    }
+                        anchors.margins: 30
+                        font.pointSize: 25
                 }
-
                 Button {
                     id: _item_close_btn
                     text: "X"
