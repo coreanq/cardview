@@ -2,10 +2,13 @@ import QtQuick 2.8
 import QtQuick.Window 2.2
 import QtSensors 5.9
 import QtQuick.Controls 2.2
+import QtQuick.XmlListModel 2.0
+
 import QtWebSockets 1.0 
 import QtWebChannel 1.0
 import VPlayApps 1.0
 import VPlayPlugins 1.0
+
 import "qwebchannel.js"  as WebChannel
 
 App{
@@ -32,6 +35,15 @@ App{
             opacity: 0.5
         }
     }
+    XmlListModel {
+      id: _xmlItemModel
+      
+      query: "/root/item"
+      XmlRole { name: "name"; query: "name/string()" }
+      XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
+      XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
+    }
+    
      WebSocket {
         id: socket
 
@@ -63,7 +75,8 @@ App{
                 new WebChannel.QWebChannel(socket, function(ch) {
                     console.log( url + " opened.");
                     _mainWnd.cppSpeech  = ch.objects.speech
-                    ch.objects.speech.printModel();
+                    _xmlItemModel.xml = ch.objects.speech.itemModel
+                    console.log(_xmlItemModel.xml)
                 });
 
                 break;
@@ -79,7 +92,7 @@ App{
     }
     Button {
         id: _bntConnect
-        text: "reconnect"
+        text: "test"
         width: parent.width
         height: 20
         z:1
@@ -99,6 +112,7 @@ App{
         height: parent.height  - _ad.height
 //        anchors.fill: parent
         spacing: 20
+        model: _xmlItemModel
         
         delegate: Flickable {
             id: _item_container

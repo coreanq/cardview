@@ -48,7 +48,6 @@
 #include <QString>
 #include <QStringList>
 #include <QNetworkAccessManager>
-#include "qml_interface_model/qmlstandarditemmodel.h"
 
 class Speech : public QObject
 {
@@ -87,7 +86,6 @@ public slots:
     void localeChanged(const QLocale &locale);
 
 private:
-	QmlStandardItemModel* m_languageModel;
     QString m_itemModel;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;

@@ -45,8 +45,7 @@
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
-    m_speech(0), 
-    m_languageModel(new QmlStandardItemModel() )
+    m_speech(0)
 {
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
@@ -55,7 +54,9 @@ Speech::Speech(QObject *parent)
 	}
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(requestReceived(QNetworkReply*)));
-    m_itemModel = "<root>"
+    m_itemModel = 
+                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+                    "<root>"
                         "<item>"
                             "<name>apple</name>"
                             "<front_img_name>apple.jpg</front_img_name>"
@@ -223,7 +224,7 @@ void Speech::engineSelected(QString engineName)
                      .arg(QLocale::languageToString(locale.language()))
                      .arg(QLocale::countryToString(locale.country())));
 //        QVariant localeVariant(locale);
-        m_languageModel->appendRow(new QStandardItem(name) );
+//        m_languageModel->appendRow(new QStandardItem(name) );
         qDebug() << name;
 //        ui.language->addItem(name, localeVariant);
 //        if (locale.name() == current.name())
