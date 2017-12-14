@@ -41,7 +41,8 @@ App{
       
       query: "/root/item"
       XmlRole { name: "id"; query: "id/string()"; isKey: true }
-      XmlRole { name: "name"; query: "name/string()"; }
+      XmlRole { name: "english"; query: "name/string()";  }
+      XmlRole { name: "korean"; query: "korean/string()";  }
       XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
       XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
     }
@@ -77,7 +78,7 @@ App{
                 new WebChannel.QWebChannel(socket, function(ch) {
                     console.log( url + " opened.");
                     _main.cppSpeech  = ch.objects.speech
-//                    _xmlItemModel.xml = ch.objects.speech.itemModel
+                    _xmlItemModel.xml = ch.objects.speech.itemModel
                     console.log(_xmlItemModel.xml)
                 });
 
@@ -135,6 +136,7 @@ App{
 
             Rectangle {
                 id: _item
+                property string name: korean
                 anchors.fill: parent
                 color: "white"
                 radius: 30
@@ -170,15 +172,15 @@ App{
                         }
 
                         onClicked:{
-                            console.log("clicked " + name)
-                            _main.cppSpeech.speak(name)
+                            console.log("clicked " + _item.name)
+                            _main.cppSpeech.speak(_item.name)
                         }
                     }
 
                 }
                 Text{
                         id: _item_text
-                        text: name
+                        text: _item.name
                         visible: false
                         anchors.bottom: parent.bottom
                         anchors.horizontalCenter: parent.horizontalCenter

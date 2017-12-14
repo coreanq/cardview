@@ -8,6 +8,7 @@
 #include "speech.h"
 #include <QWebChannel>
 #include <QWebSocketServer>
+#include <QTextCodec>
 
 int main(int argc, char *argv[])
 {
