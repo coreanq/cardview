@@ -3,23 +3,26 @@
 #include <QQmlContext>
 #include <VPApplication>
 
-int main(int argc, char *argv[])
-{
-    // using QApplication classs for QWidget class using in AdMobs lib 
-    QApplication app(argc, argv);
-    
-#ifndef QT_DEBUG
 #include "webchannel_interface/websocketclientwrapper.h"
 #include "webchannel_interface/websockettransport.h"
 #include "speech.h"
 #include <QWebChannel>
 #include <QWebSocketServer>
 
+int main(int argc, char *argv[])
+{
+    // using QApplication classs for QWidget class using in AdMobs lib 
+    QApplication app(argc, argv);
+    
+#ifdef QT_DEBUG
+
+
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
         qFatal("Failed to open web socket server"); 
         return 1;
     } 
+    qDebug() << server.serverAddress();
      // wrap WebSocket clients in QWebChannelAbstractTransport objects
     WebSocketClientWrapper clientWrapper(&server);
 
