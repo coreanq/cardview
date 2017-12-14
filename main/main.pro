@@ -3,7 +3,9 @@ CONFIG += v-play c++11
 QT += widgets qml quick websockets webchannel texttospeech
     
 SOURCES += main.cpp \ 
-    speech.cpp
+    speech.cpp \
+    webchannel_interface/websocketclientwrapper.cpp \
+    webchannel_interface/websockettransport.cpp
 
 Debug {
     #DEPLOYMENTFOLDERS 해당 리소스를 showdow 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
@@ -62,12 +64,11 @@ DISTFILES += \
     android/build.gradle \
     assets/*.jpg \
     qml/Main.qml \
-    qml/Constant.qml
+    qml/Constant.qml \
+    webchannel_interface/qwebchannel.js
 
 HEADERS += \
     speech.h \
     webchannel_interface/websocketclientwrapper.h \
     webchannel_interface/websockettransport.h \
-    qml_interface_model/qmlsortfilterproxymodel.h \
-    qml_interface_model/qmlstandarditemmodel.h
 
