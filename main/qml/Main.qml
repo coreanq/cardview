@@ -13,7 +13,7 @@ import "qwebchannel.js"  as WebChannel
 
 App{
 
-    id: _mainWnd
+    id: _main
     visible: true
     licenseKey: "2295246592E1DC90A8F79AC5C38BC3FED4B97543419BB1E3F73B6799BE66308C1342E93AC3D85279A4F049BEEBC6217C6B56570617E15FA177454DCA65DFF992A12176D7494055F91762C62E20F6BF70685169CA49C90663AD242E70346AB5153CDA66D095A64CD9552DA8F24F6E6AC7357D23490329021B00CAACFAFFA1882F4F430EC1548A2FE131E8CD63EA732410D4D0085988C2845DB9E02382E23F03FAAF7142B91F7330499333921D7F3183173FCC0EE20590CAD6910A96B01214D163B70F037BC941818BE58ACC7AB9FD04C58BF0DB7C0C348154177DD4E697F605194F9EBF4C456A0A756F29846E24B763B58A22270D9A6DBB1BFCE63E6C6BBFFE729FF04F4948A5F1DEB0902F0E6B1394725F392B3BCC6B5C1AC599496C14A92C00D2FF4507E4D114F3931D485134090522D720BEE50570F557BB46E71B4BECDD94"
     readonly property string assetsPath: "../assets/"
@@ -39,7 +39,7 @@ App{
       id: _xmlItemModel
       
       query: "/root/item"
-      XmlRole { name: "name"; query: "name/string()"; isKey: True }
+      XmlRole { name: "name"; query: "name/string()"; isKey: true }
       XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
       XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
     }
@@ -74,7 +74,7 @@ App{
                 //open the webchannel with the socket as transport
                 new WebChannel.QWebChannel(socket, function(ch) {
                     console.log( url + " opened.");
-                    _mainWnd.cppSpeech  = ch.objects.speech
+                    _main.cppSpeech  = ch.objects.speech
                     _xmlItemModel.xml = ch.objects.speech.itemModel
                     console.log(_xmlItemModel.xml)
                 });
@@ -93,11 +93,21 @@ App{
         z:1
         onClicked: {
             console.log("active clicked " + socket.active)
-            _mainWnd.cppSpeech.printModel();
+            _main.cppSpeech.printModel();
             socket.active = !socket.active
         }
         
     }
+    // 가로 보기시 status bar 제거 
+    onPortraitChanged: {
+        
+        if( _main.potrait )
+            ThemeColors.statusBarStyle = ThemeColors.statusBarStyleHidden
+        else 
+            ThemeColors.statusBarStyle =  ThemeColors.statusBarStyleBlack
+        
+    }
+
     ListView {
         id: _listView
         clip: true
@@ -108,7 +118,7 @@ App{
         y: Theme.statusBarHeight
         
         width: parent.width
-        height: parent.height  - _ad.height
+        height: parent.height  - _ad.height - Theme.statusBarHeight
         
         spacing: 20
         model: _xmlItemModel
@@ -135,7 +145,8 @@ App{
                     clip: true
                     source: Qt.resolvedUrl(assetsPath + front_img_name)
                     fillMode: Image.PreserveAspectFit
-                    Button { text: "click"
+                    Button { 
+                        text: "click"
                         visible: false
                         anchors.centerIn: parent
                         width: 100
@@ -158,7 +169,7 @@ App{
 
                         onClicked:{
                             console.log("clicked " + name)
-                            _mainWnd.cppSpeech.speak(name)
+                            _main.cppSpeech.speak(name)
                         }
                     }
 
