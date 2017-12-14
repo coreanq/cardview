@@ -6,7 +6,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.XmlListModel 2.0
 
 import QtWebSockets 1.0 
-import QtWebChannel 1.0
 import VPlayApps 1.0
 import VPlayPlugins 1.0
 
@@ -40,7 +39,7 @@ App{
       id: _xmlItemModel
       
       query: "/root/item"
-      XmlRole { name: "name"; query: "name/string()" }
+      XmlRole { name: "name"; query: "name/string()"; isKey: True }
       XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
       XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
     }
@@ -85,16 +84,11 @@ App{
         }
     }
 
-    Rectangle {
-//        source: assetsPath + "background.jpg"
-        anchors.fill: parent
-        color: "lightgrey"
-        z: -1
-    }
     Button {
         id: _bntConnect
         text: "test"
         width: parent.width
+        visible: false
         height: 30
         z:1
         onClicked: {
@@ -107,11 +101,15 @@ App{
     ListView {
         id: _listView
         clip: true
+        
         anchors.left: parent.left
         anchors.bottom: _ad.top
+        
+        y: Theme.statusBarHeight
+        
         width: parent.width
         height: parent.height  - _ad.height
-//        anchors.fill: parent
+        
         spacing: 20
         model: _xmlItemModel
         
