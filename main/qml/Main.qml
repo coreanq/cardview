@@ -40,7 +40,8 @@ App{
       source: "http://edu-card.herokuapp.com/cards"
       
       query: "/root/item"
-      XmlRole { name: "name"; query: "name/string()"; isKey: true }
+      XmlRole { name: "id"; query: "id/string()"; isKey: true }
+      XmlRole { name: "name"; query: "name/string()"; }
       XmlRole { name: "front_img_name"; query: "front_img_name/string()" }
       XmlRole { name: "back_img_name"; query: "back_img_name/string()" }
     }
