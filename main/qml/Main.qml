@@ -37,7 +37,7 @@ App{
     }
     XmlListModel {
       id: _xmlItemModel
-      source: "http://edu-card.herokuapp.com/cards"
+//      source: "http://edu-card.herokuapp.com/cards"
       
       query: "/root/item"
       XmlRole { name: "id"; query: "id/string()"; isKey: true }
@@ -77,9 +77,9 @@ App{
                 //open the webchannel with the socket as transport
                 new WebChannel.QWebChannel(socket, function(ch) {
                     console.log( url + " opened.");
-                    _main.cppSpeech  = ch.objects.speech
-                    _xmlItemModel.xml = ch.objects.speech.itemModel
-                    console.log(_xmlItemModel.xml)
+                    _main.cppSpeech  = ch.objects.speech;
+                    _xmlItemModel.xml = ch.objects.speech.itemModel;
+                    console.log(ch.objects.speech.itemModel);
                 });
 
                 break;
