@@ -40,14 +40,9 @@ ios {
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
 
-    qmlFiles.files = $$files(qml/*.*)
-    qmlFiles.path = qml
-    QMAKE_BUNDLE_DATA += qmlFiles
-
     assetsFiles.files = $$files(assets/*.*)
     assetsFiles.path = assets
     QMAKE_BUNDLE_DATA += assetsFiles
-    RESOURCES += assets.qrc
 }
 win32 {
     #RC_FILE += win/app_icon.rc
