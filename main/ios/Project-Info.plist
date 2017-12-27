@@ -57,61 +57,11 @@
         <key>UILaunchImageMinimumOSVersion</key>
         <string>8.0</string>
         <key>UILaunchImageName</key>
-        <string>Def</string>
+        <string>Def-750h</string>
         <key>UILaunchImageOrientation</key>
         <string>Portrait</string>
         <key>UILaunchImageSize</key>
-        <string>{320, 480}</string>
-    </dict>
-    <dict>
-        <key>UILaunchImageMinimumOSVersion</key>
-        <string>8.0</string>
-        <key>UILaunchImageName</key>
-        <string>Def-568h</string>
-        <key>UILaunchImageOrientation</key>
-        <string>Portrait</string>
-        <key>UILaunchImageSize</key>
-        <string>{320, 568}</string>
-    </dict>
-    <dict>
-        <key>UILaunchImageMinimumOSVersion</key>
-        <string>8.0</string>
-        <key>UILaunchImageName</key>
-        <string>Def-667h</string>
-        <key>UILaunchImageOrientation</key>
-        <string>Portrait</string>
-        <key>UILaunchImageSize</key>
-        <string>{375, 667}</string>
-    </dict>
-    <dict>
-        <key>UILaunchImageMinimumOSVersion</key>
-        <string>8.0</string>
-        <key>UILaunchImageName</key>
-        <string>Def-Portrait-736h</string>
-        <key>UILaunchImageOrientation</key>
-        <string>Portrait</string>
-        <key>UILaunchImageSize</key>
-        <string>{414, 736}</string>
-    </dict>
-    <dict>
-        <key>UILaunchImageMinimumOSVersion</key>
-        <string>8.0</string>
-        <key>UILaunchImageName</key>
-        <string>Def-Portrait</string>
-        <key>UILaunchImageOrientation</key>
-        <string>Portrait</string>
-        <key>UILaunchImageSize</key>
-        <string>{768, 1024}</string>
-    </dict>
-    <dict>
-        <key>UILaunchImageMinimumOSVersion</key>
-        <string>8.0</string>
-        <key>UILaunchImageName</key>
-        <string>Def-Landscape-736h</string>
-        <key>UILaunchImageOrientation</key>
-        <string>Landscape</string>
-        <key>UILaunchImageSize</key>
-        <string>{414, 736}</string>
+        <string>{750, 1334}</string>
     </dict>
     <dict>
         <key>UILaunchImageMinimumOSVersion</key>
