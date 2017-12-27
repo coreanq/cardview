@@ -3,8 +3,6 @@
         <file>assets/grape.jpg</file>
         <file>assets/orange.jpg</file>
         <file>assets/pineapple.jpg</file>
-        <file>qml/constant.qml</file>
-        <file>qml/main.qml</file>
         <file>qml/qwebchannel.js</file>
         <file>assets/aubergine.jpg</file>
         <file>assets/banana.jpg</file>
@@ -32,5 +30,7 @@
         <file>assets/sweet potato.jpg</file>
         <file>assets/tengerine.jpg</file>
         <file>assets/water melon.jpg</file>
+        <file>qml/Constant.qml</file>
+        <file>qml/Main.qml</file>
     </qresource>
 </RCC>

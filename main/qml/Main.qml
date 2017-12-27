@@ -16,8 +16,11 @@ App{
     id: _main
     visible: true
     licenseKey: "2295246592E1DC90A8F79AC5C38BC3FED4B97543419BB1E3F73B6799BE66308C1342E93AC3D85279A4F049BEEBC6217C6B56570617E15FA177454DCA65DFF992A12176D7494055F91762C62E20F6BF70685169CA49C90663AD242E70346AB5153CDA66D095A64CD9552DA8F24F6E6AC7357D23490329021B00CAACFAFFA1882F4F430EC1548A2FE131E8CD63EA732410D4D0085988C2845DB9E02382E23F03FAAF7142B91F7330499333921D7F3183173FCC0EE20590CAD6910A96B01214D163B70F037BC941818BE58ACC7AB9FD04C58BF0DB7C0C348154177DD4E697F605194F9EBF4C456A0A756F29846E24B763B58A22270D9A6DBB1BFCE63E6C6BBFFE729FF04F4948A5F1DEB0902F0E6B1394725F392B3BCC6B5C1AC599496C14A92C00D2FF4507E4D114F3931D485134090522D720BEE50570F557BB46E71B4BECDD94"
-    readonly property string assetsPath: "../assets/"
+    property string assetsPath: "../assets/"
     property var cppSpeech
+
+    Component.onCompleted: {
+    }
 
     AdMobBanner{
         id: _ad
@@ -38,7 +41,6 @@ App{
     XmlListModel {
       id: _xmlItemModel
 //      source: "http://edu-card.herokuapp.com/cards"
-      
       query: "/root/item"
       XmlRole { name: "id"; query: "id/string()"; isKey: true }
       XmlRole { name: "english"; query: "name/string()";  }
@@ -79,7 +81,13 @@ App{
                     console.log( url + " opened.");
                     _main.cppSpeech  = ch.objects.speech;
                     _xmlItemModel.xml = ch.objects.speech.itemModel;
-                    console.log(ch.objects.speech.itemModel);
+
+                    if( _main.cppSpeech.isDebug == true )
+                        _main.assetsPath = "../assets/"
+                    else
+                        _main.assetsPath = "qrc:/assets/"
+                    console.log( _main.assetsPath )
+                    //console.log(ch.objects.speech.itemModel);
                 });
 
                 break;

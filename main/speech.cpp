@@ -55,9 +55,16 @@ Speech::Speech(QObject *parent)
 	}
     m_manager = new QNetworkAccessManager(this);
     connect(m_manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(requestReceived(QNetworkReply*)));
+
+#ifdef QT_DEBUG
+    m_isDebug = true;
+#else
+    m_isDebug = false;
+#endif
     
-    
-    m_itemModel  =  QString::fromLocal8Bit( 
+    auto textCodec = QTextCodec::codecForName("euckr");
+
+    m_itemModel  =  textCodec->toUnicode(
                     "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                     "<root>"
                         "<item>"
@@ -280,7 +287,7 @@ Speech::Speech(QObject *parent)
                   "</root>"
                   );
     
-    qDebug() << m_itemModel;
+    //qDebug() << m_itemModel;
     
 }
 QString Speech::itemModel()

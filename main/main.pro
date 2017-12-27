@@ -7,18 +7,6 @@ SOURCES += main.cpp \
     webchannel_interface/websocketclientwrapper.cpp \
     webchannel_interface/websockettransport.cpp
 
-Debug {
-    #DEPLOYMENTFOLDERS 해당 리소스를 showdow 빌드 디렉토리로 qrc 로 컴파일 하지 않고 복사함
-    qmlFolder.source = qml
-    DEPLOYMENTFOLDERS += qmlFolder 
-
-    assetsFolder.source = assets
-    DEPLOYMENTFOLDERS += assetsFolder
-}
-Release{
-    RESOURCES += assets.qrc 
-}
-
 
 # NOTE: for PUBLISHING, perform the following steps:
 # 1. comment the DEPLOYMENTFOLDERS += qmlFolder line above, to avoid shipping your qml files with the application (instead they get compiled to the app binary)
@@ -40,9 +28,20 @@ ios {
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
 
-    assetsFiles.files = $$files(assets/*.*)
-    assetsFiles.path = assets
-    QMAKE_BUNDLE_DATA += assetsFiles
+    CONFIG(debug, debug|release) {
+        # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
+        # 설치 폴더로 복사
+        assetsFiles.files = $$files(assets/*.*)
+        assetsFiles.path = assets
+        QMAKE_BUNDLE_DATA += assetsFiles
+
+        qmlFiles.files = $$files(qml/*.*)
+        qmlFiles.path = qml
+        QMAKE_BUNDLE_DATA += qmlFiles
+    }
+    CONFIG(release, debug|release) {
+        RESOURCES += assets.qrc
+    }
 }
 win32 {
     #RC_FILE += win/app_icon.rc
@@ -56,11 +55,7 @@ DISTFILES += \
     qml/config.json \
     ios/Project-Info.plist \
     android/AndroidManifest.xml \
-    android/build.gradle \
-    assets/*.jpg \
-    qml/Main.qml \
-    qml/Constant.qml \
-    webchannel_interface/qwebchannel.js
+    android/build.gradle
 
 HEADERS += \
     speech.h \
