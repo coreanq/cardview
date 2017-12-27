@@ -5,7 +5,7 @@
     <key>CFBundleIdentifier</key>
     <string>home.charles.cardview</string>
     <key>CFBundleDisplayName</key>
-    <string>cardview</string>
+    <string>낱말카드</string>
     <key>CFBundleName</key>
     <string>${PRODUCT_NAME}</string>
     <key>CFBundleExecutable</key>
