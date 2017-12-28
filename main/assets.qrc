@@ -33,5 +33,6 @@
         <file>qml/Constant.qml</file>
         <file>qml/Main.qml</file>
         <file>qml/config.json</file>
+        <file>qml/FruitPage.qml</file>
     </qresource>
 </RCC>
