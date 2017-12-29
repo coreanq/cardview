@@ -1,25 +1,19 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+import VPlayApps 1.0
 
 ListView {
-    id: _listView
-    clip: true
-    
-    anchors.left: parent.left
-    anchors.bottom: _naviWnd.top
-    
-    y: Theme.statusBarHeight
-    
-    
+    id: _root
     spacing: 20
-    model: _xmlItemModel
+    signal fruitClicked(string fruitName)
+    property string assetsPath : ""
     
     delegate: Flickable {
         id: _item_container
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: 20
-        height: _listView.height * 0.615
+        height: _root.height * 0.615
         interactive: false
 
         Rectangle {
@@ -37,7 +31,7 @@ ListView {
                 clip: true
                 source: Qt.resolvedUrl(assetsPath + front_img_name)
                 fillMode: Image.PreserveAspectFit
-                Button { 
+                AppButton { 
                     text: "click"
                     visible: false
                     anchors.centerIn: parent
@@ -60,8 +54,8 @@ ListView {
                     }
 
                     onClicked:{
-                        console.log("clicked " + _item.name)
-                        _main.cppSpeech.speak(_item.name)
+                        _root.fruitClicked(_item.name);
+                        console.log("clicked " + _item.name);
                     }
                 }
 
@@ -115,7 +109,7 @@ ListView {
                 PropertyChanges { target: _item_text; explicit: true; visible: true }
                 // Move the list so that this item is at the top.
                 PropertyChanges { target: _item_container.ListView.view; explicit: true; contentY: _item_container.y }
-                PropertyChanges { target: _listView; explicit: true; interactive: false }
+                PropertyChanges { target: _root; explicit: true; interactive: false }
                 PropertyChanges { target: _normalized_mouse_area ; explicit: true; visible: false }
                 PropertyChanges { target: _maximized_mouse_area ; explicit: true; visible: true }
                 PropertyChanges { target: _item_close_btn; explicit: true; visible: true }

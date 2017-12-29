@@ -34,5 +34,8 @@
         <file>qml/Main.qml</file>
         <file>qml/config.json</file>
         <file>qml/FruitPage.qml</file>
+        <file>qml/FruitModel.qml</file>
+        <file>qml/CppInterface.qml</file>
+        <file>qml/AdBanner.qml</file>
     </qresource>
 </RCC>
