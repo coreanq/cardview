@@ -13,13 +13,6 @@ App{
         id: _xmlItemModel
     }
 
-    CppInterface {
-        id: _cppInterface
-        onConnected: {
-            _xmlItemModel.xml = fruitModel
-//            console.log(_xmlItemModel.xml)
-        }
-    }
     
     Component {
         id: _fruitPage
@@ -29,7 +22,24 @@ App{
                 _cppInterface.speechObj.speak(fruitName);
             }
             Component.onCompleted: {
-                console.log("_fruitPage create!")
+                console.log("_fruitPage create! path: " + assetsPath)
+            }
+        }
+    }
+
+    Component{
+        id: _cppInterface
+        CppInterface {
+            onConnected: {
+                console.log("test1: " + _cppInterface.fruitModel)
+                console.log("test:"+  _xmlItemModel.xml)
+                _xmlItemModel.xml = _cppInterface.fruitModel
+                _fruitPage.assetsPath = _cppInterface.assetsPath
+                console.log("test1: " + _cppInterface.fruitModel)
+                console.log("test:"+  _xmlItemModel.xml)
+            }
+            Component.onCompleted: {
+                console.log("_cppInterface create!" )
             }
         }
     }
@@ -54,6 +64,9 @@ App{
            icon: IconType.calculator
            Loader {
                 sourceComponent: _fruitPage
+           }
+           Loader {
+                sourceComponent: _cppInterface
            }
          }
     

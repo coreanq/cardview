@@ -22,6 +22,10 @@ ListView {
             anchors.fill: parent
             color: "white"
             radius: 30
+            Component.onCompleted: {
+                console.log("path " + assetsPath)
+            }
+
             Image{
                 id: _item_image
                 anchors.centerIn: parent
