@@ -31,6 +31,7 @@ ListView {
                 clip: true
                 source: Qt.resolvedUrl(assetsPath + front_img_name)
                 fillMode: Image.PreserveAspectFit
+
                 AppButton { 
                     text: "click"
                     visible: false

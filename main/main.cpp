@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <VPApplication>
+#include <VPLiveClient>
 
 #include "webchannel_interface/websocketclientwrapper.h"
 #include "webchannel_interface/websockettransport.h"
@@ -39,31 +40,26 @@ int main(int argc, char *argv[])
 
 /////////////////////////////////////////////////////////////////////////////
     VPApplication vplay;
+
     // Use platform-specific fonts instead of V-Play's default font
     vplay.setPreservePlatformFonts(true);
-    
-    // qml 과 c++ 인터페이스
-    // qml 내부에서 해당 객체를 직접 선언해서 사용할 경우 qmlRegisterType 방식 사용
-//     qmlRegisterType<Speech>("cpp.Speech", 1, 0, "Speech");
-    
-//#include "speech.h"
-//    Speech speech;
-//    context->setContextProperty("cppSpeech", &speech);
+
     QQmlApplicationEngine engine;
     vplay.initialize(&engine);
-    QQmlContext* context = engine.rootContext();
-    
-    
-#ifdef QT_DEBUG    
-    QString qmlSource = "qml/Main.qml";
-#else
-    QString qmlSource = "qrc:/qml/Main.qml";  // for url type
-#endif
-    vplay.setMainQmlFileName(qmlSource);
-    
+
+    // use this during development
+    // for PUBLISHING, use the entry point below
+    vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
+
+    // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
+    // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected
+    // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
+    // also see the .pro file for more details
+    // vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
+
     engine.load(QUrl(vplay.mainQmlFileName()));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+//	VPlayLiveClient liveClient(&engine);
+    return app.exec();
 
     return app.exec();
 }

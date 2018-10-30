@@ -1,8 +1,8 @@
 TEMPLATE = app
-QT += widgets texttospeech websockets webchannel
+QT += core texttospeech websockets webchannel
 
 
-CONFIG += c++11 console 
+CONFIG += c++14 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -24,7 +24,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     ../main/speech.h \
-    mainwindow.h \
     ../main/webchannel_interface/websocketclientwrapper.h \
     ../main/webchannel_interface/websockettransport.h
 
