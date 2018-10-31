@@ -2,15 +2,14 @@ import QtQuick 2.0
 import VPlayPlugins 1.0
 
 AdMobBanner{
-    id: _ad
-    visible: false
-//    appId: "ca-app-pub-1343411537040925~3583043750"
-    adUnitId: "ca-app-pub-1343411537040925/9502612510"
-    testDeviceIds: ["cf47d897bcd4218b7995db4268ed3083e0d5de1b"]
-    anchors.bottom : parent.bottom
-    width: parent.width
-    height: 30
+    id: _root
+    visible: true
+    adUnitId: "ca-app-pub-1343411537040925/6004482526"
+    testDeviceIds: [""]
     banner: AdMobBanner.Smart
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom : parent.bottom
+//    anchors.top: parent.top
     Rectangle {
         anchors.fill: parent
         color: "black"
