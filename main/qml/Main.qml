@@ -11,13 +11,21 @@ App{
 
     FruitModel {
         id: _xmlItemModel
+        xml: _cppInterface.fruitModel
     }
 
-    
+    CppInterface {
+        id: _cppInterface
+        Component.onCompleted: {
+            console.log("_cppInterface create!" )
+        }
+    }
+
     Component {
         id: _fruitPage
         FruitPage {
             model: _xmlItemModel
+            assetsPath: _cppInterface.assetsPath
             onFruitClicked: {
                 _cppInterface.speechObj.speak(fruitName);
             }
@@ -27,22 +35,6 @@ App{
         }
     }
 
-    Component{
-        id: _cppInterface
-        CppInterface {
-            onConnected: {
-                console.log("test1: " + _cppInterface.fruitModel)
-                console.log("test:"+  _xmlItemModel.xml)
-                _xmlItemModel.xml = _cppInterface.fruitModel
-                _fruitPage.assetsPath = _cppInterface.assetsPath
-                console.log("test1: " + _cppInterface.fruitModel)
-                console.log("test:"+  _xmlItemModel.xml)
-            }
-            Component.onCompleted: {
-                console.log("_cppInterface create!" )
-            }
-        }
-    }
 
     AdBanner {
         id: _adBanner
@@ -64,9 +56,6 @@ App{
            icon: IconType.calculator
            Loader {
                 sourceComponent: _fruitPage
-           }
-           Loader {
-                sourceComponent: _cppInterface
            }
          }
     
