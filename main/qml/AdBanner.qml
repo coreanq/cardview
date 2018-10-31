@@ -4,8 +4,8 @@ import VPlayPlugins 1.0
 AdMobBanner{
     id: _root
     visible: true
-    adUnitId: "ca-app-pub-1343411537040925/6004482526"
-    testDeviceIds: [""]
+    adUnitId: Constants.admobBannerAdUnitId
+    testDeviceIds: Constants.admobTestDeviceIds
     banner: AdMobBanner.Smart
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom : parent.bottom

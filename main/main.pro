@@ -57,7 +57,8 @@ DISTFILES += \
     qml/config.json \
     ios/Project-Info.plist \
     android/AndroidManifest.xml \
-    android/build.gradle
+    android/build.gradle \
+    qml/qmldir
 
 HEADERS += \
     speech.h \
