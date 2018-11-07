@@ -35,54 +35,57 @@ App{
         }
     }
 
-
     AdBanner {
         id: _adBanner
         z: 100
+        height: 50
     }
-    
-    
-    
-  
-    Navigation {
+    Page {
         id: _naviWnd
-        visible: true
-        y: Theme.statusBarHeight
-        
-         NavigationItem {
-           id: widgetsItem
-           title: "Main"
-         
-           icon: IconType.calculator
-           Loader {
-                sourceComponent: _fruitPage
-           }
-         }
-    
-         NavigationItem {
-           title: "Simple List"
-           icon: IconType.list
-    
-           NavigationStack { //this tab/navigation item uses stack-based sub-navigation
-             splitView: tablet
-             Page { }
-           }
-         }
-    
-   }
-    Button {
+        anchors.bottom: _adBanner.top
+        clip: true
+        Navigation {
+             z: -1
+             visible: true
+             id: navigation
+             navigationMode: navigationModeDrawer
+             Component.onCompleted: {
+                 //drawer width change
+                 navigation.drawer.width = navigation.width * 0.4
+             }
+
+             NavigationItem {
+               title: "과일"
+               icon: IconType.heart
+                Loader {
+                    sourceComponent: _fruitPage
+                    anchors.fill: parent
+                }
+             }
+             NavigationItem {
+               title: "설정"
+               icon: IconType.cog
+
+               Rectangle{
+                   anchors.fill: parent
+                   color: "black"
+                   opacity: 0.5
+               }
+             }
+        }
+    }
+    FloatingActionButton {
         id: _bntConnect
-        text: "test"
-        width: parent.width
-        visible: false
-        height: 30
+        icon: IconType.terminal
+        visible: true
         z:1
         onClicked: {
+            console.log("test clicked");
             _cppInterface.speechObj.printModel();
         }
         
     }
-    // 가로 보기시 status bar 제거 
+    // 가로 보기시 status bar 제거 필요
     onPortraitChanged: {
         console.log("Portrait changed" )
         if( _main.potrait )

@@ -21,7 +21,7 @@ WebSocket {
     }
 
     active: true
-    url: "ws://192.168.137.1:12345"
+    url: "ws://127.0.0.1:12345"
 
     onStatusChanged: {
         switch (_root.status) {

@@ -8,8 +8,7 @@ AdMobBanner{
     testDeviceIds: Constants.admobTestDeviceIds
     banner: AdMobBanner.Smart
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottom : parent.bottom
-//    anchors.top: parent.top
+    anchors.bottom: parent.bottom
     Rectangle {
         anchors.fill: parent
         color: "black"

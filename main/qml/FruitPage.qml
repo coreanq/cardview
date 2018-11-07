@@ -71,13 +71,10 @@ ListView {
                     anchors.margins: 30
                     font.pointSize: 25
             }
-            Button {
+            IconButton {
                 id: _item_close_btn
-                text: "X"
-                width: 30
-                height: 30
                 visible: false
-                anchors.margins: 10
+                icon: IconType.close
                 anchors.right: parent.right
                 anchors.top: parent.top
                 onClicked: {
