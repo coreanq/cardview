@@ -40,10 +40,47 @@ App{
         z: 100
         height: 50
     }
+    Rectangle {
+         id: container
+         width: 600; height: 200
+
+         Rectangle {
+             id: rect
+             width: 150; height: 150
+             color: "red"
+             opacity: (600.0 - rect.x) / 600
+             MultiPointTouchArea{
+                 id: _multiTouch
+                 property int startXpoint: 0
+                 anchors.fill: parent
+                 onPressed: {
+                     startXpoint = point1.x
+                 }
+                 onReleased: {
+                     startXpoint = point1.x
+                 }
+
+                 touchPoints: [
+
+                     TouchPoint {
+                         id: point1
+                         onXChanged: {
+                             rect.scale = 1- ((_multiTouch.startXpoint -x )/ _multiTouch.width)
+                             console.log(x + " " + _multiTouch.startXpoint + " " + rect.scale)
+                         }
+                     }
+                 ]
+
+
+             }
+
+         }
+     }
     Page {
         id: _naviWnd
         anchors.bottom: _adBanner.top
         clip: true
+        visible: false
         Navigation {
              z: -1
              visible: true
