@@ -62,6 +62,7 @@ public:
     Speech(const Speech & obj) {}
 
 signals:
+    void elementAdded(QString);
 	void languageModelChanged();
     void itemModelChanged();
     void isDebugChanged();
@@ -71,8 +72,6 @@ public slots:
     bool isDebug() { return m_isDebug;}
     QString itemModel();
     void printModel();
-    void requestGet();
-    void requestReceived(QNetworkReply *reply);
     void speak(QString sentence);
     void stop();
 

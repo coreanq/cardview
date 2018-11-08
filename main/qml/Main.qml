@@ -11,13 +11,17 @@ App{
 
     FruitModel {
         id: _xmlItemModel
-        xml: _cppInterface.fruitModel
+
     }
 
     CppInterface {
         id: _cppInterface
         Component.onCompleted: {
             console.log("_cppInterface create!" )
+        }
+        onElementAdded: {
+            console.log("hello" + element)
+            _xmlItemModel.append(element)
         }
     }
 

@@ -43,6 +43,7 @@
 #include <QDebug>
 #include <QNetworkReply>
 #include <QTextCodec>
+#include <QStringList>
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
@@ -51,16 +52,60 @@ Speech::Speech(QObject *parent)
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
 		engineSelected(engine);
-		break;
+        break;
 	}
-    m_manager = new QNetworkAccessManager(this);
-    connect(m_manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(requestReceived(QNetworkReply*)));
 
 #ifdef QT_DEBUG
     m_isDebug = true;
 #else
     m_isDebug = false;
 #endif
+
+
+    auto elementTemplate = QString("{'name' = '%1', 'english' = '%1', 'front_img_name' = '%1.jpg', 'type' = '%2', 'korean' = '%3'}");
+
+    auto itemList = QStringList();
+    itemList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
+    itemList << QString::fromUtf8("water melon,vegetable,수박");
+    itemList << QString::fromUtf8("pepper,vegetable,고추");
+    itemList << QString::fromUtf8("pumpkin,vegetable,호박");
+    itemList << QString::fromUtf8("cucumber,vegetable,오이");
+    itemList << QString::fromUtf8("paprika,vegetable,파프리카");
+    itemList << QString::fromUtf8("tengerine,vegetable,귤");
+    itemList << QString::fromUtf8("mushroom,vegetable,버섯");
+    itemList << QString::fromUtf8("persimmon,vegetable,감");
+    itemList << QString::fromUtf8("peach,vegetable,복숭아");
+    itemList << QString::fromUtf8("cherry,vegetable,체리");
+    itemList << QString::fromUtf8("broccoli,vegetable,브로콜리");
+    itemList << QString::fromUtf8("lemon,vegetable,레몬");
+    itemList << QString::fromUtf8("aubergine,vegetable,가지");
+    itemList << QString::fromUtf8("cabbage,vegetable,양배추");
+    itemList << QString::fromUtf8("pear,vegetable,배");
+    itemList << QString::fromUtf8("carrot,vegetable,당근");
+    itemList << QString::fromUtf8("onion,vegetable,양파");
+    itemList << QString::fromUtf8("blueberries,vegetable,블루베리");
+    itemList << QString::fromUtf8("kiwi,vegetable,키위");
+    itemList << QString::fromUtf8("sweet potato,vegetable,고구마");
+    itemList << QString::fromUtf8("melon,vegetable,멜론");
+    itemList << QString::fromUtf8("grapefruit,vegetable,자몽");
+    itemList << QString::fromUtf8("pomegranate,vegetable,석류");
+    itemList << QString::fromUtf8("banana,vegetable,바나나");
+    itemList << QString::fromUtf8("apple,vegetable,사과");
+    itemList << QString::fromUtf8("tomato,vegetable,토마토");
+    itemList << QString::fromUtf8("pineapple,vegetable,파인애플");
+    itemList << QString::fromUtf8("grape,vegetable,포도");
+    itemList << QString::fromUtf8("orange,vegetable,오렌지");
+
+    foreach (QString item, itemList){
+        auto itemSplit = item.split(",", QString::SkipEmptyParts);
+        auto element = elementTemplate
+                .arg(itemSplit.at(0).trimmed())
+                .arg(itemSplit.at(1).trimmed())
+                .arg(itemSplit.at(2).trimmed());
+//        qDebug() << Q_FUNC_INFO << element;
+        emit elementAdded(element);
+    }
+
     
     auto textCodec = QTextCodec::codecForName("utf8");
 
@@ -294,49 +339,6 @@ QString Speech::itemModel()
 void Speech::printModel()
 {
     qDebug() << m_itemModel;
-}
-
-void Speech::requestGet()
-{
-    qDebug() << Q_FUNC_INFO;
-    m_manager->get(QNetworkRequest(QUrl("http://edu-card.herokuapp.com/cards")));
-}
-void Speech::requestReceived(QNetworkReply *reply)
-{
-    reply->deleteLater();
-
-    if(reply->error() == QNetworkReply::NoError) {
-        // Get the http status code
-        int v = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        if (v >= 200 && v < 300) // Success
-        {
-             // Here we got the final reply 
-            QString replyText = reply->readAll();
-            qDebug() << Q_FUNC_INFO << replyText;
-            emit dataRecved(replyText);
-        } 
-        else if (v >= 300 && v < 400) // Redirection
-        {
-            // Get the redirection url
-            QUrl newUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-            // Because the redirection url can be relative, 
-            // we have to use the previous one to resolve it 
-            newUrl = reply->url().resolved(newUrl);
-
-            QNetworkAccessManager *manager = reply->manager();
-            QNetworkRequest redirection(newUrl);
-            QNetworkReply *newReply = manager->get(redirection);
-
-            return; // to keep the manager for the next request
-        } 
-    } 
-    else 
-    {
-        // Error
-        qDebug() << Q_FUNC_INFO;
-    }
-
-    reply->manager()->deleteLater();
 }
 void Speech::speak(QString sentence)
 {

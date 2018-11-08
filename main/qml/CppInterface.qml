@@ -8,6 +8,7 @@ WebSocket {
     property string assetsPath 
     property string fruitModel
     signal connected()
+    signal elementAdded(string element)
     
     // the following three properties/functions are required to align the QML WebSocket API
     // with the HTML5 WebSocket API.
@@ -36,6 +37,9 @@ WebSocket {
                 console.log( url + " opened.");
                 _root.speechObj = ch.objects.speech;
                 _root.fruitModel = ch.objects.speech.itemModel;
+                ch.objects.speech.elementAdded.connect( function(element) {
+                    console.log(elemnt)
+                })
 
                 if( ch.objects.speech.isDebug === true ){
                     _root.assetsPath = "../assets/"
