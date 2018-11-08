@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
     
-//#ifdef QT_DEBUG
+#ifndef QT_DEBUG
 
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     Speech* speech = new Speech(&app);
     channel.registerObject(QStringLiteral("speech"), speech);
 
-//#endif
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
     VPApplication vplay;

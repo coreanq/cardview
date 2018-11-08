@@ -7,7 +7,6 @@ WebSocket {
     property var speechObj
     property string assetsPath 
     property string fruitModel
-    property bool isDebug : true
     signal connected()
     
     // the following three properties/functions are required to align the QML WebSocket API
@@ -21,7 +20,7 @@ WebSocket {
     }
 
     active: true
-    url: "ws://127.0.0.1:12345"
+    url: Constants.cppInterfaceServerIpAddr
 
     onStatusChanged: {
         switch (_root.status) {
@@ -37,14 +36,17 @@ WebSocket {
                 console.log( url + " opened.");
                 _root.speechObj = ch.objects.speech;
                 _root.fruitModel = ch.objects.speech.itemModel;
-                _root.isDebug = ch.objects.speech.isDebug;
 
-                if( _root.isDebug === true )
+                if( ch.objects.speech.isDebug === true ){
                     _root.assetsPath = "../assets/"
-                else
+                    Constants.isDebugMode = true
+                }
+                else{
+                    Constants.isDebugMode = false
                     _root.assetsPath = "qrc:/assets/"
+                }
                 console.log("asset path: " +  _root.assetsPath )
-                console.log("Debug: " + _root.isDebug )
+                console.log("Debug: " + Constants.isDebugMode )
                 console.log("xml: " + _root.fruitModel)
                 connected();
             });
