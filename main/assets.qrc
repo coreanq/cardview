@@ -37,5 +37,6 @@
         <file>qml/CppInterface.qml</file>
         <file>qml/AdBanner.qml</file>
         <file>qml/Constants.qml</file>
+        <file>qml/SwipeArea.qml</file>
     </qresource>
 </RCC>

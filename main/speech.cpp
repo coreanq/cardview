@@ -286,9 +286,6 @@ Speech::Speech(QObject *parent)
                         "</item>"
                   "</root>"
                   );
-    
-    qDebug() << m_itemModel;
-    
 }
 QString Speech::itemModel()
 {

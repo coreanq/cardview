@@ -12,7 +12,7 @@ ListView {
         id: _item_container
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: 20
+        anchors.margins: 10
         height: _root.height * 0.615
         interactive: false
 
@@ -22,6 +22,7 @@ ListView {
             anchors.fill: parent
             color: "white"
             radius: 30
+            border.color: "gray"
 
             Image{
                 id: _item_image
@@ -43,24 +44,6 @@ ListView {
                         console.log("requesetGet clicked")
                     }
                 }
-                MouseArea {
-                    id: _item_mouse_area
-                    visible: false
-                    anchors.fill: parent
-                    Rectangle{
-                        anchors.fill: parent
-                        visible : false
-                        color: "black"
-                        opacity: 0.5
-                        z: 1
-                    }
-
-                    onClicked:{
-                        _root.fruitClicked(_item.name);
-                        console.log("clicked " + _item.name);
-                    }
-                }
-
             }
             Text{
                     id: _item_text
@@ -89,11 +72,27 @@ ListView {
                     _item_container.state = "maximized"
                 }
             }
-            MouseArea {
+            SwipeArea {
                 id: _maximized_mouse_area
-                visible: false
                 anchors.fill: parent
+                visible: false
                 z: -1
+                onTopbottomSwipe: {
+//                    console.log(moveRatio)
+                    if( 1 - moveRatio < 0.8 ){
+                        _item_container.state = "normalized"
+                    }
+                    else
+                        _item.scale = 1 - moveRatio
+                    }
+                onClicked:{
+                        _root.fruitClicked(_item.name);
+                        console.log("clicked " + _item.name);
+                }
+                onReleased: {
+                        _item.scale = 1
+
+                }
             }
         }
 
@@ -104,7 +103,6 @@ ListView {
                 PropertyChanges { target: _item_container; explicit: true; anchors.leftMargin: 0; anchors.rightMargin: 0 }
                 PropertyChanges { target: _item_container; explicit: true; interactive: true }
                 PropertyChanges { target: _item; explicit: true; radius: 0}
-                PropertyChanges { target: _item_mouse_area; explicit: true; visible: true }
                 PropertyChanges { target: _item_text; explicit: true; visible: true }
                 // Move the list so that this item is at the top.
                 PropertyChanges { target: _item_container.ListView.view; explicit: true; contentY: _item_container.y }
@@ -112,9 +110,11 @@ ListView {
                 PropertyChanges { target: _normalized_mouse_area ; explicit: true; visible: false }
                 PropertyChanges { target: _maximized_mouse_area ; explicit: true; visible: true }
                 PropertyChanges { target: _item_close_btn; explicit: true; visible: true }
+                PropertyChanges { target: _item; explicit: true; scale: 1 }
             },
             State {
                 name: "normalized"
+                PropertyChanges { target: _item; explicit: true; scale: 1 }
             }
         ]
 
@@ -122,16 +122,17 @@ ListView {
             ParallelAnimation{
                 NumberAnimation { 
                     target: _item_container
-                    properties:"radius,height,anchors.leftMargin,anchors.rightMargin"
+                    properties:"radius,height,anchors.leftMargin,anchors.rightMargin,scale"
                     duration: 500
-                    easing.type: Easing.InOutBack
+                    easing.type: Easing.OutQuart
                 }
                 NumberAnimation {
                     target: _item
-                    properties:"radius"
+                    properties:"scale"
                     duration: 500
-                    easing.type: Easing.InOutBack
+                    easing.type: Easing.OutQuart
                 }
+                //text appeared slowly
                 NumberAnimation {
                     target: _item_text
                     properties:"visible"
@@ -141,7 +142,8 @@ ListView {
                     target: _item.ListView.view
                     properties:"contentY"
                     duration: 500
-                    easing.type: Easing.InOutBack
+                    easing.type: Easing.OutQuart
+
                 }
             }
         }
