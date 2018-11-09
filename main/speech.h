@@ -52,7 +52,6 @@
 class Speech : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString itemModel READ itemModel NOTIFY itemModelChanged)
     Q_PROPERTY(bool isDebug READ isDebug NOTIFY isDebugChanged)
 
 public:
@@ -62,15 +61,13 @@ public:
     Speech(const Speech & obj) {}
 
 signals:
-    void elementAdded(QString);
+    void elementAdded(QString, QString);
 	void languageModelChanged();
-    void itemModelChanged();
     void isDebugChanged();
     void dataRecved(QString msg);
 
 public slots:
     bool isDebug() { return m_isDebug;}
-    QString itemModel();
     void printModel();
     void speak(QString sentence);
     void stop();
@@ -86,8 +83,12 @@ public slots:
 
     void localeChanged(const QLocale &locale);
 
+
+    void updateModels();
+
 private:
     bool 	m_isDebug;
+    QStringList m_fruitList;
     QString m_itemModel;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;

@@ -9,8 +9,8 @@ App{
     visible: true
     licenseKey: Constants.vplaylicenseKey
 
-    FruitModel {
-        id: _xmlItemModel
+    ListModel{
+        id: _itemModel
 
     }
 
@@ -20,15 +20,15 @@ App{
             console.log("_cppInterface create!" )
         }
         onElementAdded: {
-            console.log("hello" + element)
-            _xmlItemModel.append(element)
+//            console.log("~~~~" + element)
+            _itemModel.append(JSON.parse(element))
         }
     }
 
     Component {
         id: _fruitPage
         FruitPage {
-            model: _xmlItemModel
+            model: _itemModel
             assetsPath: _cppInterface.assetsPath
             onFruitClicked: {
                 _cppInterface.speechObj.speak(fruitName);

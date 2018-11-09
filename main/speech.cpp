@@ -62,279 +62,50 @@ Speech::Speech(QObject *parent)
 #endif
 
 
-    auto elementTemplate = QString("{'name' = '%1', 'english' = '%1', 'front_img_name' = '%1.jpg', 'type' = '%2', 'korean' = '%3'}");
 
-    auto itemList = QStringList();
-    itemList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
-    itemList << QString::fromUtf8("water melon,vegetable,수박");
-    itemList << QString::fromUtf8("pepper,vegetable,고추");
-    itemList << QString::fromUtf8("pumpkin,vegetable,호박");
-    itemList << QString::fromUtf8("cucumber,vegetable,오이");
-    itemList << QString::fromUtf8("paprika,vegetable,파프리카");
-    itemList << QString::fromUtf8("tengerine,vegetable,귤");
-    itemList << QString::fromUtf8("mushroom,vegetable,버섯");
-    itemList << QString::fromUtf8("persimmon,vegetable,감");
-    itemList << QString::fromUtf8("peach,vegetable,복숭아");
-    itemList << QString::fromUtf8("cherry,vegetable,체리");
-    itemList << QString::fromUtf8("broccoli,vegetable,브로콜리");
-    itemList << QString::fromUtf8("lemon,vegetable,레몬");
-    itemList << QString::fromUtf8("aubergine,vegetable,가지");
-    itemList << QString::fromUtf8("cabbage,vegetable,양배추");
-    itemList << QString::fromUtf8("pear,vegetable,배");
-    itemList << QString::fromUtf8("carrot,vegetable,당근");
-    itemList << QString::fromUtf8("onion,vegetable,양파");
-    itemList << QString::fromUtf8("blueberries,vegetable,블루베리");
-    itemList << QString::fromUtf8("kiwi,vegetable,키위");
-    itemList << QString::fromUtf8("sweet potato,vegetable,고구마");
-    itemList << QString::fromUtf8("melon,vegetable,멜론");
-    itemList << QString::fromUtf8("grapefruit,vegetable,자몽");
-    itemList << QString::fromUtf8("pomegranate,vegetable,석류");
-    itemList << QString::fromUtf8("banana,vegetable,바나나");
-    itemList << QString::fromUtf8("apple,vegetable,사과");
-    itemList << QString::fromUtf8("tomato,vegetable,토마토");
-    itemList << QString::fromUtf8("pineapple,vegetable,파인애플");
-    itemList << QString::fromUtf8("grape,vegetable,포도");
-    itemList << QString::fromUtf8("orange,vegetable,오렌지");
+    m_fruitList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
+    m_fruitList << QString::fromUtf8("water melon,vegetable,수박");
+    m_fruitList << QString::fromUtf8("pepper,vegetable,고추");
+    m_fruitList << QString::fromUtf8("pumpkin,vegetable,호박");
+    m_fruitList << QString::fromUtf8("cucumber,vegetable,오이");
+    m_fruitList << QString::fromUtf8("paprika,vegetable,파프리카");
+    m_fruitList << QString::fromUtf8("tengerine,vegetable,귤");
+    m_fruitList << QString::fromUtf8("mushroom,vegetable,버섯");
+    m_fruitList << QString::fromUtf8("persimmon,vegetable,감");
+    m_fruitList << QString::fromUtf8("peach,vegetable,복숭아");
+    m_fruitList << QString::fromUtf8("cherry,vegetable,체리");
+    m_fruitList << QString::fromUtf8("broccoli,vegetable,브로콜리");
+    m_fruitList << QString::fromUtf8("lemon,vegetable,레몬");
+    m_fruitList << QString::fromUtf8("aubergine,vegetable,가지");
+    m_fruitList << QString::fromUtf8("cabbage,vegetable,양배추");
+    m_fruitList << QString::fromUtf8("pear,vegetable,배");
+    m_fruitList << QString::fromUtf8("carrot,vegetable,당근");
+    m_fruitList << QString::fromUtf8("onion,vegetable,양파");
+    m_fruitList << QString::fromUtf8("blueberries,vegetable,블루베리");
+    m_fruitList << QString::fromUtf8("kiwi,vegetable,키위");
+    m_fruitList << QString::fromUtf8("sweet potato,vegetable,고구마");
+    m_fruitList << QString::fromUtf8("melon,vegetable,멜론");
+    m_fruitList << QString::fromUtf8("grapefruit,vegetable,자몽");
+    m_fruitList << QString::fromUtf8("pomegranate,vegetable,석류");
+    m_fruitList << QString::fromUtf8("banana,vegetable,바나나");
+    m_fruitList << QString::fromUtf8("apple,vegetable,사과");
+    m_fruitList << QString::fromUtf8("tomato,vegetable,토마토");
+    m_fruitList << QString::fromUtf8("pineapple,vegetable,파인애플");
+    m_fruitList << QString::fromUtf8("grape,vegetable,포도");
+    m_fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
-    foreach (QString item, itemList){
+}
+void Speech::updateModels()
+{
+    auto elementTemplate = QString("{ \"name\" : \"%1\", \"english\" : \"%1\", \"front_img_name\" : \"%1.jpg\", \"type\" : \"%2\", \"korean\" : \"%3\"}");
+    foreach (QString item, m_fruitList){
         auto itemSplit = item.split(",", QString::SkipEmptyParts);
         auto element = elementTemplate
                 .arg(itemSplit.at(0).trimmed())
                 .arg(itemSplit.at(1).trimmed())
                 .arg(itemSplit.at(2).trimmed());
-//        qDebug() << Q_FUNC_INFO << element;
-        emit elementAdded(element);
+        emit elementAdded(element, "vegetable");
     }
-
-    
-    auto textCodec = QTextCodec::codecForName("utf8");
-
-    m_itemModel  =  textCodec->toUnicode(
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-                    "<root>"
-                        "<item>"
-                            "<name>kimchi cabbage</name>"
-                            "<korean>배추</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>kimchi cabbage.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>water melon</name>"
-                            "<korean>수박</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>water melon.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>pepper</name>"
-                            "<korean>고추</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>pepper.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>pumpkin</name>"
-                            "<korean>호박</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>pumpkin.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>cucumber</name>"
-                            "<korean>오이</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>cucumber.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>paprika</name>"
-                            "<korean>파프리카</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>paprika.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>tengerine</name>"
-                            "<korean>귤</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>tengerine.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>mushroom</name>"
-                            "<korean>버섯</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>mushroom.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>persimmon</name>"
-                            "<korean>감</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>persimmon.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>peach</name>"
-                            "<korean>복숭아</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>peach.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>strawberry</name>"
-                            "<korean>딸기</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>strawberry.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>cherry</name>"
-                            "<korean>체리</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>cherry.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>broccoli</name>"
-                            "<korean>브로콜리</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>broccoli.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>lemon</name>"
-                            "<korean>레몬</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>lemon.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>aubergine</name>"
-                            "<korean>가지</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>aubergine.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>cabbage</name>"
-                            "<korean>양배추</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>cabbage.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>pear</name>"
-                            "<korean>배</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>pear.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>carrot</name>"
-                            "<korean>당근</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>carrot.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>onion</name>"
-                            "<korean>양파</korean>"
-                            "<type>vegetabl</type>"
-                            "<front_img_name>onion.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>blueberries</name>"
-                            "<korean>블루베리</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>blueberries.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>kiwi</name>"
-                            "<korean>키위</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>kiwi.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>sweet potato</name>"
-                            "<korean>고구마</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>sweet potato.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>melon</name>"
-                            "<korean>멜론</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>melon.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>grapefruit</name>"
-                            "<korean>자몽</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>grapefruit.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>pomegranate</name>"
-                            "<korean>석류</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>pomegranate.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>banana</name>"
-                            "<korean>바나나</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>banana.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>apple</name>"
-                            "<korean>사과</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>apple.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>tomato</name>"
-                            "<korean>토마토</korean>"
-                            "<type>vegetable</type>"
-                            "<front_img_name>tomato.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>pineapple</name>"
-                            "<korean>파인애플</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>pineapple.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>grape</name>"
-                            "<korean>포도</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>grape.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                        "<item>"
-                            "<name>orange</name>"
-                            "<korean>오렌지</korean>"
-                            "<type>fruit</type>"
-                            "<front_img_name>orange.jpg</front_img_name>"
-                            "<back_img_name>card_back.jpg</back_img_name>"
-                        "</item>"
-                  "</root>"
-                  );
-}
-QString Speech::itemModel()
-{
-    return m_itemModel;
 }
 void Speech::printModel()
 {
