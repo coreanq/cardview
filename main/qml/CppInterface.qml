@@ -8,7 +8,12 @@ WebSocket {
     property var speechObj
     property string assetsPath 
     signal connected()
+
+    // signal when item add
     signal elementAdded(string element)
+    signal voiceLanguageAdded(string element)
+    signal voiceTypeUpdate()
+    signal voiceTypeAdded(string element)
     
     // the following three properties/functions are required to align the QML WebSocket API
     // with the HTML5 WebSocket API.
@@ -40,6 +45,9 @@ WebSocket {
 
                 //signal to signal connection
                 speechObj.elementAdded.connect(_root.elementAdded)
+                speechObj.voiceTypeAdded.connect(_root.voiceTypeAdded)
+                speechObj.voiceTypeUpdate.connect(_root.voiceTypeUpdate)
+                speechObj.voiceLanguageAdded.connect(_root.voiceLanguageAdded)
 
                 // model update
                 speechObj.updateModels()

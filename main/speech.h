@@ -47,7 +47,6 @@
 #include <QVector>
 #include <QString>
 #include <QStringList>
-#include <QNetworkAccessManager>
 
 class Speech : public QObject
 {
@@ -61,14 +60,17 @@ public:
     Speech(const Speech & obj) {}
 
 signals:
+    void voiceLanguageAdded(QString);
+    void voiceTypeAdded(QString);
+    void voiceTypeUpdate();
+
     void elementAdded(QString, QString);
-	void languageModelChanged();
     void isDebugChanged();
     void dataRecved(QString msg);
 
 public slots:
     bool isDebug() { return m_isDebug;}
-    void printModel();
+
     void speak(QString sentence);
     void stop();
 
@@ -83,16 +85,15 @@ public slots:
 
     void localeChanged(const QLocale &locale);
 
-
     void updateModels();
 
 private:
     bool 	m_isDebug;
     QStringList m_fruitList;
-    QString m_itemModel;
+    QStringList m_voiceLanguageList;
+    QStringList m_voiceTypeList;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
-    QNetworkAccessManager *m_manager = new QNetworkAccessManager(this);
 };
  Q_DECLARE_METATYPE(Speech)
 #endif

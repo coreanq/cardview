@@ -49,19 +49,12 @@ Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0)
 {
-    foreach (QString engine, QTextToSpeech::availableEngines()){
-        qDebug() << "engine name" << engine;
-		engineSelected(engine);
-        break;
-	}
 
 #ifdef QT_DEBUG
     m_isDebug = true;
 #else
     m_isDebug = false;
 #endif
-
-
 
     m_fruitList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
     m_fruitList << QString::fromUtf8("water melon,vegetable,수박");
@@ -97,6 +90,12 @@ Speech::Speech(QObject *parent)
 }
 void Speech::updateModels()
 {
+    foreach (QString engine, QTextToSpeech::availableEngines()){
+        qDebug() << "engine name" << engine;
+        engineSelected(engine);
+        break;
+    }
+    // jsobject
     auto elementTemplate = QString("{ \"name\" : \"%1\", \"english\" : \"%1\", \"front_img_name\" : \"%1.jpg\", \"type\" : \"%2\", \"korean\" : \"%3\"}");
     foreach (QString item, m_fruitList){
         auto itemSplit = item.split(",", QString::SkipEmptyParts);
@@ -106,10 +105,6 @@ void Speech::updateModels()
                 .arg(itemSplit.at(2).trimmed());
         emit elementAdded(element, "vegetable");
     }
-}
-void Speech::printModel()
-{
-    qDebug() << m_itemModel;
 }
 void Speech::speak(QString sentence)
 {
@@ -160,24 +155,20 @@ void Speech::engineSelected(QString engineName)
         m_speech = new QTextToSpeech(this);
     else
         m_speech = new QTextToSpeech(engineName, this);
-    // Populate the languages combobox before connecting its signal.
+
     QVector<QLocale> locales = m_speech->availableLocales();
     QLocale current = m_speech->locale();
     foreach (const QLocale &locale, locales) {
-        QString name(QString("%1 (%2)")
-                     .arg(QLocale::languageToString(locale.language()))
-                     .arg(QLocale::countryToString(locale.country())));
-//        QVariant localeVariant(locale);
-//        m_languageModel->appendRow(new QStandardItem(name) );
+        QString name(QString("%1")
+                     .arg(QLocale::languageToString(locale.language())) );
+//                     .arg(QLocale::countryToString(locale.country())));
+        emit voiceLanguageAdded(QString("{\"language\": \"%1\"}").arg(name));
+        m_voiceLanguageList.append(name);
         qDebug() << name;
-//        ui.language->addItem(name, localeVariant);
-//        if (locale.name() == current.name())
-//            current = locale;
     }
-    emit languageModelChanged();
 
 //    connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
-//    connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
+    connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
 
 //    connect(ui.language, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::languageSelected);
     localeChanged(current);
@@ -196,18 +187,19 @@ void Speech::voiceSelected(int index)
 
 void Speech::localeChanged(const QLocale &locale)
 {
-//    QVariant localeVariant(locale);
-//    ui.language->setCurrentIndex(ui.language->findData(localeVariant));
-
-//    disconnect(ui.voice, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::voiceSelected);
-//    ui.voice->clear();
+    emit voiceTypeUpdate();
+    m_voiceTypeList.clear();
 
     m_voices = m_speech->availableVoices();
     QVoice currentVoice = m_speech->voice();
     foreach (const QVoice &voice, m_voices) {
-        qDebug() << (QString("%1 - %2 - %3").arg(voice.name())
+        auto voiceType = (QString("%1 - %2 - %3").arg(voice.name())
                           .arg(QVoice::genderName(voice.gender()))
                           .arg(QVoice::ageName(voice.age())));
+
+        m_voiceTypeList.append(voiceType);
+        qDebug() << voiceType;
+        emit voiceTypeAdded(QString("{\"voiceType\": \"%1\"}").arg(voiceType));
     }
 //    connect(ui.voice, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::voiceSelected);
 }

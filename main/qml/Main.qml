@@ -9,10 +9,9 @@ App{
     visible: true
     licenseKey: Constants.vplaylicenseKey
 
-    ListModel{
-        id: _itemModel
-
-    }
+    ListModel{ id: _itemModel }
+    ListModel{ id: _voiceLanguageModel }
+    ListModel{ id: _voiceTypeModel }
 
     CppInterface {
         id: _cppInterface
@@ -22,6 +21,17 @@ App{
         onElementAdded: {
 //            console.log("~~~~" + element)
             _itemModel.append(JSON.parse(element))
+        }
+        onVoiceLanguageAdded: {
+            console.log("~~~~" + element)
+            _voiceLanguageModel.append(JSON.parse(element))
+        }
+        onVoiceTypeAdded:  {
+            console.log("~~~~" + element)
+            _voiceTypeModel.append(JSON.parse(element))
+        }
+        onVoiceTypeUpdate: {
+            _voiceTypeModel.clear()
         }
     }
 
@@ -51,12 +61,8 @@ App{
         visible: true
         Navigation {
              z: -1
-             id: navigation
-             navigationMode: navigationModeDrawer
-             Component.onCompleted: {
-                 //drawer width change
-                 navigation.drawer.width = navigation.width * 0.4
-             }
+             navigationMode: navigationModeTabs
+             drawer.width: parent.width * 0.4
 
              NavigationItem {
                title: "과일"
@@ -70,11 +76,13 @@ App{
                title: "설정"
                icon: IconType.cog
 
-               Rectangle{
+               SettingView{
                    anchors.fill: parent
-                   color: "black"
-                   opacity: 0.5
+                   voiceLanguageViewModel: _voiceLanguageModel
+                   voiceTypeViewModel: _voiceTypeModel
+
                }
+
              }
         }
     }
