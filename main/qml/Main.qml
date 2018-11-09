@@ -61,7 +61,6 @@ App{
         visible: true
         Navigation {
              z: -1
-             navigationMode: navigationModeTabs
              drawer.width: parent.width * 0.4
 
              NavigationItem {
