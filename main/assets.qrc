@@ -38,5 +38,6 @@
         <file>qml/Constants.qml</file>
         <file>qml/SwipeArea.qml</file>
         <file>qml/SettingView.qml</file>
+        <file>qml/qmldir</file>
     </qresource>
 </RCC>
