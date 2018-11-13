@@ -41,16 +41,15 @@ ios {
     CONFIG(debug, debug|release) {
         # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
         # 설치 폴더로 복사
-        assetsFiles.files = $$files(assets/*.*)
-        assetsFiles.path = assets
-        QMAKE_BUNDLE_DATA += assetsFiles
+        qmlFolder.source = qml
+        DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
 
-        qmlFiles.files = $$files(qml/*.*)
-        qmlFiles.path = qml
-        QMAKE_BUNDLE_DATA += qmlFiles
+        assetsFolder.source = assets
+        DEPLOYMENTFOLDERS += assetsFolder
+
     }
     CONFIG(release, debug|release) {
-        RESOURCES += assets.qrc
+        RESOURCES +=
     }
 }
 win32 {
@@ -219,4 +218,7 @@ HEADERS += \
     ios/GoogleMobileAds.framework/Versions/A/Headers/GADVideoOptions.h \
     ios/GoogleMobileAds.framework/Versions/A/Headers/GoogleMobileAds.h \
     ios/GoogleMobileAds.framework/Versions/A/Headers/GoogleMobileAdsDefines.h
+
+RESOURCES += \
+    assets.qrc
 

@@ -3,7 +3,6 @@
         <file>assets/grape.jpg</file>
         <file>assets/orange.jpg</file>
         <file>assets/pineapple.jpg</file>
-        <file>qml/qwebchannel.js</file>
         <file>assets/aubergine.jpg</file>
         <file>assets/banana.jpg</file>
         <file>assets/blueberries.jpg</file>
@@ -32,12 +31,13 @@
         <file>assets/water melon.jpg</file>
         <file>qml/Main.qml</file>
         <file>qml/config.json</file>
-        <file>qml/FruitPage.qml</file>
-        <file>qml/CppInterface.qml</file>
-        <file>qml/AdBanner.qml</file>
-        <file>qml/Constants.qml</file>
-        <file>qml/SwipeArea.qml</file>
-        <file>qml/SettingView.qml</file>
-        <file>qml/qmldir</file>
+        <file>qml/helper/Constants.qml</file>
+        <file>qml/helper/CppInterface.qml</file>
+        <file>qml/helper/qmldir</file>
+        <file>qml/helper/SwipeArea.qml</file>
+        <file>qml/page/AdBanner.qml</file>
+        <file>qml/page/FruitPage.qml</file>
+        <file>qml/page/SettingView.qml</file>
+        <file>qml/helper/qwebchannel.js</file>
     </qresource>
 </RCC>

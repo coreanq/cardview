@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
 import VPlayApps 1.0
+import "../helper"
 
 ListView {
     id: _root

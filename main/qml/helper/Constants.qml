@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick 2.0
-Item {
+QtObject {
     // detect debug mode
 
     property bool isDebugMode: false
