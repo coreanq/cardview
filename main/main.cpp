@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
     
-#ifndef QT_DEBUG
+#if 0
 
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
@@ -45,21 +45,22 @@ int main(int argc, char *argv[])
     vplay.setPreservePlatformFonts(true);
 
     QQmlApplicationEngine engine;
-    vplay.initialize(&engine);
+    //vplay.initialize(&engine);
 
+ #ifdef NO_VPLAY_LIVE_SERVER
     // use this during development
     // for PUBLISHING, use the entry point below
-    vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
+    //vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
 
     // use this instead of the above call to avoid deployment of the qml files and compile them into the binary with qt's resource system qrc
     // this is the preferred deployment option for publishing games to the app stores, because then your qml files and js files are protected
     // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
     // also see the .pro file for more details
-    // vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
+    vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 
     engine.load(QUrl(vplay.mainQmlFileName()));
-//	VPlayLiveClient liveClient(&engine);
-    return app.exec();
-
+#else
+    VPlayLiveClient liveClient(&engine);
+#endif
     return app.exec();
 }
