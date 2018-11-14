@@ -53,6 +53,7 @@ App{
     AdBanner {
         id: _adBanner
         z: 100
+        height: 50
         anchors.bottom: parent.bottom
     }
     Page {
@@ -62,8 +63,6 @@ App{
         visible: true
         Navigation {
              z: -1
-             drawer.width: parent.width * 0.4
-
              NavigationItem {
                title: "과일"
                icon: IconType.heart
