@@ -14,7 +14,7 @@ SOURCES += main.cpp \
     webchannel_interface/websockettransport.cpp \
 
 
-DEFINES += NO_VPLAY_LIVE_SERVER
+#DEFINES += VPLAY_LIVE_SERVER
 
 PRODUCT_IDENTIFIER = "com.home.cardview"
 

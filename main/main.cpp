@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     vplay.initialize(&engine);
 
-#ifdef NO_VPLAY_LIVE_SERVER
+#ifndef VPLAY_LIVE_SERVER
     // use this during development
     // for PUBLISHING, use the entry point below
 #ifdef QT_DEBUG
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 #endif
 
     engine.load(QUrl(vplay.mainQmlFileName()));
-#else
+#else // V_PLAY_LIVER_SERVER
     // only support debug mode
     VPlayLiveClient liveClient(&engine);
 #endif
