@@ -1,8 +1,13 @@
 pragma Singleton
 import QtQuick 2.0
+// need to another folder from Main.qml
 QtObject {
-    // detect debug mode
 
+    // assets path for debug or release mode
+
+    property string assetsPath: ""
+
+    // detect debug mode
     property bool isDebugMode: false
     // ip address in release mode should be 127.0.0.1
     readonly property string cppInterfaceServerIpAddr: "ws://127.0.0.1:12345"

@@ -7,8 +7,7 @@ ListView {
     id: _root
     spacing: 20
     signal fruitClicked(string fruitName)
-    property string assetsPath : ""
-    
+
     delegate: Flickable {
         id: _item_container
         anchors.left: parent.left
@@ -32,7 +31,7 @@ ListView {
                 height: parent.height * 0.815
 
                 clip: true
-                source: Qt.resolvedUrl(assetsPath + front_img_name)
+                source: Qt.resolvedUrl(Constants.assetsPath + front_img_name)
                 fillMode: Image.PreserveAspectFit
 
                 AppButton { 

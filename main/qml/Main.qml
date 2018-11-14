@@ -41,12 +41,11 @@ App{
         id: _fruitPage
         FruitPage {
             model: _itemModel
-            assetsPath: _cppInterface.assetsPath
             onFruitClicked: {
                 _cppInterface.speechObj.speak(fruitName);
             }
             Component.onCompleted: {
-                console.log("_fruitPage create! path: " + assetsPath)
+                console.log("_fruitPage create! path: " + Constants.assetsPath)
             }
         }
     }
@@ -54,7 +53,7 @@ App{
     AdBanner {
         id: _adBanner
         z: 100
-        height: 50
+        anchors.bottom: parent.bottom
     }
     Page {
         id: _naviWnd

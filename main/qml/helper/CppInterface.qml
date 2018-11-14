@@ -6,7 +6,6 @@ WebSocket {
     id: _root
     property var onmessage
     property var speechObj
-    property string assetsPath 
     signal connected()
 
     // signal when item add
@@ -53,15 +52,15 @@ WebSocket {
                 speechObj.updateModels()
 
                 if( ch.objects.speech.isDebug === true ){
-                    _root.assetsPath = "../assets/"
+                    Constants.assetsPath = "../../assets/"
                     Constants.isDebugMode = true
                 }
                 else{
-                    _root.assetsPath = "qrc:/assets/"
+                    Constants.assetsPath = "qrc:/assets/"
                     Constants.isDebugMode = false
                 }
 
-                console.log("asset path: " +  _root.assetsPath )
+                console.log("asset path: " +  Constants.assetsPath )
                 console.log("Debug: " + Constants.isDebugMode )
 //                console.log("xml: " + _root.fruitModel)
                 connected();
