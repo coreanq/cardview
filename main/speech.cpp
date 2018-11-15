@@ -161,7 +161,7 @@ void Speech::engineSelected(QString engineName)
     foreach (const QLocale &locale, locales) {
         QString name(QString("%1")
                      .arg(QLocale::languageToString(locale.language())) );
-//                     .arg(QLocale::countryToString(locale.country())));
+                     .arg(QLocale::countryToString(locale.country())));
         emit voiceLanguageAdded(QString("{\"language\": \"%1\"}").arg(name));
         m_voiceLanguageList.append(name);
         qDebug() << name;

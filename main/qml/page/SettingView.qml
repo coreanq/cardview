@@ -34,11 +34,21 @@ Item {
             title: "Audio language"
             model: voiceLanguageViewModel
             delegate: SimpleRow{
+                id: row
                 text: language
                 style.showDisclosure: false   // disble right arrow in ios
-            }
-            onItemSelected: {
-                console.log("Clicked Item #" + index + ": "+ JSON.stringify(item));
+                Icon {
+                  anchors.right: parent.right
+                  anchors.rightMargin: dp(10)
+                  anchors.verticalCenter: parent.verticalCenter
+                  icon: IconType.check
+                  size: dp(14)
+                  color: row.style.textColor
+                  visible: language === 'Korean'
+                }
+                onSelected: {
+                    console.log("Clicked Item #" + index ) ;
+                }
             }
       }
 

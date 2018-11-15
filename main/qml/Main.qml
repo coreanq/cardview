@@ -52,8 +52,6 @@ App{
 
     AdBanner {
         id: _adBanner
-        z: 100
-        height: 50
         anchors.bottom: parent.bottom
     }
     Page {
@@ -62,17 +60,15 @@ App{
         clip: true
         visible: true
         Navigation {
-             z: -1
-             NavigationItem {
-               title: "과일"
-               icon: IconType.heart
+            NavigationItem {
+//                title: "과일"
+                icon: IconType.heart
                 Loader {
                     sourceComponent: _fruitPage
-                    anchors.fill: parent
                 }
-             }
-             NavigationItem {
-               title: "설정"
+            }
+            NavigationItem {
+//               title: "설정"
                icon: IconType.cog
 
                SettingView{
@@ -82,13 +78,14 @@ App{
 
                }
 
-             }
+            }
         }
     }
     FloatingActionButton {
         id: _bntConnect
         icon: IconType.terminal
         visible: true
+        anchors.bottom: _naviWnd.bottom
         z:1
         onClicked: {
             console.log("test clicked");
@@ -98,11 +95,7 @@ App{
     }
     // 가로 보기시 status bar 제거 필요
     onPortraitChanged: {
-        console.log("Portrait changed" )
-        if( _main.potrait )
-            ThemeColors.statusBarStyle = ThemeColors.statusBarStyleHidden
-        else 
-            ThemeColors.statusBarStyle =  ThemeColors.statusBarStyleBlack
+        console.log("Portrait changed " + portrait )
         
     }
 
