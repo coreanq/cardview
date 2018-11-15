@@ -56,56 +56,65 @@ Speech::Speech(QObject *parent)
     m_isDebug = false;
 #endif
 
-    m_fruitList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
-    m_fruitList << QString::fromUtf8("water melon,vegetable,수박");
-    m_fruitList << QString::fromUtf8("pepper,vegetable,고추");
-    m_fruitList << QString::fromUtf8("pumpkin,vegetable,호박");
-    m_fruitList << QString::fromUtf8("cucumber,vegetable,오이");
-    m_fruitList << QString::fromUtf8("paprika,vegetable,파프리카");
-    m_fruitList << QString::fromUtf8("tengerine,vegetable,귤");
-    m_fruitList << QString::fromUtf8("mushroom,vegetable,버섯");
-    m_fruitList << QString::fromUtf8("persimmon,vegetable,감");
-    m_fruitList << QString::fromUtf8("peach,vegetable,복숭아");
-    m_fruitList << QString::fromUtf8("cherry,vegetable,체리");
-    m_fruitList << QString::fromUtf8("broccoli,vegetable,브로콜리");
-    m_fruitList << QString::fromUtf8("lemon,vegetable,레몬");
-    m_fruitList << QString::fromUtf8("aubergine,vegetable,가지");
-    m_fruitList << QString::fromUtf8("cabbage,vegetable,양배추");
-    m_fruitList << QString::fromUtf8("pear,vegetable,배");
-    m_fruitList << QString::fromUtf8("carrot,vegetable,당근");
-    m_fruitList << QString::fromUtf8("onion,vegetable,양파");
-    m_fruitList << QString::fromUtf8("blueberries,vegetable,블루베리");
-    m_fruitList << QString::fromUtf8("kiwi,vegetable,키위");
-    m_fruitList << QString::fromUtf8("sweet potato,vegetable,고구마");
-    m_fruitList << QString::fromUtf8("melon,vegetable,멜론");
-    m_fruitList << QString::fromUtf8("grapefruit,vegetable,자몽");
-    m_fruitList << QString::fromUtf8("pomegranate,vegetable,석류");
-    m_fruitList << QString::fromUtf8("banana,vegetable,바나나");
-    m_fruitList << QString::fromUtf8("apple,vegetable,사과");
-    m_fruitList << QString::fromUtf8("tomato,vegetable,토마토");
-    m_fruitList << QString::fromUtf8("pineapple,vegetable,파인애플");
-    m_fruitList << QString::fromUtf8("grape,vegetable,포도");
-    m_fruitList << QString::fromUtf8("orange,vegetable,오렌지");
+    auto fruitList = QStringList();
+    fruitList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
+    fruitList << QString::fromUtf8("water melon,vegetable,수박");
+    fruitList << QString::fromUtf8("pepper,vegetable,고추");
+    fruitList << QString::fromUtf8("pumpkin,vegetable,호박");
+    fruitList << QString::fromUtf8("cucumber,vegetable,오이");
+    fruitList << QString::fromUtf8("paprika,vegetable,파프리카");
+    fruitList << QString::fromUtf8("tengerine,vegetable,귤");
+    fruitList << QString::fromUtf8("mushroom,vegetable,버섯");
+    fruitList << QString::fromUtf8("persimmon,vegetable,감");
+    fruitList << QString::fromUtf8("peach,vegetable,복숭아");
+    fruitList << QString::fromUtf8("cherry,vegetable,체리");
+    fruitList << QString::fromUtf8("broccoli,vegetable,브로콜리");
+    fruitList << QString::fromUtf8("lemon,vegetable,레몬");
+    fruitList << QString::fromUtf8("aubergine,vegetable,가지");
+    fruitList << QString::fromUtf8("cabbage,vegetable,양배추");
+    fruitList << QString::fromUtf8("pear,vegetable,배");
+    fruitList << QString::fromUtf8("carrot,vegetable,당근");
+    fruitList << QString::fromUtf8("onion,vegetable,양파");
+    fruitList << QString::fromUtf8("blueberries,vegetable,블루베리");
+    fruitList << QString::fromUtf8("kiwi,vegetable,키위");
+    fruitList << QString::fromUtf8("sweet potato,vegetable,고구마");
+    fruitList << QString::fromUtf8("melon,vegetable,멜론");
+    fruitList << QString::fromUtf8("grapefruit,vegetable,자몽");
+    fruitList << QString::fromUtf8("pomegranate,vegetable,석류");
+    fruitList << QString::fromUtf8("banana,vegetable,바나나");
+    fruitList << QString::fromUtf8("apple,vegetable,사과");
+    fruitList << QString::fromUtf8("tomato,vegetable,토마토");
+    fruitList << QString::fromUtf8("pineapple,vegetable,파인애플");
+    fruitList << QString::fromUtf8("grape,vegetable,포도");
+    fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
-}
-void Speech::updateModels()
-{
-    foreach (QString engine, QTextToSpeech::availableEngines()){
-        qDebug() << "engine name" << engine;
-        engineSelected(engine);
-        break;
-    }
-    // jsobject
+
+
+
+    // jsobject should be use " instead of '
+    auto elementList  = QStringList();
     auto elementTemplate = QString("{ \"name\" : \"%1\", \"english\" : \"%1\", \"front_img_name\" : \"%1.jpg\", \"type\" : \"%2\", \"korean\" : \"%3\"}");
-    foreach (QString item, m_fruitList){
+    foreach (QString item, fruitList){
         auto itemSplit = item.split(",", QString::SkipEmptyParts);
         auto element = elementTemplate
                 .arg(itemSplit.at(0).trimmed())
                 .arg(itemSplit.at(1).trimmed())
                 .arg(itemSplit.at(2).trimmed());
-        emit elementAdded(element, "vegetable");
+        elementList << element;
+    }
+
+    // make jsarray
+    m_fruitList = QString("[%1]").arg(elementList.join(","));
+    //qDebug() << m_fruitList;
+
+
+    foreach (QString engine, QTextToSpeech::availableEngines()){
+        qDebug() << "engine name" << engine;
+        engineSelected(engine);
+        break;
     }
 }
+
 void Speech::speak(QString sentence)
 {
     qDebug() << Q_FUNC_INFO;
@@ -156,21 +165,22 @@ void Speech::engineSelected(QString engineName)
     else
         m_speech = new QTextToSpeech(engineName, this);
 
+    auto voiceLanguageList = QStringList();
     QVector<QLocale> locales = m_speech->availableLocales();
     QLocale current = m_speech->locale();
     foreach (const QLocale &locale, locales) {
-        QString name(QString("%1")
-                     .arg(QLocale::languageToString(locale.language())) );
-                     .arg(QLocale::countryToString(locale.country())));
-        emit voiceLanguageAdded(QString("{\"language\": \"%1\"}").arg(name));
-        m_voiceLanguageList.append(name);
-        qDebug() << name;
+        auto languageInfo = QString("{\"language\": \"%1\", \"country\": \"%2\"}")
+                     .arg(QLocale::languageToString(locale.language()))
+                     .arg(QLocale::countryToString(locale.country()));
+        voiceLanguageList.append(languageInfo);
     }
+
+    m_voiceLanguageList = QString("[%1]").arg(voiceLanguageList.join(","));
+    qDebug() << m_voiceLanguageList;
 
 //    connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
     connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
 
-//    connect(ui.language, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::languageSelected);
     localeChanged(current);
 }
 
@@ -187,19 +197,18 @@ void Speech::voiceSelected(int index)
 
 void Speech::localeChanged(const QLocale &locale)
 {
-    emit voiceTypeUpdate();
     m_voiceTypeList.clear();
 
     m_voices = m_speech->availableVoices();
     QVoice currentVoice = m_speech->voice();
+    auto voiceTypeList = QStringList();
     foreach (const QVoice &voice, m_voices) {
-        auto voiceType = (QString("%1 - %2 - %3").arg(voice.name())
+        auto voiceType = QString("{\"name\": \"%1\",  \"gender\": \"%2\", \"age\": \"%3\"}").arg(voice.name())
                           .arg(QVoice::genderName(voice.gender()))
-                          .arg(QVoice::ageName(voice.age())));
+                          .arg(QVoice::ageName(voice.age()));
+        voiceTypeList << voiceType;
 
-        m_voiceTypeList.append(voiceType);
-        qDebug() << voiceType;
-        emit voiceTypeAdded(QString("{\"voiceType\": \"%1\"}").arg(voiceType));
     }
-//    connect(ui.voice, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Speech::voiceSelected);
+    m_voiceTypeList = QString("[%1]").arg(voiceTypeList.join(","));
+    qDebug() << m_voiceTypeList;
 }

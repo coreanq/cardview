@@ -49,7 +49,7 @@ ios {
 
     }
     CONFIG(release, debug|release) {
-        RESOURCES + = assets.qrc
+        RESOURCES += assets.qrc
     }
 }
 win32 {

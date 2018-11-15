@@ -11,41 +11,23 @@ App{
     visible: true
     licenseKey: Constants.vplaylicenseKey
 
-    ListModel{ id: _itemModel }
-    ListModel{ id: _voiceLanguageModel }
-    ListModel{ id: _voiceTypeModel }
-
     CppInterface {
         id: _cppInterface
         Component.onCompleted: {
             console.log("_cppInterface create!" )
-        }
-        onElementAdded: {
-//            console.log("~~~~" + element)
-            _itemModel.append(JSON.parse(element))
-        }
-        onVoiceLanguageAdded: {
-            console.log("~~~~" + element)
-            _voiceLanguageModel.append(JSON.parse(element))
-        }
-        onVoiceTypeAdded:  {
-            console.log("~~~~" + element)
-            _voiceTypeModel.append(JSON.parse(element))
-        }
-        onVoiceTypeUpdate: {
-            _voiceTypeModel.clear()
         }
     }
 
     Component {
         id: _fruitPage
         FruitPage {
-            model: _itemModel
+            model: JSON.parse(_cppInterface.speechObj.fruitList)
             onFruitClicked: {
                 _cppInterface.speechObj.speak(fruitName);
             }
             Component.onCompleted: {
                 console.log("_fruitPage create! path: " + Constants.assetsPath)
+
             }
         }
     }
@@ -73,8 +55,9 @@ App{
 
                SettingView{
                    anchors.fill: parent
-                   voiceLanguageViewModel: _voiceLanguageModel
-                   voiceTypeViewModel: _voiceTypeModel
+                   voiceLanguageViewModel: JSON.parse(_cppInterface.speechObj.voiceLanguageList)
+                   voiceTypeViewModel: JSON.parse(_cppInterface.speechObj.voiceTypeList)
+
 
                }
 

@@ -18,7 +18,7 @@ ListView {
 
         Rectangle {
             id: _item
-            property string name: korean
+            property string name: model.modelData.korean
             anchors.fill: parent
             color: "white"
             radius: 30
@@ -31,7 +31,7 @@ ListView {
                 height: parent.height * 0.815
 
                 clip: true
-                source: Qt.resolvedUrl(Constants.assetsPath + front_img_name)
+                source: Qt.resolvedUrl(Constants.assetsPath + model.modelData.front_img_name)
                 fillMode: Image.PreserveAspectFit
 
                 AppButton { 

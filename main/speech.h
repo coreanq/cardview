@@ -52,6 +52,9 @@ class Speech : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isDebug READ isDebug NOTIFY isDebugChanged)
+    Q_PROPERTY(QString fruitList READ fruitList NOTIFY fruitListChanged)
+    Q_PROPERTY(QString voiceLanguageList READ voiceLanguageList NOTIFY voiceLanguageListChanged)
+    Q_PROPERTY(QString voiceTypeList READ  voiceTypeList NOTIFY voiceTypeListChanged)
 
 public:
     Speech(QObject *parent = 0);
@@ -60,16 +63,19 @@ public:
     Speech(const Speech & obj) {}
 
 signals:
-    void voiceLanguageAdded(QString);
-    void voiceTypeAdded(QString);
-    void voiceTypeUpdate();
-
-    void elementAdded(QString, QString);
     void isDebugChanged();
+    void fruitListChanged();
+    void voiceTypeListChanged();
+    void voiceLanguageListChanged();
+
     void dataRecved(QString msg);
 
 public slots:
+    QString fruitList(){return m_fruitList;}
+    QString voiceLanguageList(){return m_voiceLanguageList;}
+    QString voiceTypeList(){return m_voiceTypeList;}
     bool isDebug() { return m_isDebug;}
+
 
     void speak(QString sentence);
     void stop();
@@ -85,13 +91,12 @@ public slots:
 
     void localeChanged(const QLocale &locale);
 
-    void updateModels();
 
 private:
     bool 	m_isDebug;
-    QStringList m_fruitList;
-    QStringList m_voiceLanguageList;
-    QStringList m_voiceTypeList;
+    QString m_fruitList;
+    QString m_voiceLanguageList;
+    QString m_voiceTypeList;
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
 };

@@ -43,13 +43,7 @@ WebSocket {
                 speechObj = ch.objects.speech;
 
                 //signal to signal connection
-                speechObj.elementAdded.connect(_root.elementAdded)
-                speechObj.voiceTypeAdded.connect(_root.voiceTypeAdded)
-                speechObj.voiceTypeUpdate.connect(_root.voiceTypeUpdate)
-                speechObj.voiceLanguageAdded.connect(_root.voiceLanguageAdded)
-
-                // model update
-                speechObj.updateModels()
+                //speechObj.elementAdded.connect(_root.elementAdded)
 
                 if( ch.objects.speech.isDebug === true ){
                     Constants.assetsPath = "../../assets/"

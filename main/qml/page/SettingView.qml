@@ -4,8 +4,8 @@ import "../helper"
 
 Item {
     id: _root
-    property ListModel voiceLanguageViewModel
-    property ListModel voiceTypeViewModel
+    property var voiceLanguageViewModel
+    property var voiceTypeViewModel
 
       NavigationStack {
         splitView: tablet
@@ -35,7 +35,7 @@ Item {
             model: voiceLanguageViewModel
             delegate: SimpleRow{
                 id: row
-                text: language
+                text: model.modelData.language
                 style.showDisclosure: false   // disble right arrow in ios
                 Icon {
                   anchors.right: parent.right
@@ -44,7 +44,7 @@ Item {
                   icon: IconType.check
                   size: dp(14)
                   color: row.style.textColor
-                  visible: language === 'Korean'
+                  visible: (model.modelData.language.indexof('Korean') !== -1)
                 }
                 onSelected: {
                     console.log("Clicked Item #" + index ) ;
@@ -56,12 +56,12 @@ Item {
             title: "Audio type"
             model: voiceTypeViewModel
             delegate: SimpleRow{
-                text: voiceType
+                text: model.modelData.name
                 style.showDisclosure: false // disble right arrow in ios
+                onSelected: {
+                    console.log("Clicked Item #" + index ) ;
+                }
 
-            }
-            onItemSelected: {
-                console.log("Clicked Item #" + index + ": "+ JSON.stringify(item));
             }
       }
 
