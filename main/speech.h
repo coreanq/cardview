@@ -51,10 +51,10 @@
 class Speech : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool isDebug READ isDebug NOTIFY isDebugChanged)
-    Q_PROPERTY(QString fruitList READ fruitList NOTIFY fruitListChanged)
-    Q_PROPERTY(QString voiceLanguageList READ voiceLanguageList NOTIFY voiceLanguageListChanged)
-    Q_PROPERTY(QString voiceTypeList READ  voiceTypeList NOTIFY voiceTypeListChanged)
+    Q_PROPERTY(bool isDebug MEMBER m_isDebug NOTIFY DebugChanged)
+    Q_PROPERTY(QString fruitList MEMBER m_fruitList NOTIFY fruitListChanged)
+    Q_PROPERTY(QString voiceLanguageList MEMBER m_voiceLanguageList NOTIFY voiceLanguageListChanged)
+    Q_PROPERTY(QString voiceTypeList MEMBER m_voiceTypeList NOTIFY voiceTypeListChanged)
 
 public:
     Speech(QObject *parent = 0);
@@ -63,7 +63,7 @@ public:
     Speech(const Speech & obj) {}
 
 signals:
-    void isDebugChanged();
+    void DebugChanged();
     void fruitListChanged();
     void voiceTypeListChanged();
     void voiceLanguageListChanged();
@@ -71,22 +71,18 @@ signals:
     void dataRecved(QString msg);
 
 public slots:
-    QString fruitList(){return m_fruitList;}
-    QString voiceLanguageList(){return m_voiceLanguageList;}
-    QString voiceTypeList(){return m_voiceTypeList;}
-    bool isDebug() { return m_isDebug;}
 
 
     void speak(QString sentence);
     void stop();
-
     void setRate(int);
     void setPitch(int);
     void setVolume(int volume);
 
     void stateChanged(QTextToSpeech::State state);
     void engineSelected(QString engineName);
-    void languageSelected(int language);
+
+    void languageSelected(int index);
     void voiceSelected(int index);
 
     void localeChanged(const QLocale &locale);
@@ -97,8 +93,10 @@ private:
     QString m_fruitList;
     QString m_voiceLanguageList;
     QString m_voiceTypeList;
+
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
+    QVector<QLocale>  m_locales;
 };
  Q_DECLARE_METATYPE(Speech)
 #endif

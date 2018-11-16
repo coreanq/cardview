@@ -8,12 +8,6 @@ WebSocket {
     property var speechObj
     signal connected()
 
-    // signal when item add
-    signal elementAdded(string element)
-    signal voiceLanguageAdded(string element)
-    signal voiceTypeUpdate()
-    signal voiceTypeAdded(string element)
-    
     // the following three properties/functions are required to align the QML WebSocket API
     // with the HTML5 WebSocket API.
     property var send: function(arg) {
@@ -42,8 +36,21 @@ WebSocket {
                 // cpp main object
                 speechObj = ch.objects.speech;
 
+                // c++ property 의 경우  client side 에서  cache 되므로 변경시  main object 를 업데트 해줌
                 //signal to signal connection
-                //speechObj.elementAdded.connect(_root.elementAdded)
+                speechObj.voiceTypeListChanged.connect( function() {
+                    speechObj = ch.objects.speech;
+                })
+
+                speechObj.voiceLanguageListChanged.connect( function() {
+                    speechObj = ch.objects.speech;
+                })
+                // Invoke a method:
+//                foo.myMethod(arg1, arg2, function(returnValue) {
+//                    // This callback will be invoked when myMethod has a return value. Keep in mind that
+//                    // the communication is asynchronous, hence the need for this callback.
+//                    console.log(returnValue);
+//                });
 
                 if( ch.objects.speech.isDebug === true ){
                     Constants.assetsPath = "../../assets/"

@@ -117,7 +117,7 @@ Speech::Speech(QObject *parent)
 
 void Speech::speak(QString sentence)
 {
-    qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO << sentence;
     m_speech->say(sentence);
 }
 void Speech::stop()
@@ -166,49 +166,53 @@ void Speech::engineSelected(QString engineName)
         m_speech = new QTextToSpeech(engineName, this);
 
     auto voiceLanguageList = QStringList();
-    QVector<QLocale> locales = m_speech->availableLocales();
+    m_locales = m_speech->availableLocales();
     QLocale current = m_speech->locale();
-    foreach (const QLocale &locale, locales) {
-        auto languageInfo = QString("{\"language\": \"%1\", \"country\": \"%2\"}")
+    foreach (const QLocale &locale, m_locales) {
+        auto languageInfo = QString("{\"language\": \"%1\", \"country\": \"%2\", \"selected\": %3}")
                      .arg(QLocale::languageToString(locale.language()))
-                     .arg(QLocale::countryToString(locale.country()));
+                     .arg(QLocale::countryToString(locale.country()))
+                     .arg(m_locales[0] == locale ? "true" : "false");
         voiceLanguageList.append(languageInfo);
     }
 
     m_voiceLanguageList = QString("[%1]").arg(voiceLanguageList.join(","));
-    qDebug() << m_voiceLanguageList;
+//    qDebug() << m_voiceLanguageList;
 
-//    connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
+    connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
     connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
 
     localeChanged(current);
 }
 
-void Speech::languageSelected(int language)
+void Speech::languageSelected(int index)
 {
-//    QLocale locale = ui.language->itemData(language).toLocale();
-//    m_speech->setLocale(locale);
+    auto locale = QLocale(m_locales.at(index));
+    m_speech->setLocale(locale);
+    qDebug() << Q_FUNC_INFO <<  locale.name() << index;
 }
 
 void Speech::voiceSelected(int index)
 {
-    m_speech->setVoice(m_voices.at(index));
+    auto voice = m_voices.at(index);
+    m_speech->setVoice(voice);
+    qDebug() << Q_FUNC_INFO <<  voice.name() << index;
 }
 
 void Speech::localeChanged(const QLocale &locale)
 {
-    m_voiceTypeList.clear();
-
     m_voices = m_speech->availableVoices();
-    QVoice currentVoice = m_speech->voice();
+
     auto voiceTypeList = QStringList();
     foreach (const QVoice &voice, m_voices) {
-        auto voiceType = QString("{\"name\": \"%1\",  \"gender\": \"%2\", \"age\": \"%3\"}").arg(voice.name())
+        auto voiceType = QString("{\"name\": \"%1\",  \"gender\": \"%2\", \"age\": \"%3\", \"selected\": %4}").arg(voice.name())
                           .arg(QVoice::genderName(voice.gender()))
-                          .arg(QVoice::ageName(voice.age()));
+                          .arg(QVoice::ageName(voice.age()))
+                          .arg(m_voices[0] == voice ? "true" : "false");
         voiceTypeList << voiceType;
 
     }
     m_voiceTypeList = QString("[%1]").arg(voiceTypeList.join(","));
-    qDebug() << m_voiceTypeList;
+    emit voiceTypeListChanged();
+    qDebug() << Q_FUNC_INFO << m_voiceTypeList;
 }

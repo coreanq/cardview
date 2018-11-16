@@ -57,8 +57,6 @@ App{
                    anchors.fill: parent
                    voiceLanguageViewModel: JSON.parse(_cppInterface.speechObj.voiceLanguageList)
                    voiceTypeViewModel: JSON.parse(_cppInterface.speechObj.voiceTypeList)
-
-
                }
 
             }

@@ -21,7 +21,6 @@ Item {
 
             section.property: "group"
             onItemSelected: {
-                console.log("Clicked Item #" + index + ": "+ JSON.stringify(item));
                 if( index === 0 )
                     navigationStack.popAllExceptFirstAndPush(audioLanguagePage)
                 else if ( index === 1)
@@ -38,17 +37,26 @@ Item {
                 text: model.modelData.language
                 style.showDisclosure: false   // disble right arrow in ios
                 Icon {
-                  anchors.right: parent.right
-                  anchors.rightMargin: dp(10)
-                  anchors.verticalCenter: parent.verticalCenter
-                  icon: IconType.check
-                  size: dp(14)
-                  color: row.style.textColor
-                  visible: (model.modelData.language.indexof('Korean') !== -1)
+                    anchors.right: parent.right
+                    anchors.rightMargin: dp(10)
+                    anchors.verticalCenter: parent.verticalCenter
+                    icon: IconType.check
+                    size: dp(14)
+                    color: row.style.textColor
+                    visible: model.modelData.selected
                 }
                 onSelected: {
-                    console.log("Clicked Item #" + index ) ;
+                    console.log("Clicked Item #" + index  +  JSON.stringify(model.modelData) + " " + Object.keys(model)  + " " + model.objectName) ;
+//                    // Set selection
+                    model.modelData.selected = Qt.binding(function() { return true } )
+//                    for(var i = 0; i < Object.keys(model).length; i++) {
+//                        console.log("!!!! " + model[i].selected )
+//                        model[i].selected = i === index ? true : false
+////                        model.setProperty(i, "selected", i === index ? true : false)
+//                    }
+                    _cppInterface.speechObj.languageSelected(index)
                 }
+
             }
       }
 
