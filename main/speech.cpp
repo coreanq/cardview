@@ -44,6 +44,10 @@
 #include <QNetworkReply>
 #include <QTextCodec>
 #include <QStringList>
+#include <QJsonValue>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
@@ -55,6 +59,7 @@ Speech::Speech(QObject *parent)
 #else
     m_isDebug = false;
 #endif
+
 
     auto fruitList = QStringList();
     fruitList << QString::fromUtf8("kimchi cabbage,vegetable,배추");
@@ -89,24 +94,29 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
 
-
-
-    // jsobject should be use " instead of '
-    auto elementList  = QStringList();
-    auto elementTemplate = QString("{ \"name\" : \"%1\", \"english\" : \"%1\", \"front_img_name\" : \"%1.jpg\", \"type\" : \"%2\", \"korean\" : \"%3\"}");
+    auto jsonArray = QJsonArray();
     foreach (QString item, fruitList){
         auto itemSplit = item.split(",", QString::SkipEmptyParts);
-        auto element = elementTemplate
-                .arg(itemSplit.at(0).trimmed())
-                .arg(itemSplit.at(1).trimmed())
-                .arg(itemSplit.at(2).trimmed());
-        elementList << element;
+        //qDebug() << itemSplit;
+        auto jsonObj = QJsonObject();
+        jsonObj["name"] = itemSplit.at(0).trimmed();
+        jsonObj["english"] = itemSplit.at(0).trimmed();
+        jsonObj["front_img_name"] = itemSplit.at(0).trimmed();
+        jsonObj["type"] = itemSplit.at(1).trimmed();
+        jsonObj["korean"] = itemSplit.at(2).trimmed();
+
+//        qDebug() << jsonObj.value("korean").toString();
+
+        auto jsonValue = QJsonValue(jsonObj);
+        jsonArray.append(jsonValue);
     }
 
-    // make jsarray
-    m_fruitList = QString("[%1]").arg(elementList.join(","));
-    //qDebug() << m_fruitList;
+    auto jsonDoc = QJsonDocument(jsonArray);
 
+    qDebug() << Q_FUNC_INFO << QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Indented));
+
+    // make jsarray
+    m_fruitList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Indented));
 
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
