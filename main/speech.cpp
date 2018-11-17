@@ -114,7 +114,7 @@ Speech::Speech(QObject *parent)
     auto jsonDoc = QJsonDocument(jsonArray);
 
     // make jsarray
-    m_fruitList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Indented));
+    m_fruitList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
 
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
@@ -176,6 +176,7 @@ void Speech::engineSelected(QString engineName)
     auto voiceLanguageList = QStringList();
     m_locales = m_speech->availableLocales();
 
+    auto currentLocale = m_speech->locale();
 
     // make back data
     foreach (const QLocale &locale, m_locales) {
@@ -183,7 +184,7 @@ void Speech::engineSelected(QString engineName)
             QString::fromUtf8("%1 %2,%3")
                  .arg(QLocale::languageToString(locale.language()))
                  .arg(QLocale::countryToString(locale.country()))
-                 .arg(m_locales[0] == locale ? "true" : "false")
+                 .arg(currentLocale == locale ? "true" : "false")
             );
     }
 
@@ -195,7 +196,7 @@ void Speech::engineSelected(QString engineName)
         //qDebug() << itemSplit;
         auto jsonObj = QJsonObject();
         jsonObj["language"] = itemSplit.at(0).trimmed();
-        jsonObj["selected"] = itemSplit.at(1).trimmed();
+        jsonObj["selected"] = itemSplit.at(1).trimmed() == "true" ?  true : false;
 
 //        qDebug() << jsonObj.value("korean").toString();
 
@@ -206,22 +207,44 @@ void Speech::engineSelected(QString engineName)
     auto jsonDoc = QJsonDocument(jsonArray);
 
     // make jsarray
-    m_voiceLanguageList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Indented));
-    qDebug() << Q_FUNC_INFO << m_voiceLanguageList;
+    m_voiceLanguageList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+//    qDebug() << Q_FUNC_INFO << m_voiceLanguageList;
     emit voiceLanguageListChanged();
-
 
     connect(m_speech, &QTextToSpeech::stateChanged, this, &Speech::stateChanged);
     connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
 
-
-    QLocale current = m_speech->locale();
-    localeChanged(current);
+    localeChanged(currentLocale);
 }
 
 void Speech::languageSelected(int index)
 {
     auto locale = QLocale(m_locales.at(index));
+
+    //selected value change
+    auto jsonDoc = QJsonDocument::fromJson( m_voiceLanguageList.toLatin1() );
+    if( jsonDoc.isArray() ) {
+
+        auto jsonArray = jsonDoc.array(); // no reference value
+        for(int i = 0; i < jsonArray.size(); i ++ ){
+
+            auto jsonObj = jsonArray[i].toObject(); // no refernece value
+//            qDebug() << Q_FUNC_INFO << index << jsonObj["language"].toString();
+            if( i == index ){
+                jsonObj["selected"] = true;
+            }
+            else{
+                jsonObj["selected"] = false;
+            }
+            jsonArray[i] = jsonObj;
+        }
+        jsonDoc = QJsonDocument(jsonArray);
+    }
+    // make jsarray
+    m_voiceLanguageList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    qDebug() << Q_FUNC_INFO << m_voiceLanguageList;
+    emit voiceLanguageListChanged();
+
     m_speech->setLocale(locale);
     qDebug() << Q_FUNC_INFO <<  locale.name() << index;
 }
@@ -239,6 +262,7 @@ void Speech::localeChanged(const QLocale &locale)
 
     auto voiceTypeList = QStringList();
 
+    QVoice currentVoice = m_speech->voice();
     // make back data
     foreach (const QVoice &voice, m_voices) {
         voiceTypeList.append(
@@ -246,7 +270,7 @@ void Speech::localeChanged(const QLocale &locale)
                   .arg(voice.name())
                   .arg(QVoice::genderName(voice.gender()))
                   .arg(QVoice::ageName(voice.age()))
-                  .arg(m_voices[0] == voice ? "true" : "false")
+                  .arg(currentVoice == voice ? "true" : "false")
             );
     }
 
@@ -260,7 +284,7 @@ void Speech::localeChanged(const QLocale &locale)
         jsonObj["name"] = itemSplit.at(0).trimmed();
         jsonObj["gender"] = itemSplit.at(1).trimmed();
         jsonObj["age"] = itemSplit.at(2).trimmed();
-        jsonObj["selected"] = itemSplit.at(3).trimmed();
+        jsonObj["selected"] = itemSplit.at(3).trimmed() == "true" ? true : false;
 
 //        qDebug() << jsonObj.value("korean").toString();
 
@@ -271,7 +295,7 @@ void Speech::localeChanged(const QLocale &locale)
     auto jsonDoc = QJsonDocument(jsonArray);
 
     // make jsarray
-    m_voiceTypeList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Indented));
+    m_voiceTypeList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     emit voiceTypeListChanged();
     qDebug() << Q_FUNC_INFO << m_voiceTypeList;
 }

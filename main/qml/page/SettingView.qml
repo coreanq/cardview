@@ -42,18 +42,12 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     icon: IconType.check
                     size: dp(14)
-                    color: row.style.textColor
                     visible: model.modelData.selected
                 }
                 onSelected: {
-                    console.log("Clicked Item #" + index  +  JSON.stringify(model.modelData) + " " + Object.keys(model)  + " " + model.objectName) ;
-//                    // Set selection
-                    model.modelData.selected = Qt.binding(function() { return true } )
-//                    for(var i = 0; i < Object.keys(model).length; i++) {
-//                        console.log("!!!! " + model[i].selected )
-//                        model[i].selected = i === index ? true : false
-////                        model.setProperty(i, "selected", i === index ? true : false)
-//                    }
+                    // do not modify cpp models data
+                    // should do in cpp code
+                    console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
                     _cppInterface.speechObj.languageSelected(index)
                 }
 
@@ -66,8 +60,19 @@ Item {
             delegate: SimpleRow{
                 text: model.modelData.name
                 style.showDisclosure: false // disble right arrow in ios
+                Icon {
+                    anchors.right: parent.right
+                    anchors.rightMargin: dp(10)
+                    anchors.verticalCenter: parent.verticalCenter
+                    icon: IconType.check
+                    size: dp(14)
+                    visible: model.modelData.selected
+                }
                 onSelected: {
-                    console.log("Clicked Item #" + index ) ;
+                    // do not modify cpp models data
+                    // should do in cpp code
+                    console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
+                    _cppInterface.speechObj.languageSelected(index)
                 }
 
             }
