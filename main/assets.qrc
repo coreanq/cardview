@@ -39,5 +39,7 @@
         <file>qml/page/FruitPage.qml</file>
         <file>qml/page/SettingView.qml</file>
         <file>qml/helper/qwebchannel.js</file>
+        <file>qml/helper/JSONListModel/JSONListModel.qml</file>
+        <file>qml/helper/JSONListModel/jsonpath.js</file>
     </qresource>
 </RCC>
