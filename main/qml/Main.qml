@@ -5,12 +5,29 @@ import QtQuick.Layouts 1.3
 import VPlayApps 1.0
 import "helper"
 import "page"
+import "helper/JSONListModel"
 
 App{
     id: _main
     visible: true
     licenseKey: Constants.vplaylicenseKey
 
+    JSONListModel{
+        id: _voiceTypeModel
+        json: _cppInterface.speechObj.voiceTypeList
+        query: ""
+        onJsonChanged: {
+            console.log(json);
+        }
+    }
+    JSONListModel{
+        id: _voiceLanguageModel
+        json: _cppInterface.speechObj.voiceLanguageList
+        query: ""
+        onJsonChanged: {
+            console.log(json);
+        }
+    }
     CppInterface {
         id: _cppInterface
         Component.onCompleted: {
@@ -55,8 +72,8 @@ App{
 
                SettingView{
                    anchors.fill: parent
-                   voiceLanguageViewModel: _cppInterface.voiceLanguageModel
-                   voiceTypeViewModel: _cppInterface.voiceTypeModel
+                   voiceLanguageViewModel: _voiceLanguageModel.model
+                   voiceTypeViewModel: _voiceTypeModel.model
                }
 
             }

@@ -50,7 +50,9 @@ Item {
                     console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
                     _cppInterface.speechObj.languageSelected(index)
                 }
-
+            }
+            onModelChanged: {
+                console.log("kkk" + model)
             }
       }
 

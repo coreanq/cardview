@@ -2,30 +2,12 @@ import QtQuick 2.0
 import QtWebSockets 1.0
 import QtQml.Models 2.11
 import "qwebchannel.js"  as WebChannel
-//import "./JSONListModel"
+
 WebSocket {
     id: _root
     property var onmessage
     property var speechObj
-//    property alias voiceTypeModel : _voiceTypeModel.model
-//    property alias voiceLanguageModel : _voiceLanguageModel.model
     signal connected()
-    ListModel{
-        id: test
-        dynamicRoles: true
-
-    }
-
-//    JSONListModel{
-////        id: _voiceTypeModel
-////        json: speechObj.voiceTypeList
-////        query: "$.[*]"
-//    }
-//    JSONListModel{
-////        id: _voiceLanguageModel
-////        json: speechObj.voiceLanguageList
-////        query: "$.[*]"
-//    }
 
     // the following three properties/functions are required to align the QML WebSocket API
     // with the HTML5 WebSocket API.
@@ -58,11 +40,11 @@ WebSocket {
                 // c++ property 의 경우  client side 에서  cache 되므로 변경시  main object 를 업데트 해줌
                 //signal to signal connection
                 speechObj.voiceTypeListChanged.connect( function() {
-                    speechObj = ch.objects.speech;
+                    speechObj.voiceTypeList = ch.objects.speech.voiceTypeList;
                 })
 
                 speechObj.voiceLanguageListChanged.connect( function() {
-                    speechObj = ch.objects.speech;
+                    speechObj.voiceLanguageList = ch.objects.speech.voiceLanugageList;
                 })
                 // Invoke a method:
 //                foo.myMethod(arg1, arg2, function(returnValue) {

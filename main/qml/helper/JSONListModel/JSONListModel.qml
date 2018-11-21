@@ -12,7 +12,8 @@ Item {
     property string json: ""
     property string query: ""
 
-    property ListModel model : ListModel { id: jsonModel }
+    property alias model : jsonModel
+    ListModel { id: jsonModel }
     property alias count: jsonModel.count
 
     onSourceChanged: {
@@ -36,7 +37,9 @@ Item {
 
         var objectArray = parseJSONString(json, query);
         for ( var key in objectArray ) {
+
             var jo = objectArray[key];
+            console.log("++" + key + JSON.stringify(jo))
             jsonModel.append( jo );
         }
     }
