@@ -77,8 +77,8 @@ Item {
                 onSelected: {
                     // do not modify cpp models data
                     // should do in cpp code
-                    console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
-//                    _cppInterface.speechObj.languageSelected(index)
+                    console.log("Clicked Item #" + index + JSON.stringify(currentModel) ) ;
+                    _cppInterface.speechObj.voiceSelected(index)
                 }
 
             }

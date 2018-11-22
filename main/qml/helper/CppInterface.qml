@@ -38,17 +38,19 @@ WebSocket {
                 console.log( url + " opened.");
                 // cpp main object
                 speechObj = ch.objects.speech
-                voiceLanguageList = Qt.binding(function() { return speechObj.voiceLanguageList } )
-                voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
+                voiceLanguageList = speechObj.voiceLanguageList
+                voiceTypeList = speechObj.voiceTypeList
 
-                // c++ property 의 경우  client side 에서  cache 되므로 변경시  main object 를 업데트 해줌
+                // c++ property 의 경우  client side 에서  cache 되므로 변경시 강제 업데이트 수행
                 //signal to signal connection
                 speechObj.voiceLanguageListChanged.connect( function() {
-                    voiceLanguageList = Qt.binding(function() { return speechObj.voiceLanguageList } )
+                    voiceLanguageList = speechObj.voiceLanguageList
+//                    voiceLanguageList = Qt.binding(function() { return speechObj.voiceLanguageList } )
                 })
 
                 speechObj.voiceTypeListChanged.connect( function() {
-                    voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
+                    voiceTypeList = speechObj.voiceTypeList
+//                    voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
                 })
                 // Invoke a method:
 //                foo.myMethod(arg1, arg2, function(returnValue) {

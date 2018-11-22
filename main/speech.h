@@ -61,6 +61,7 @@ public:
    	// copy, assign 생성자 delete 속성  제거  
     Speech &operator =( Speech &obj ) {return obj;}
     Speech(const Speech & obj) {}
+    void makeVoiceTypeList();
 
 signals:
     void DebugChanged();

@@ -254,15 +254,14 @@ void Speech::voiceSelected(int index)
     auto voice = m_voices.at(index);
     m_speech->setVoice(voice);
     qDebug() << Q_FUNC_INFO <<  voice.name() << index;
+    makeVoiceTypeList();
 }
 
-void Speech::localeChanged(const QLocale &locale)
+
+void Speech::makeVoiceTypeList()
 {
-    m_voices = m_speech->availableVoices();
-
     auto voiceTypeList = QStringList();
-
-    QVoice currentVoice = m_speech->voice();
+    auto currentVoice = m_speech->voice();
     // make back data
     foreach (const QVoice &voice, m_voices) {
         voiceTypeList.append(
@@ -298,4 +297,10 @@ void Speech::localeChanged(const QLocale &locale)
     m_voiceTypeList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     emit voiceTypeListChanged();
     qDebug() << Q_FUNC_INFO << m_voiceTypeList;
+}
+
+void Speech::localeChanged(const QLocale &locale)
+{
+    m_voices = m_speech->availableVoices();
+    makeVoiceTypeList();
 }
