@@ -39,8 +39,8 @@ Item {
         for ( var key in objectArray ) {
 
             var jo = objectArray[key];
-            console.log("++" + key + JSON.stringify(jo))
             jsonModel.append( jo );
+//            console.log("+++" + typeof jsonModel.get(key).language + " " + jsonModel.get(key).language )
         }
     }
 

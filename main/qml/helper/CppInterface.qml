@@ -7,6 +7,8 @@ WebSocket {
     id: _root
     property var onmessage
     property var speechObj
+    property string voiceTypeList
+    property string voiceLanguageList
     signal connected()
 
     // the following three properties/functions are required to align the QML WebSocket API
@@ -35,16 +37,18 @@ WebSocket {
             new WebChannel.QWebChannel(_root, function(ch) {
                 console.log( url + " opened.");
                 // cpp main object
-                speechObj = ch.objects.speech;
+                speechObj = ch.objects.speech
+                voiceLanguageList = Qt.binding(function() { return speechObj.voiceLanguageList } )
+                voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
 
                 // c++ property 의 경우  client side 에서  cache 되므로 변경시  main object 를 업데트 해줌
                 //signal to signal connection
-                speechObj.voiceTypeListChanged.connect( function() {
-                    speechObj.voiceTypeList = ch.objects.speech.voiceTypeList;
+                speechObj.voiceLanguageListChanged.connect( function() {
+                    voiceLanguageList = Qt.binding(function() { return speechObj.voiceLanguageList } )
                 })
 
-                speechObj.voiceLanguageListChanged.connect( function() {
-                    speechObj.voiceLanguageList = ch.objects.speech.voiceLanugageList;
+                speechObj.voiceTypeListChanged.connect( function() {
+                    voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
                 })
                 // Invoke a method:
 //                foo.myMethod(arg1, arg2, function(returnValue) {

@@ -4,8 +4,8 @@ import "../helper"
 
 Item {
     id: _root
-    property var voiceLanguageViewModel
-    property var voiceTypeViewModel
+    property ListModel voiceLanguageViewModel
+    property ListModel voiceTypeViewModel
 
       NavigationStack {
         splitView: tablet
@@ -31,10 +31,13 @@ Item {
 
       property Component audioLanguagePage: ListPage {
             title: "Audio language"
+
             model: voiceLanguageViewModel
             delegate: SimpleRow{
                 id: row
-                text: model.modelData.language
+                // cannot access model.modelData.language so fix to direct access
+                property var currentModel : voiceLanguageViewModel.get(index)
+                text: currentModel.language
                 style.showDisclosure: false   // disble right arrow in ios
                 Icon {
                     anchors.right: parent.right
@@ -42,17 +45,16 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     icon: IconType.check
                     size: dp(14)
-                    visible: model.modelData.selected
+                    visible: currentModel.selected
                 }
                 onSelected: {
                     // do not modify cpp models data
                     // should do in cpp code
-                    console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
+                    console.log("Clicked Item #" + index +  " " + JSON.stringify(currentModel))
                     _cppInterface.speechObj.languageSelected(index)
                 }
             }
             onModelChanged: {
-                console.log("kkk" + model)
             }
       }
 
@@ -60,7 +62,9 @@ Item {
             title: "Audio type"
             model: voiceTypeViewModel
             delegate: SimpleRow{
-                text: model.modelData.name
+                // cannot access model.modelData.name so fix to direct access
+                property var currentModel : voiceTypeViewModel.get(index)
+                text: currentModel.name
                 style.showDisclosure: false // disble right arrow in ios
                 Icon {
                     anchors.right: parent.right
@@ -68,13 +72,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     icon: IconType.check
                     size: dp(14)
-                    visible: model.modelData.selected
+                    visible: currentModel.selected
                 }
                 onSelected: {
                     // do not modify cpp models data
                     // should do in cpp code
                     console.log("Clicked Item #" + index + JSON.stringify(model.modelData) ) ;
-                    _cppInterface.speechObj.languageSelected(index)
+//                    _cppInterface.speechObj.languageSelected(index)
                 }
 
             }

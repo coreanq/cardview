@@ -14,7 +14,7 @@ App{
 
     JSONListModel{
         id: _voiceTypeModel
-        json: _cppInterface.speechObj.voiceTypeList
+        json: _cppInterface.voiceTypeList
         query: ""
         onJsonChanged: {
             console.log(json);
@@ -22,7 +22,7 @@ App{
     }
     JSONListModel{
         id: _voiceLanguageModel
-        json: _cppInterface.speechObj.voiceLanguageList
+        json: _cppInterface.voiceLanguageList
         query: ""
         onJsonChanged: {
             console.log(json);
