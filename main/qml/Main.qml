@@ -96,6 +96,14 @@ App{
         console.log("Portrait changed " + portrait )
         
     }
+    onApplicationPaused: {
+        console.log("paused")
+
+    }
+    onApplicationResumed: {
+        console.log("resumed")
+
+    }
 
    
 

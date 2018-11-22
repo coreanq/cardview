@@ -84,7 +84,15 @@ ListView {
                     }
                     else
                         _item.scale = 1 - moveRatio
+                }
+                onBottomtopSwipe: {
+//                    console.log(moveRatio)
+                    if( 1 - moveRatio < 0.8 ){
+                        _item_container.state = "normalized"
                     }
+                    else
+                        _item.scale = 1 - moveRatio
+                }
                 onClicked:{
                         _root.fruitClicked(_item.name);
                         console.log("clicked " + _item.name);
