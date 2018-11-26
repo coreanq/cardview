@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
                      [&](Qt::ApplicationState state) {
                         qDebug() << state;
                         if( state == Qt::ApplicationActive ){
-
                             if( server.isListening() == false ) {
                                 if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
                                     qFatal("Failed to open web socket server");
@@ -52,7 +51,9 @@ int main(int argc, char *argv[])
                                     qDebug() << "SERVER listen again";
                                 }
                             }
-
+                        }
+                        else {
+                            server.close();
                         }
                     } );
 #endif

@@ -97,13 +97,34 @@ App{
         console.log("Portrait changed " + portrait )
         
     }
+
+
+    Timer {
+        id: _cppInterfaceReconnectTimer
+        interval: 500
+        running: false
+        repeat: true
+        onTriggered: {
+            if( _cppInterface.active == false ){
+                _cppInterface.active = true
+                console.log("try to reconnect")
+            }
+            else {
+                running = false
+            }
+        }
+    }
+
     onApplicationPaused: {
         console.log("paused")
-
+         _cppInterface.active = false
     }
     onApplicationResumed: {
         console.log("resumed")
-
+        if( _cppInterface.active == false ){
+            console.log("reconnect timer on")
+            _cppInterfaceReconnectTimer.running = true
+        }
     }
 
    
