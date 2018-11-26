@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 {
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
-    QObject::connect(&app, &QGuiApplication::applicationStateChanged, [=](Qt::ApplicationState state) { qDebug() << Q_FUNC_INFO << state; } );
 
 #if 1
 
@@ -37,6 +36,25 @@ int main(int argc, char *argv[])
     Speech* speech = new Speech(&app);
     channel.registerObject(QStringLiteral("speech"), speech);
 
+    // application state changed
+    // when application active, server listen again
+    QObject::connect(&app, &QGuiApplication::applicationStateChanged,
+                     [=](Qt::ApplicationState state) {
+                        qDebug() << state;
+                        if( state == Qt::ApplicationActive ){
+
+                            if( server.isListening() == true ) {
+                                if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
+                                    qFatal("Failed to open web socket server");
+                                    return 1;
+                                }
+                                else {
+                                    qDebug() << "SERVER listen again";
+                                }
+                            }
+
+                        }
+                    } );
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
