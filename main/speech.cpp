@@ -135,12 +135,12 @@ void Speech::stop()
 
 void Speech::setRate(int rate)
 {
-    m_speech->setRate(rate / 10.0);
+    m_speech->setRate(rate / 100.0);
 }
 
 void Speech::setPitch(int pitch)
 {
-    m_speech->setPitch(pitch / 10.0);
+    m_speech->setPitch(pitch / 100.0);
 }
 
 void Speech::setVolume(int volume)

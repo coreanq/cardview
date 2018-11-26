@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import VPlayApps 1.0
-import QtQuick.Controls 2.2
 import "../helper"
 
 Item {
@@ -104,41 +103,48 @@ Item {
             }
         }
     }
+    // do not confuse Qtquick's Page and V-play Page
     property Component audioSpecificPage: Page {
         title: "Audio specific"
         Column{
+
             anchors.horizontalCenter: parent.horizontalCenter
             Column {
                 // show slider
                 AppSlider {
                     id: _rateSlider
-//                    onPositionChanged: {
-//                        console.log(position)
-//                    }
+                    onPositionChanged: {
+                        console.log(position)
+                        _cppInterface.setRate(Math.round(_rateSlider.position * 100))
+                    }
+                    from: 0
+                    to: 100
                 }
 
                 // display slider position
                 AppText {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Rate: " + Math.round(_rateSlider.position * 100)
+                    anchors.horizontalCenter:  parent.horizontalCenter
+                    text: "Rate: " + Math.round(_rateSlider.position * 100) + "%"
+
                 }
-            } // Column
+            } // column
             Column {
                 // show slider
                 AppSlider {
                     id: _pitchSlider
-//                    onPositionChanged: {
-//                        console.log(position)
-//                    }
+                    onPositionChanged: {
+                        console.log(position)
+                        _cppInterface.setPitch(Math.round(_pitchSlider.position * 100))
+                    }
                 }
 
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Pitch: " + Math.round(_pitchSlider.position * 100)
+                    text: "Pitch: " + Math.round(_pitchSlider.position * 100) + "%"
                 }
             } // Column
         }
-
     }
+
 }
