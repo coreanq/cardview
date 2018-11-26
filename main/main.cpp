@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     // application state changed
     // when application active, server listen again
     QObject::connect(&app, &QGuiApplication::applicationStateChanged,
-                     [=](Qt::ApplicationState state) {
+                     [&](Qt::ApplicationState state) {
                         qDebug() << state;
                         if( state == Qt::ApplicationActive ){
 

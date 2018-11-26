@@ -66,7 +66,8 @@ HEADERS += \
     qml_interface_model/qmlsortfilterproxymodel.h \
     qml_interface_model/qmlstandarditemmodel.h \
     webchannel_interface/websocketclientwrapper.h \
-    webchannel_interface/websockettransport.h
+    webchannel_interface/websockettransport.h \
+    speech.h
 
 OTHER_FILES += \
     assets.qrc
