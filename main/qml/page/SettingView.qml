@@ -115,7 +115,7 @@ Item {
                     id: _rateSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.setRate(Math.round(_rateSlider.position * 100))
+                        _cppInterface.speechObj.setRate(Math.round(_rateSlider.position * 100))
                     }
                     from: 0
                     to: 100
@@ -134,7 +134,7 @@ Item {
                     id: _pitchSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.setPitch(Math.round(_pitchSlider.position * 100))
+                        _cppInterface.speechObj.setPitch(Math.round(_pitchSlider.position * 100))
                     }
                 }
 
