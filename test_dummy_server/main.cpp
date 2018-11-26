@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QGuiApplication>
 #include <QWebChannel>
 #include <QWebSocketServer>
 #include <QDebug>
@@ -10,8 +10,10 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     app.installEventFilter(new EventEater());
+
+    QObject::connect(&app, &QGuiApplication::applicationStateChanged, [=](Qt::ApplicationState state) { qDebug() << Q_FUNC_INFO << state; } );
 
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
