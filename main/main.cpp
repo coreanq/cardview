@@ -10,12 +10,13 @@
 #include <QWebChannel>
 #include <QWebSocketServer>
 #include <QTextCodec>
-
+#include "eventeater.h"
 int main(int argc, char *argv[])
 {
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
-    
+    app.installEventFilter(new EventEater());
+
 #if 1
 
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );

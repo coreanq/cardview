@@ -6,11 +6,13 @@
 #include "../main/webchannel_interface/websocketclientwrapper.h"
 #include "../main/webchannel_interface/websockettransport.h"
 #include "../main/speech.h"
+#include "../main/eventeater.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
-    
+    app.installEventFilter(new EventEater());
+
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
         qFatal("Failed to open web socket server"); 

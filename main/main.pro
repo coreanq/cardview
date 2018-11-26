@@ -12,6 +12,7 @@ SOURCES += main.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp \
     webchannel_interface/websocketclientwrapper.cpp \
     webchannel_interface/websockettransport.cpp \
+    eventeater.cpp
 
 
 #DEFINES += VPLAY_LIVE_SERVER
@@ -69,6 +70,7 @@ HEADERS += \
     webchannel_interface/websocketclientwrapper.h \
     webchannel_interface/websockettransport.h \
     speech.h \
+    eventeater.h
 
 OTHER_FILES += \
     assets.qrc

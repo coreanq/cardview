@@ -3,10 +3,15 @@
 
 #include <QObject>
 
-class EventEater
+class EventEater: public QObject
 {
+    Q_OBJECT
 public:
     EventEater();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // EVENTEATER_H

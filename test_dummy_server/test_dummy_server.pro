@@ -19,13 +19,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     ../main/speech.cpp \
     ../main/webchannel_interface/websocketclientwrapper.cpp \
-    ../main/webchannel_interface/websockettransport.cpp
+    ../main/webchannel_interface/websockettransport.cpp \
+    ../main/eventeater.cpp
     mainwindow.cpp
 
 HEADERS += \
     ../main/speech.h \
     ../main/webchannel_interface/websocketclientwrapper.h \
-    ../main/webchannel_interface/websockettransport.h
+    ../main/webchannel_interface/websockettransport.h \
+    ../main/eventeater.h
 
 FORMS += \
     mainwindow.ui
