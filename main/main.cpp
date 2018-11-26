@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
                         qDebug() << state;
                         if( state == Qt::ApplicationActive ){
 
-                            if( server.isListening() == true ) {
+                            if( server.isListening() == false ) {
                                 if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
                                     qFatal("Failed to open web socket server");
                                     return 1;
