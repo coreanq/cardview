@@ -115,7 +115,7 @@ Item {
                     id: _rateSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.speechObj.setRate(Math.round(_rateSlider.position * 100))
+                        _cppInterface.speechObj.setRate(Math.round(_rateSlider.position * 20) - 10)
                     }
                     from: 0
                     to: 100
@@ -124,7 +124,7 @@ Item {
                 // display slider position
                 AppText {
                     anchors.horizontalCenter:  parent.horizontalCenter
-                    text: "Rate: " + Math.round(_rateSlider.position * 100) + "%"
+                    text: "Rate: " + (Math.round(_rateSlider.position * 20) - 10) + "%"
 
                 }
             } // column
@@ -134,14 +134,14 @@ Item {
                     id: _pitchSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.speechObj.setPitch(Math.round(_pitchSlider.position * 100))
+                        _cppInterface.speechObj.setPitch(Math.round(_pitchSlider.position * 20) - 10)
                     }
                 }
 
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Pitch: " + Math.round(_pitchSlider.position * 100) + "%"
+                    text: "Pitch: " + (Math.round(_pitchSlider.position * 20)- 10) + "%"
                 }
             } // Column
         }

@@ -55,8 +55,8 @@ class Speech : public QObject
     Q_PROPERTY(QString fruitList MEMBER m_fruitList NOTIFY fruitListChanged)
     Q_PROPERTY(QString voiceLanguageList MEMBER m_voiceLanguageList NOTIFY voiceLanguageListChanged)
     Q_PROPERTY(QString voiceTypeList MEMBER m_voiceTypeList NOTIFY voiceTypeListChanged)
-    Q_PROPERTY(int voiceRate, MEMBER m_rate, NOTIFY voiceRateChanged)
-    Q_PROPERTY(int voicePitch, MEMBER m_pitch, NOTIFY voicePitchChanged)
+    Q_PROPERTY(int voiceRate MEMBER m_rate NOTIFY voiceRateChanged)
+    Q_PROPERTY(int voicePitch MEMBER m_pitch NOTIFY voicePitchChanged)
 
 
 public:
