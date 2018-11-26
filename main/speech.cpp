@@ -51,7 +51,9 @@
 
 Speech::Speech(QObject *parent)
     : QObject(parent),
-    m_speech(0)
+    m_speech(0),
+    m_rate(0),
+    m_pitch(0)
 {
 
 #ifdef QT_DEBUG
@@ -135,17 +137,21 @@ void Speech::stop()
 
 void Speech::setRate(int rate)
 {
-    m_speech->setRate(rate / 100.0);
+    m_rate = rate;
+    emit voiceRateChanged();
+    m_speech->setRate(m_rate / 10.0);
 }
 
 void Speech::setPitch(int pitch)
 {
-    m_speech->setPitch(pitch / 100.0);
+    m_pitch = pitch;
+    emit voicePitchChanged();
+    m_speech->setPitch(m_pitch / 10.0);
 }
 
 void Speech::setVolume(int volume)
 {
-    m_speech->setVolume(volume / 100.0);
+    m_speech->setVolume(volume / 10.0);
 }
 
 void Speech::stateChanged(QTextToSpeech::State state)
