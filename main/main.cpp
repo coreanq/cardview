@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
     app.installEventFilter(new EventEater());
+    QObject::connect(&app, &QGuiApplication::applicationStateChanged, [=](Qt::ApplicationState state) { qDebug() << Q_FUNC_INFO << state; } );
 
 #if 1
 
