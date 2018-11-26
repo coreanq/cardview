@@ -10,7 +10,6 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    QObject::connect(&app, &QGuiApplication::applicationStateChanged, [=](Qt::ApplicationState state) { qDebug() << Q_FUNC_INFO << state; } );
 
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
     if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
@@ -18,6 +17,26 @@ int main(int argc, char *argv[])
         return 1;
     } 
     qDebug() << server.serverAddress() ;
+
+    // application state changed
+    // when application active, server listen again
+    QObject::connect(&app, &QGuiApplication::applicationStateChanged,
+                     [&](Qt::ApplicationState state) {
+                        qDebug() << state;
+                        if( state == Qt::ApplicationActive ){
+
+                            if( server.isListening() == true ) {
+                                if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
+                                    qFatal("Failed to open web socket server");
+                                    return 1;
+                                }
+                                else {
+                                    qDebug() << "SERVER listen again";
+                                }
+                            }
+
+                        }
+                    } );
      // wrap WebSocket clients in QWebChannelAbstractTransport objects
     WebSocketClientWrapper clientWrapper(&server);
 
