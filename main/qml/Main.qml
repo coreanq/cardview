@@ -54,20 +54,22 @@ App{
         anchors.bottom: parent.bottom
     }
     Page {
-        id: _naviWnd
+        id: _naviWndContainer
         anchors.bottom: _adBanner.top
         clip: true
         visible: true
         Navigation {
+            id: _naviWnd
+            navigationMode: navigationModeDrawer
             NavigationItem {
-//                title: "과일"
+                title: "과일"
                 icon: IconType.heart
                 Loader {
                     sourceComponent: _fruitPage
                 }
             }
             NavigationItem {
-//               title: "설정"
+               title: "설정"
                icon: IconType.cog
 
                SettingView{
@@ -81,13 +83,12 @@ App{
     }
     FloatingActionButton {
         id: _bntConnect
-        icon: IconType.terminal
+        icon: IconType.wrench
         visible: true
-        anchors.bottom: _naviWnd.bottom
+        anchors.bottom: _naviWndContainer.bottom
         z:1
         onClicked: {
-            console.log("test clicked");
-            _cppInterface.speechObj.printModel();
+            _naviWnd.drawer.toggle()
         }
         
     }
