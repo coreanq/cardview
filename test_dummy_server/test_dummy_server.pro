@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += core texttospeech websockets webchannel
+QT += texttospeech websockets webchannel
 
 
 CONFIG += c++14 console
@@ -19,9 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     ../main/speech.cpp \
     ../main/webchannel_interface/websocketclientwrapper.cpp \
-    ../main/webchannel_interface/websockettransport.cpp \
-    ../main/eventeater.cpp
-    mainwindow.cpp
+    ../main/webchannel_interface/websockettransport.cpp
 
 HEADERS += \
     ../main/speech.h \
@@ -29,8 +27,6 @@ HEADERS += \
     ../main/webchannel_interface/websockettransport.h \
     ../main/eventeater.h
 
-FORMS += \
-    mainwindow.ui
 
 DISTFILES += \
     ../main/webchannel_interface/qwebchannel.js

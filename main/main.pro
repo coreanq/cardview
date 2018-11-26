@@ -11,8 +11,7 @@ SOURCES += main.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp \
     webchannel_interface/websocketclientwrapper.cpp \
-    webchannel_interface/websockettransport.cpp \
-    eventeater.cpp
+    webchannel_interface/websockettransport.cpp
 
 
 #DEFINES += VPLAY_LIVE_SERVER
@@ -62,15 +61,12 @@ macx {
 
 
 HEADERS += \
-    speech.h \
     webchannel_interface/websocketclientwrapper.h \
     webchannel_interface/websockettransport.h \
     qml_interface_model/qmlsortfilterproxymodel.h \
     qml_interface_model/qmlstandarditemmodel.h \
     webchannel_interface/websocketclientwrapper.h \
-    webchannel_interface/websockettransport.h \
-    speech.h \
-    eventeater.h
+    webchannel_interface/websockettransport.h
 
 OTHER_FILES += \
     assets.qrc

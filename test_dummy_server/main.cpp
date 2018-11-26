@@ -6,13 +6,10 @@
 #include "../main/webchannel_interface/websocketclientwrapper.h"
 #include "../main/webchannel_interface/websockettransport.h"
 #include "../main/speech.h"
-#include "../main/eventeater.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    app.installEventFilter(new EventEater());
-
     QObject::connect(&app, &QGuiApplication::applicationStateChanged, [=](Qt::ApplicationState state) { qDebug() << Q_FUNC_INFO << state; } );
 
     QWebSocketServer server(QStringLiteral("QWebChannel Test server"), QWebSocketServer::NonSecureMode );
