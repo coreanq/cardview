@@ -7,67 +7,77 @@ import "helper"
 import "page"
 import "helper/JSONListModel"
 
-App{
+App {
     id: _main
     visible: true
     licenseKey: Constants.vplaylicenseKey
 
-    JSONListModel{
+    CppInterface {
+        id: _cppInterface
+        Component.onCompleted: {
+            console.log("_cppInterface create!")
+        }
+    }
+
+    JSONListModel {
         id: _voiceTypeModel
         json: _cppInterface.voiceTypeList
         query: ""
         onJsonChanged: {
-            console.log(json);
+            console.log(json)
         }
     }
-    JSONListModel{
+    JSONListModel {
         id: _voiceLanguageModel
         json: _cppInterface.voiceLanguageList
         query: ""
         onJsonChanged: {
-            console.log(json);
+            console.log(json)
         }
     }
-    CppInterface {
-        id: _cppInterface
-        Component.onCompleted: {
-            console.log("_cppInterface create!" )
+    property Component fruitPage: FruitPage {
+        model: JSON.parse(_cppInterface.speechObj.fruitList)
+        onMaxFruitClicked: {
+            _cppInterface.speechObj.speak(fruitName)
         }
     }
 
+    FruitPage {
+        id: _fruitPage
+        model: JSON.parse(_cppInterface.speechObj.fruitList)
+        onMaxFruitClicked: {
+            _cppInterface.speechObj.speak(fruitName)
+        }
+    }
     AdBanner {
         id: _adBanner
         anchors.bottom: parent.bottom
     }
     Page {
         id: _naviWndContainer
+        visible: false
         anchors.bottom: _adBanner.top
         clip: true
-        visible: true
         Navigation {
             id: _naviWnd
             navigationMode: navigationModeDrawer
             NavigationItem {
                 title: "과일"
                 icon: IconType.heart
-                FruitPage {
-                    id: _fruitPage
-                    model: JSON.parse(_cppInterface.speechObj.fruitList)
-                    onFruitClicked: {
-                        _cppInterface.speechObj.speak(fruitName);
-                    }
-                }
+
+                //                Loader {
+                //                    sourceComponent: fruitPage
+                //                }
             }
             NavigationItem {
-               title: "설정"
-               icon: IconType.cog
+                title: "설정"
+                icon: IconType.cog
 
-               SettingView{
-                   anchors.fill: parent
-                   voiceLanguageViewModel: _voiceLanguageModel.model
-                   voiceTypeViewModel: _voiceTypeModel.model
-               }
-
+                SettingView {
+                    anchors.fill: parent
+                    voiceLanguageViewModel: _voiceLanguageModel.model
+                    voiceTypeViewModel: _voiceTypeModel.model
+                }
             }
         }
     }
@@ -79,12 +89,11 @@ App{
         onClicked: {
             _naviWnd.drawer.toggle()
         }
-        Rectangle{
+        Rectangle {
             anchors.fill: parent
             visible: false
             color: "black"
             opacity: 0.5
-
         }
     }
 
@@ -96,35 +105,35 @@ App{
         visible: true
         anchors.bottom: _btnDrawer.top
         onClicked: {
-            if( running == false ){
+            if (running == false) {
                 console.log("automated on")
                 running = true
                 _autoTimer.running = running
-                icon =  IconType.close
-            }
-            else {
+                icon = IconType.close
+            } else {
                 console.log("automated off")
                 running = false
                 _autoTimer.running = running
-                icon =  IconType.font
-
+                icon = IconType.font
             }
         }
-
     }
     // 가로 보기시
     onPortraitChanged: {
-        console.log("Portrait changed " + portrait )
-        
+        console.log("Portrait changed " + portrait)
     }
 
     Timer {
         id: _autoTimer
-        interval: 1000
+        interval: 2000
         running: false
         repeat: true
         onTriggered: {
             _fruitPage.incrementCurrentIndex()
+            _fruitPage.positionViewAtIndex(_fruitPage.currentIndex,
+                                           ListView.Center)
+            _fruitPage.item.state = "maximized"
+            //            _fruitPage.normalFruitClicked()
         }
     }
 
@@ -134,11 +143,10 @@ App{
         running: false
         repeat: true
         onTriggered: {
-            if( _cppInterface.active == false ){
+            if (_cppInterface.active == false) {
                 _cppInterface.active = true
                 console.log("try to reconnect")
-            }
-            else {
+            } else {
                 running = false
             }
         }
@@ -146,121 +154,117 @@ App{
 
     onApplicationPaused: {
         console.log("paused")
-         _cppInterface.active = false
+        _cppInterface.active = false
     }
     onApplicationResumed: {
         console.log("resumed")
-        if( _cppInterface.active == false ){
+        if (_cppInterface.active == false) {
             console.log("reconnect timer on")
             _cppInterfaceReconnectTimer.running = true
         }
     }
 
-   
+    //        Flipable {
+    //            // Image 의 source 는 url type 이 필요 하므로
+    //            property bool flipped: true
+    //            Component.onCompleted: {
+    //            }
 
+    //            id: _cardWnd
+    //            width: _listView.width
+    //            height: _listView.height / 3
 
-//        Flipable {
-//            // Image 의 source 는 url type 이 필요 하므로
-//            property bool flipped: true
-//            Component.onCompleted: {
-//            }
+    //            front: Rectangle {
+    //                anchors.fill: parent
+    //                anchors.margins: 10
+    //                color: "black"
+    //                Image{
+    //                    anchors.fill: parent
+    //                    source: Qt.resolvedUrl(assetsPath + front_img_name)
+    //                    fillMode: Image.PreserveAspectFit
+    //                }
+    //            }
+    //            back: Rectangle {
+    //                anchors.fill: parent
+    //                anchors.margins: 10
+    //                color: "black"
+    //                Image {
+    //                    anchors.fill: parent
+    //                    source: Qt.resolvedUrl(assetsPath + back_img_name)
+    //                    Text {
+    //                        anchors.centerIn: parent
+    //                        text: name
+    //                        font.pointSize: parent.width /10
+    //                    }
+    //                }
+    //            }
 
-//            id: _cardWnd
-//            width: _listView.width
-//            height: _listView.height / 3
+    //            MouseArea {
+    //                anchors.fill: parent
+    //                onClicked:{
+    //                    console.log("clicked " + name)
+    //                    cppInterface.speak(name)
+    //                }
+    //                onDoubleClicked: {
+    //                    console.log("double clicked " + front_img_name)
+    //                    _cardWnd.flipped = !_cardWnd.flipped
+    //                }
 
+    //            }
 
-//            front: Rectangle {
-//                anchors.fill: parent
-//                anchors.margins: 10
-//                color: "black"
-//                Image{
-//                    anchors.fill: parent
-//                    source: Qt.resolvedUrl(assetsPath + front_img_name)
-//                    fillMode: Image.PreserveAspectFit
-//                }
-//            }
-//            back: Rectangle {
-//                anchors.fill: parent
-//                anchors.margins: 10
-//                color: "black"
-//                Image {
-//                    anchors.fill: parent
-//                    source: Qt.resolvedUrl(assetsPath + back_img_name)
-//                    Text {
-//                        anchors.centerIn: parent
-//                        text: name
-//                        font.pointSize: parent.width /10
-//                    }
-//                }
-//            }
+    //            transform: Rotation {
+    //                id: _rotationProcessing
+    //                origin.x: _cardWnd.width/2
+    //                origin.y: _cardWnd.height/2
+    //                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
+    //                angle: 0    // the default angle
+    //            }
 
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked:{
-//                    console.log("clicked " + name)
-//                    cppInterface.speak(name)
-//                }
-//                onDoubleClicked: {
-//                    console.log("double clicked " + front_img_name)
-//                    _cardWnd.flipped = !_cardWnd.flipped
-//                }
-                
-//            }
+    //            states: [
+    //                State {
+    //                    name: "back"
+    //                    when: _cardWnd.flipped
+    //                    PropertyChanges {
+    //                      target: _rotationProcessing; angle: 180
+    //                    }
+    //                },
+    //                State {
+    //                    name: "front"
+    //                    when: !_cardWnd.flipped
+    //                    PropertyChanges {
+    //                      target: _rotationProcessing; angle: 0
+    //                    }
+    //                }
+    //            ]
 
-//            transform: Rotation {
-//                id: _rotationProcessing
-//                origin.x: _cardWnd.width/2
-//                origin.y: _cardWnd.height/2
-//                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-//                angle: 0    // the default angle
-//            }
+    //            transitions: Transition {
+    //                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
+    //            }
+    //        }
 
-//            states: [
-//                State {
-//                    name: "back"
-//                    when: _cardWnd.flipped
-//                    PropertyChanges {
-//                      target: _rotationProcessing; angle: 180
-//                    }
-//                },
-//                State {
-//                    name: "front"
-//                    when: !_cardWnd.flipped
-//                    PropertyChanges {
-//                      target: _rotationProcessing; angle: 0
-//                    }
-//                }
-//            ]
+    //    }
 
-//            transitions: Transition {
-//                NumberAnimation { target: _rotationProcessing; property: "angle"; duration: 800 }
-//            }
-//        }
+    //    ListView{
+    //    	anchors.bottom: _ad.top
+    //    	anchors.left: _listView.right
+    //    	width: parent.width /2
+    //    	height: parent.height - _ad.height
+    //        clip: true
 
-//    }
-
-//    ListView{
-//    	anchors.bottom: _ad.top
-//    	anchors.left: _listView.right
-//    	width: parent.width /2
-//    	height: parent.height - _ad.height
-//        clip: true
-    	
-////    	model : ["banana", "apple", "coconut"]
-//        model: cppInterface.languageModel
-//        delegate: Rectangle {
-//            height: 25
-//            width: parent.width
-//            Row {
-//                Text {
-//                    text: first
-//                    font.pointSize: 15
-//                }
-//            }
-//        }
-//        Component.onCompleted: {
-////            console.log( cppInterface.str() )
-//        }
-//    }
+    ////    	model : ["banana", "apple", "coconut"]
+    //        model: cppInterface.languageModel
+    //        delegate: Rectangle {
+    //            height: 25
+    //            width: parent.width
+    //            Row {
+    //                Text {
+    //                    text: first
+    //                    font.pointSize: 15
+    //                }
+    //            }
+    //        }
+    //        Component.onCompleted: {
+    ////            console.log( cppInterface.str() )
+    //        }
+    //    }
 }

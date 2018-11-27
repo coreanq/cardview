@@ -6,8 +6,9 @@ import "../helper"
 AppListView {
     id: _root
     spacing: 20
-    keyNavigationWraps: true
-    signal fruitClicked(string fruitName)
+    signal maxFruitClicked(string fruitName)
+    signal normalFruitClicked()
+    property Flickable item : currentItem
 
     delegate: Flickable {
         id: _item_container
@@ -25,17 +26,18 @@ AppListView {
             radius: 30
             border.color: "gray"
 
-            Image{
+            Image {
                 id: _item_image
                 anchors.centerIn: parent
                 width: parent.width * 0.815
                 height: parent.height * 0.815
 
                 clip: true
-                source: Qt.resolvedUrl(Constants.assetsPath + model.modelData.front_img_name)
+                source: Qt.resolvedUrl(
+                            Constants.assetsPath + model.modelData.front_img_name)
                 fillMode: Image.PreserveAspectFit
 
-                AppButton { 
+                AppButton {
                     text: "click"
                     visible: false
                     anchors.centerIn: parent
@@ -46,14 +48,14 @@ AppListView {
                     }
                 }
             }
-            Text{
-                    id: _item_text
-                    text: _item.name
-                    visible: false
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.margins: 30
-                    font.pointSize: 25
+            Text {
+                id: _item_text
+                text: _item.name
+                visible: false
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 30
+                font.pointSize: 25
             }
             IconButton {
                 id: _item_close_btn
@@ -79,28 +81,26 @@ AppListView {
                 visible: false
                 z: -1
                 onTopbottomSwipe: {
-//                    console.log(moveRatio)
-                    if( 1 - moveRatio < 0.8 ){
+                    //                    console.log(moveRatio)
+                    if (1 - moveRatio < 0.8) {
                         _item_container.state = "normalized"
-                    }
-                    else if(1- moveRatio < 0.95 ) // do not affect when click input captured
+                    } else if (1 - moveRatio < 0.95)
+                        // do not affect when click input captured
                         _item.scale = 1 - moveRatio
                 }
                 onBottomtopSwipe: {
-//                    console.log(moveRatio)
-                    if( 1 - moveRatio < 0.8 ){
+                    //                    console.log(moveRatio)
+                    if (1 - moveRatio < 0.8) {
                         _item_container.state = "normalized"
-                    }
-                    else if(1- moveRatio < 0.95 )
+                    } else if (1 - moveRatio < 0.95)
                         _item.scale = 1 - moveRatio
                 }
-                onClicked:{
-                        _root.fruitClicked(_item.name);
-                        console.log("clicked " + _item.name);
+                onClicked: {
+                    _root.maxFruitClicked(_item.name)
+                    console.log("clicked " + _item.name)
                 }
                 onReleased: {
-                        _item.scale = 1
-
+                    _item.scale = 1
                 }
             }
         }
@@ -108,54 +108,101 @@ AppListView {
         states: [
             State {
                 name: "maximized"
-                PropertyChanges { target: _item_container; explicit: true; height: _item_container.ListView.view.height }
-                PropertyChanges { target: _item_container; explicit: true; anchors.leftMargin: 0; anchors.rightMargin: 0 }
-                PropertyChanges { target: _item_container; explicit: true; interactive: true }
-                PropertyChanges { target: _item; explicit: true; radius: 0}
-                PropertyChanges { target: _item_text; explicit: true; visible: true }
+                PropertyChanges {
+                    target: _item_container
+                    explicit: true
+                    height: _item_container.ListView.view.height
+                }
+                PropertyChanges {
+                    target: _item_container
+                    explicit: true
+                    anchors.leftMargin: 0
+                    anchors.rightMargin: 0
+                }
+                PropertyChanges {
+                    target: _item_container
+                    explicit: true
+                    interactive: true
+                }
+                PropertyChanges {
+                    target: _item
+                    explicit: true
+                    radius: 0
+                }
+                PropertyChanges {
+                    target: _item_text
+                    explicit: true
+                    visible: true
+                }
                 // Move the list so that this item is at the top.
-                PropertyChanges { target: _item_container.ListView.view; explicit: true; contentY: _item_container.y }
-                PropertyChanges { target: _root; explicit: true; interactive: false }
-                PropertyChanges { target: _normalized_mouse_area ; explicit: true; visible: false }
-                PropertyChanges { target: _maximized_mouse_area ; explicit: true; visible: true }
-                PropertyChanges { target: _item_close_btn; explicit: true; visible: true }
-                PropertyChanges { target: _item; explicit: true; scale: 1 }
+                PropertyChanges {
+                    target: _item_container.ListView.view
+                    explicit: true
+                    contentY: _item_container.y
+                }
+                PropertyChanges {
+                    target: _root
+                    explicit: true
+                    interactive: false
+                }
+                PropertyChanges {
+                    target: _normalized_mouse_area
+                    explicit: true
+                    visible: false
+                }
+                PropertyChanges {
+                    target: _maximized_mouse_area
+                    explicit: true
+                    visible: true
+                }
+                PropertyChanges {
+                    target: _item_close_btn
+                    explicit: true
+                    visible: true
+                }
+                PropertyChanges {
+                    target: _item
+                    explicit: true
+                    scale: 1
+                }
             },
             State {
                 name: "normalized"
-                PropertyChanges { target: _item; explicit: true; scale: 1 }
+                PropertyChanges {
+                    target: _item
+                    explicit: true
+                    scale: 1
+                }
             }
         ]
 
         transitions: Transition {
-            ParallelAnimation{
-                NumberAnimation { 
+            ParallelAnimation {
+                NumberAnimation {
                     target: _item_container
-                    properties:"radius,height,anchors.leftMargin,anchors.rightMargin,scale"
+                    properties: "radius,height,anchors.leftMargin,anchors.rightMargin,scale"
                     duration: 500
                     easing.type: Easing.OutQuart
                 }
                 NumberAnimation {
                     target: _item
-                    properties:"scale"
+                    properties: "scale"
                     duration: 500
                     easing.type: Easing.OutQuart
                 }
                 //text appeared slowly
                 NumberAnimation {
                     target: _item_text
-                    properties:"visible"
+                    properties: "visible"
                     duration: 1000
                 }
                 NumberAnimation {
                     target: _item.ListView.view
-                    properties:"contentY"
+                    properties: "contentY"
                     duration: 500
                     easing.type: Easing.OutQuart
-
                 }
             }
         }
     }
-    
 }

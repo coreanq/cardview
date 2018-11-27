@@ -6,20 +6,20 @@ Item {
     id: _root
     property ListModel voiceLanguageViewModel
     property ListModel voiceTypeViewModel
-    property real audioPitch : _pitchSlider.position
-    property real audioRate : _rateSlider.position
+    property real audioPitch: _pitchSlider.position
+    property real audioRate: _rateSlider.position
 
     NavigationStack {
         splitView: tablet
         initialPage: mainPage
     }
-//    onAudioRateChanged: {
-//        console.log("## "  + audioRate)
-//    }
-//    onAudioPitchChanged: {
-//        console.log("## "  + audioPitch)
-//    }
 
+    //    onAudioRateChanged: {
+    //        console.log("## "  + audioRate)
+    //    }
+    //    onAudioPitchChanged: {
+    //        console.log("## "  + audioPitch)
+    //    }
     property Component mainPage: ListPage {
         title: "설정"
         model: [{
@@ -106,7 +106,7 @@ Item {
     // do not confuse Qtquick's Page and V-play Page
     property Component audioSpecificPage: Page {
         title: "Audio specific"
-        Column{
+        Column {
 
             anchors.centerIn: parent
             Column {
@@ -115,26 +115,8 @@ Item {
                     id: _rateSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.speechObj.setRate(Math.round(_rateSlider.position * 20) - 10)
-                    }
-                    from: -10
-                    to: 10
-                }
-
-                // display slider position
-                AppText {
-                    anchors.horizontalCenter:  parent.horizontalCenter
-                    text: "Rate: " + (Math.round(_rateSlider.position * 20) - 10)
-
-                }
-            } // column
-            Column {
-                // show slider
-                AppSlider {
-                    id: _pitchSlider
-                    onPositionChanged: {
-                        console.log(position)
-                        _cppInterface.speechObj.setPitch(Math.round(_pitchSlider.position * 20) - 10)
+                        _cppInterface.speechObj.setRate(
+                                    Math.round(_rateSlider.position * 20) - 10)
                     }
                     from: -10
                     to: 10
@@ -143,16 +125,36 @@ Item {
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Pitch: " + (Math.round(_pitchSlider.position * 20)- 10)
+                    text: "Rate: " + (Math.round(
+                                          _rateSlider.position * 20) - 10)
+                }
+            } // column
+            Column {
+                // show slider
+                AppSlider {
+                    id: _pitchSlider
+                    onPositionChanged: {
+                        console.log(position)
+                        _cppInterface.speechObj.setPitch(
+                                    Math.round(_pitchSlider.position * 20) - 10)
+                    }
+                    from: -10
+                    to: 10
+                }
+
+                // display slider position
+                AppText {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "Pitch: " + (Math.round(
+                                           _pitchSlider.position * 20) - 10)
                 }
             } // Column
         }
         Component.onCompleted: {
-            console.log("audio specific rate " + _cppInterface.speechObj.voiceRate +  " pitch " + (_cppInterface.speechObj.voicePitch ) )
+            console.log("audio specific rate " + _cppInterface.speechObj.voiceRate
+                        + " pitch " + (_cppInterface.speechObj.voicePitch))
             _rateSlider.value = (_cppInterface.speechObj.voiceRate)
             _pitchSlider.value = (_cppInterface.speechObj.voicePitch)
-
         }
     }
-
 }
