@@ -145,6 +145,12 @@ Item {
                 }
             } // Column
         }
+        Component.onCompleted: {
+            console.log("audio specific " + _cppInterface.speechObj.voiceRate +  " " + (_cppInterface.speechObj.voicePitch + 10) / 20)
+            _rateSlider.value = (_cppInterface.speechObj.voiceRate + 10) / 20
+            _pitchSlider.value = (_cppInterface.speechObj.voicePitch + 10) / 20
+
+        }
     }
 
 }
