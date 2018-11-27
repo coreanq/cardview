@@ -35,20 +35,6 @@ App{
         }
     }
 
-    Component {
-        id: _fruitPage
-        FruitPage {
-            model: JSON.parse(_cppInterface.speechObj.fruitList)
-            onFruitClicked: {
-                _cppInterface.speechObj.speak(fruitName);
-            }
-            Component.onCompleted: {
-                console.log("_fruitPage create! path: " + Constants.assetsPath)
-
-            }
-        }
-    }
-
     AdBanner {
         id: _adBanner
         anchors.bottom: parent.bottom
@@ -64,8 +50,12 @@ App{
             NavigationItem {
                 title: "과일"
                 icon: IconType.heart
-                Loader {
-                    sourceComponent: _fruitPage
+                FruitPage {
+                    id: _fruitPage
+                    model: JSON.parse(_cppInterface.speechObj.fruitList)
+                    onFruitClicked: {
+                        _cppInterface.speechObj.speak(fruitName);
+                    }
                 }
             }
             NavigationItem {
@@ -82,22 +72,61 @@ App{
         }
     }
     FloatingActionButton {
-        id: _bntConnect
+        id: _btnDrawer
         icon: IconType.wrench
         visible: true
         anchors.bottom: _naviWndContainer.bottom
-        z:1
         onClicked: {
             _naviWnd.drawer.toggle()
         }
-        
+        Rectangle{
+            anchors.fill: parent
+            visible: false
+            color: "black"
+            opacity: 0.5
+
+        }
     }
-    // 가로 보기시 status bar 제거 필요
+
+    // auto mated list scrolling
+    FloatingActionButton {
+        property bool running: false
+        id: _btnAuto
+        icon: IconType.font
+        visible: true
+        anchors.bottom: _btnDrawer.top
+        onClicked: {
+            if( running == false ){
+                console.log("automated on")
+                running = true
+                _autoTimer.running = running
+                icon =  IconType.close
+            }
+            else {
+                console.log("automated off")
+                running = false
+                _autoTimer.running = running
+                icon =  IconType.font
+
+            }
+        }
+
+    }
+    // 가로 보기시
     onPortraitChanged: {
         console.log("Portrait changed " + portrait )
         
     }
 
+    Timer {
+        id: _autoTimer
+        interval: 1000
+        running: false
+        repeat: true
+        onTriggered: {
+            _fruitPage.incrementCurrentIndex()
+        }
+    }
 
     Timer {
         id: _cppInterfaceReconnectTimer

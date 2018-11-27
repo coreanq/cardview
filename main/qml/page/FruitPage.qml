@@ -1,11 +1,12 @@
-import QtQuick 2.0
+import QtQuick 2.11
 import QtQuick.Controls 2.2
 import VPlayApps 1.0
 import "../helper"
 
-ListView {
+AppListView {
     id: _root
     spacing: 20
+    keyNavigationWraps: true
     signal fruitClicked(string fruitName)
 
     delegate: Flickable {
@@ -82,7 +83,7 @@ ListView {
                     if( 1 - moveRatio < 0.8 ){
                         _item_container.state = "normalized"
                     }
-                    else
+                    else if(1- moveRatio < 0.95 ) // do not affect when click input captured
                         _item.scale = 1 - moveRatio
                 }
                 onBottomtopSwipe: {
@@ -90,7 +91,7 @@ ListView {
                     if( 1 - moveRatio < 0.8 ){
                         _item_container.state = "normalized"
                     }
-                    else
+                    else if(1- moveRatio < 0.95 )
                         _item.scale = 1 - moveRatio
                 }
                 onClicked:{

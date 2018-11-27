@@ -108,7 +108,7 @@ Item {
         title: "Audio specific"
         Column{
 
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
             Column {
                 // show slider
                 AppSlider {
@@ -117,14 +117,14 @@ Item {
                         console.log(position)
                         _cppInterface.speechObj.setRate(Math.round(_rateSlider.position * 20) - 10)
                     }
-                    from: 0
-                    to: 100
+                    from: -10
+                    to: 10
                 }
 
                 // display slider position
                 AppText {
                     anchors.horizontalCenter:  parent.horizontalCenter
-                    text: "Rate: " + (Math.round(_rateSlider.position * 20) - 10) + "%"
+                    text: "Rate: " + (Math.round(_rateSlider.position * 20) - 10)
 
                 }
             } // column
@@ -136,19 +136,21 @@ Item {
                         console.log(position)
                         _cppInterface.speechObj.setPitch(Math.round(_pitchSlider.position * 20) - 10)
                     }
+                    from: -10
+                    to: 10
                 }
 
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Pitch: " + (Math.round(_pitchSlider.position * 20)- 10) + "%"
+                    text: "Pitch: " + (Math.round(_pitchSlider.position * 20)- 10)
                 }
             } // Column
         }
         Component.onCompleted: {
-            console.log("audio specific " + _cppInterface.speechObj.voiceRate +  " " + (_cppInterface.speechObj.voicePitch + 10) / 20)
-            _rateSlider.value = (_cppInterface.speechObj.voiceRate + 10) / 20
-            _pitchSlider.value = (_cppInterface.speechObj.voicePitch + 10) / 20
+            console.log("audio specific rate " + _cppInterface.speechObj.voiceRate +  " pitch " + (_cppInterface.speechObj.voicePitch ) )
+            _rateSlider.value = (_cppInterface.speechObj.voiceRate)
+            _pitchSlider.value = (_cppInterface.speechObj.voicePitch)
 
         }
     }
