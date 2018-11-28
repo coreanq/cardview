@@ -41,5 +41,6 @@
         <file>qml/helper/qwebchannel.js</file>
         <file>qml/helper/JSONListModel/JSONListModel.qml</file>
         <file>qml/helper/JSONListModel/jsonpath.js</file>
+        <file>qml/page/Card.qml</file>
     </qresource>
 </RCC>

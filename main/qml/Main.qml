@@ -39,9 +39,9 @@ App {
 
         property Component fruitPage: FruitPage {
             model: JSON.parse(_cppInterface.speechObj.fruitList)
-            onMaxFruitClicked: {
-                _cppInterface.speechObj.speak(fruitName)
-            }
+//            onMaxFruitClicked: {
+//                _cppInterface.speechObj.speak(fruitName)
+//            }
             Component.onCompleted: {
                 _fruitPage.toggle.connect( triggerAutomatedScroll )
             }
