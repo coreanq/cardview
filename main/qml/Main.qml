@@ -1,7 +1,5 @@
 import QtQuick 2.8
-import QtQuick.Window 2.2
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
+import QtQml.StateMachine 1.0 as DSM
 import VPlayApps 1.0
 import "helper"
 import "page"
@@ -148,6 +146,74 @@ App {
                 console.log("try to reconnect")
             } else {
                 running = false
+            }
+        }
+    }
+
+
+    DSM.StateMachine {
+        id: _automatedScrollDSM
+        initialState: _normal
+        running: true
+        DSM.State{
+            id: _normal
+            DSM.SignalTransition {
+                targetState: _currentIndexing
+                signal : _btnAuto.clicked()
+            }
+
+            onEntered: {
+                console.log("normal")
+            }
+        }
+        DSM.State{
+            id: _currentIndexing
+
+            DSM.TimeoutTransition {
+                targetState: _maxmized
+                timeout: 500
+            }
+
+            onEntered: {
+                console.log("_currentIndexing")
+                _fruitPage.incrementCurrentIndex()
+                _fruitPage.positionViewAtIndex(_fruitPage.currentIndex,
+                                               ListView.Center)
+            }
+        }
+        DSM.State{
+            id: _maxmized
+
+            DSM.TimeoutTransition {
+                targetState: _speaking
+                timeout: 500
+            }
+
+            onEntered: {
+                console.log("maxmized")
+                _fruitPage.item.state = "maximized"
+            }
+        }
+        DSM.State{
+            id: _speaking
+
+            DSM.TimeoutTransition {
+                targetState: _normalized
+                timeout: 2000
+            }
+
+            onEntered: {
+                console.log("speaking")
+                _cppInterface.speechObj.speak(fruitName)
+
+            }
+        }
+        DSM.State{
+            id: _normalized
+
+            DSM.TimeoutTransition {
+                targetState: _normal
+                timeout: 500
             }
         }
     }
