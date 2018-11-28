@@ -33,12 +33,21 @@ App {
             console.log(json)
         }
     }
-    property Component fruitPage: FruitPage {
-        model: JSON.parse(_cppInterface.speechObj.fruitList)
-        onMaxFruitClicked: {
-            _cppInterface.speechObj.speak(fruitName)
+    Item {
+        id: _fruitPage
+        signal toggle()
+
+        property Component fruitPage: FruitPage {
+            model: JSON.parse(_cppInterface.speechObj.fruitList)
+            onMaxFruitClicked: {
+                _cppInterface.speechObj.speak(fruitName)
+            }
+            Component.onCompleted: {
+                _fruitPage.toggle.connect( triggerAutomatedScroll )
+            }
         }
     }
+
 
     AdBanner {
         id: _adBanner
@@ -57,7 +66,7 @@ App {
                 icon: IconType.heart
 
                 Loader {
-                    sourceComponent: fruitPage
+                    sourceComponent: _fruitPage.fruitPage
                 }
             }
             NavigationItem {
@@ -98,12 +107,12 @@ App {
         onClicked: {
             if (running == false) {
                 console.log("automated on")
-                fruitPage.triggerAutomatedScroll()
+                _fruitPage.toggle()
                 running = true
                 icon = IconType.close
             } else {
                 console.log("automated off")
-                fruitPage.triggerAutomatedScroll()
+                _fruitPage.toggle()
                 running = false
                 icon = IconType.font
             }
