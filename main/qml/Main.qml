@@ -106,12 +106,10 @@ App {
             if (running == false) {
                 console.log("automated on")
                 running = true
-                _autoTimer.running = running
                 icon = IconType.close
             } else {
                 console.log("automated off")
                 running = false
-                _autoTimer.running = running
                 icon = IconType.font
             }
         }
@@ -121,19 +119,6 @@ App {
         console.log("Portrait changed " + portrait)
     }
 
-    Timer {
-        id: _autoTimer
-        interval: 2000
-        running: false
-        repeat: true
-        onTriggered: {
-            _fruitPage.incrementCurrentIndex()
-            _fruitPage.positionViewAtIndex(_fruitPage.currentIndex,
-                                           ListView.Center)
-            _fruitPage.item.state = "maximized"
-            //            _fruitPage.normalFruitClicked()
-        }
-    }
 
     Timer {
         id: _cppInterfaceReconnectTimer
@@ -159,7 +144,7 @@ App {
             id: _normal
             DSM.SignalTransition {
                 targetState: _currentIndexing
-                signal : _btnAuto.clicked()
+                signal : _btnAuto.clicked
             }
 
             onEntered: {
@@ -171,11 +156,11 @@ App {
 
             DSM.TimeoutTransition {
                 targetState: _maxmized
-                timeout: 500
+                timeout: 1000
             }
 
             onEntered: {
-                console.log("_currentIndexing")
+                console.log("currentIndexing")
                 _fruitPage.incrementCurrentIndex()
                 _fruitPage.positionViewAtIndex(_fruitPage.currentIndex,
                                                ListView.Center)
@@ -186,7 +171,7 @@ App {
 
             DSM.TimeoutTransition {
                 targetState: _speaking
-                timeout: 500
+                timeout: 1000
             }
 
             onEntered: {
@@ -203,8 +188,8 @@ App {
             }
 
             onEntered: {
-                console.log("speaking")
-                _cppInterface.speechObj.speak(fruitName)
+                console.log("speaking " )
+//                _cppInterface.speechObj.speak(fruitName)
 
             }
         }
@@ -212,8 +197,12 @@ App {
             id: _normalized
 
             DSM.TimeoutTransition {
-                targetState: _normal
-                timeout: 500
+                targetState: _currentIndexing
+                timeout: 1000
+            }
+            onEntered: {
+                console.log("normalized")
+                _fruitPage.item.state = "normalized"
             }
         }
     }
