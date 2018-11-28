@@ -40,20 +40,13 @@ App {
         }
     }
 
-    FruitPage {
-        id: _fruitPage
-        model: JSON.parse(_cppInterface.speechObj.fruitList)
-        onMaxFruitClicked: {
-            _cppInterface.speechObj.speak(fruitName)
-        }
-    }
     AdBanner {
         id: _adBanner
         anchors.bottom: parent.bottom
     }
     Page {
         id: _naviWndContainer
-        visible: false
+        visible: true
         anchors.bottom: _adBanner.top
         clip: true
         Navigation {
@@ -63,9 +56,9 @@ App {
                 title: "과일"
                 icon: IconType.heart
 
-                //                Loader {
-                //                    sourceComponent: fruitPage
-                //                }
+                Loader {
+                    sourceComponent: fruitPage
+                }
             }
             NavigationItem {
                 title: "설정"
@@ -105,10 +98,12 @@ App {
         onClicked: {
             if (running == false) {
                 console.log("automated on")
+                fruitPage.triggerAutomatedScroll()
                 running = true
                 icon = IconType.close
             } else {
                 console.log("automated off")
+                fruitPage.triggerAutomatedScroll()
                 running = false
                 icon = IconType.font
             }
@@ -136,76 +131,6 @@ App {
     }
 
 
-    DSM.StateMachine {
-        id: _automatedScrollDSM
-        initialState: _normal
-        running: true
-        DSM.State{
-            id: _normal
-            DSM.SignalTransition {
-                targetState: _currentIndexing
-                signal : _btnAuto.clicked
-            }
-
-            onEntered: {
-                console.log("normal")
-            }
-        }
-        DSM.State{
-            id: _currentIndexing
-
-            DSM.TimeoutTransition {
-                targetState: _maxmized
-                timeout: 1000
-            }
-
-            onEntered: {
-                console.log("currentIndexing")
-                _fruitPage.incrementCurrentIndex()
-                _fruitPage.positionViewAtIndex(_fruitPage.currentIndex,
-                                               ListView.Center)
-            }
-        }
-        DSM.State{
-            id: _maxmized
-
-            DSM.TimeoutTransition {
-                targetState: _speaking
-                timeout: 1000
-            }
-
-            onEntered: {
-                console.log("maxmized")
-                _fruitPage.item.state = "maximized"
-            }
-        }
-        DSM.State{
-            id: _speaking
-
-            DSM.TimeoutTransition {
-                targetState: _normalized
-                timeout: 2000
-            }
-
-            onEntered: {
-                console.log("speaking " )
-//                _cppInterface.speechObj.speak(fruitName)
-
-            }
-        }
-        DSM.State{
-            id: _normalized
-
-            DSM.TimeoutTransition {
-                targetState: _currentIndexing
-                timeout: 1000
-            }
-            onEntered: {
-                console.log("normalized")
-                _fruitPage.item.state = "normalized"
-            }
-        }
-    }
 
     onApplicationPaused: {
         console.log("paused")
