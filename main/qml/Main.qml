@@ -39,9 +39,6 @@ App {
 
         property Component fruitPage: FruitPage {
             model: JSON.parse(_cppInterface.speechObj.fruitList)
-//            onMaxFruitClicked: {
-//                _cppInterface.speechObj.speak(fruitName)
-//            }
             Component.onCompleted: {
                 _fruitPage.toggle.connect( triggerAutomatedScroll )
             }
@@ -107,13 +104,13 @@ App {
         onClicked: {
             if (running == false) {
                 console.log("automated on")
-                _fruitPage.toggle()
                 running = true
+                _fruitPage.toggle()
                 icon = IconType.close
             } else {
+                running = false
                 console.log("automated off")
                 _fruitPage.toggle()
-                running = false
                 icon = IconType.font
             }
         }

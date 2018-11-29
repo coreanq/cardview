@@ -8,6 +8,32 @@ AppListView {
     anchors.fill: parent
     signal triggerAutomatedScroll()
 
+    highlightMoveVelocity: 20
+    flickDeceleration: 50
+    spacing: 30
+//    Component {
+//         id: highlight
+//         Rectangle {
+//             width: currentItem.width; height: currentItem.height
+//             color: "lightsteelblue"; radius: 40
+//             y: currentItem.y
+//             Behavior on y {
+//                 SpringAnimation {
+//                     spring: 3
+//                     damping: 0.2
+//                 }
+//             }
+//         }
+//     }
+
+//    highlight: highlight
+//     highlightFollowsCurrentItem: false
+    Behavior on contentY {
+                 SpringAnimation {
+                     spring: 3
+                     damping: 0.2
+                 }
+             }
     DSM.StateMachine {
         id: _automatedScrollDSM
         initialState: _standby
@@ -24,6 +50,7 @@ AppListView {
             }
             onExited: {
                 currentItem.state = "normalized"
+                currentIndex = 0;
             }
         }
         DSM.State {
@@ -37,7 +64,6 @@ AppListView {
             onExited: {
                 console.log("_running exiting")
                 currentItem.state = "normalized"
-
             }
 
             DSM.State{
@@ -50,8 +76,10 @@ AppListView {
 
                 onEntered: {
 //                    console.log("currentIndexing")
-                    incrementCurrentIndex()
                     positionViewAtIndex(currentIndex, ListView.Center)
+                }
+                onExited: {
+
                 }
             }
             DSM.State{
@@ -77,7 +105,7 @@ AppListView {
 
                 onEntered: {
                     console.log("speaking " )
-                    maxFruitClicked(currentItem.name)
+                    _cppInterface.speechObj.speak(currentItem.name)
                 }
             }
             DSM.State{
@@ -90,6 +118,7 @@ AppListView {
                 onEntered: {
 //                    console.log("normalized")
                     currentItem.state = "normalized"
+                    incrementCurrentIndex()
                 }
             }
         }
