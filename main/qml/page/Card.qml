@@ -4,20 +4,20 @@ import "../helper"
 
 Item {
     id: _root
-    signal maxFruitClicked(string fruitName)
-
     // use attached property when it use for ListView
     property Component cardItem: Rectangle {
         id: _item
         property var parentListView: _item.ListView.view
         property string name: model.modelData.korean
         property string imgName: Constants.assetsPath + model.modelData.front_img_name
+        property bool isCurrentItem : _item.ListView.isCurrentItem
 
         width: parentListView.width
         height: parentListView.height * 0.65
 
         color: "white"
         radius: 40
+//        border.color: isCurrentItem ? "gray" : "blue"
         border.color: "gray"
 
         //            Component.onCompleted: {
@@ -66,7 +66,7 @@ Item {
             anchors.fill: parent
             visible: false
             onTopbottomSwipe: {
-                console.log(moveRatio)
+//                console.log(moveRatio)
                 if (1 - moveRatio < 0.8) {
                     _item.state = "normalized"
                 } else if (1 - moveRatio < 0.95)
@@ -74,14 +74,14 @@ Item {
                     _item.scale = 1 - moveRatio
             }
             onBottomtopSwipe: {
-                console.log(moveRatio)
+//                console.log(moveRatio)
                 if (1 - moveRatio < 0.8) {
                     _item.state = "normalized"
                 } else if (1 - moveRatio < 0.95)
                     _item.scale = 1 - moveRatio
             }
             onClicked: {
-                _root.maxFruitClicked(_item.name)
+                _cppInterface.speechObj.speak(_item.name)
                 console.log("clicked " + _item.name)
             }
             onReleased: {

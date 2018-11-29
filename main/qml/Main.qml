@@ -59,8 +59,16 @@ App {
             id: _naviWnd
             navigationMode: navigationModeDrawer
             NavigationItem {
-                title: "과일"
-                icon: IconType.heart
+                title: "야채와 과일"
+                icon: IconType.apple
+
+                Loader {
+                    sourceComponent: _fruitPage.fruitPage
+                }
+            }
+            NavigationItem {
+                title: "동물"
+                icon: IconType.githubalt
 
                 Loader {
                     sourceComponent: _fruitPage.fruitPage
@@ -80,17 +88,11 @@ App {
     }
     FloatingActionButton {
         id: _btnDrawer
-        icon: IconType.wrench
+        icon: IconType.cog
         visible: true
         anchors.bottom: _naviWndContainer.bottom
         onClicked: {
             _naviWnd.drawer.toggle()
-        }
-        Rectangle {
-            anchors.fill: parent
-            visible: false
-            color: "black"
-            opacity: 0.5
         }
     }
 
@@ -100,7 +102,8 @@ App {
         id: _btnAuto
         icon: IconType.font
         visible: true
-        anchors.bottom: _btnDrawer.top
+        anchors.right: _btnDrawer.left
+        anchors.bottom: _adBanner.top
         onClicked: {
             if (running == false) {
                 console.log("automated on")

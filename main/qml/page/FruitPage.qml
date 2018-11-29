@@ -8,9 +8,7 @@ AppListView {
     anchors.fill: parent
     signal triggerAutomatedScroll()
 
-    highlightMoveVelocity: 20
-    flickDeceleration: 50
-    spacing: 30
+    spacing: 20
 //    Component {
 //         id: highlight
 //         Rectangle {
@@ -28,12 +26,7 @@ AppListView {
 
 //    highlight: highlight
 //     highlightFollowsCurrentItem: false
-    Behavior on contentY {
-                 SpringAnimation {
-                     spring: 3
-                     damping: 0.2
-                 }
-             }
+
     DSM.StateMachine {
         id: _automatedScrollDSM
         initialState: _standby
@@ -78,9 +71,6 @@ AppListView {
 //                    console.log("currentIndexing")
                     positionViewAtIndex(currentIndex, ListView.Center)
                 }
-                onExited: {
-
-                }
             }
             DSM.State{
                 id: _maxmized
@@ -116,9 +106,13 @@ AppListView {
                     timeout: 1000
                 }
                 onEntered: {
+                    var previousIndex = currentIndex
 //                    console.log("normalized")
                     currentItem.state = "normalized"
                     incrementCurrentIndex()
+                    if( previousIndex == currentIndex ) {
+                        _root.triggerAutomatedScroll()
+                    }
                 }
             }
         }
