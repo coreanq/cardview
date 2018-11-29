@@ -23,7 +23,7 @@ AppListView {
                 console.log("standby")
             }
             onExited: {
-                _item_container.state = "normalized"
+                currentItem.state = "normalized"
             }
         }
         DSM.State {
@@ -36,7 +36,7 @@ AppListView {
             }
             onExited: {
                 console.log("_running exiting")
-                _item_container.state = "normalized"
+                currentItem.state = "normalized"
 
             }
 
@@ -64,7 +64,7 @@ AppListView {
 
                 onEntered: {
 //                    console.log("maxmized")
-                   _item_container.state = "maximized"
+                   currentItem.state = "maximized"
                 }
             }
             DSM.State{
@@ -77,7 +77,7 @@ AppListView {
 
                 onEntered: {
                     console.log("speaking " )
-                    maxFruitClicked(_item.name)
+                    maxFruitClicked(currentItem.name)
                 }
             }
             DSM.State{
@@ -89,7 +89,7 @@ AppListView {
                 }
                 onEntered: {
 //                    console.log("normalized")
-                    _item_container.state = "normalized"
+                    currentItem.state = "normalized"
                 }
             }
         }
