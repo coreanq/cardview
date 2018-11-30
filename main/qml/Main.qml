@@ -35,7 +35,7 @@ App {
     }
     JSONListModel {
         id: _modelItems
-        json: _cppInterface.speechObj.fruitList
+        json: _cppInterface.cardList
         query: ""
         onJsonChanged: {
             console.log(json)

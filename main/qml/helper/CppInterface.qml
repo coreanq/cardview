@@ -40,7 +40,7 @@ WebSocket {
                 // cpp main object
                 speechObj = ch.objects.speech
                 voiceLanguageList = Qt.binding( function() { return speechObj.voiceLanguageList } )
-                voiceTypeList = Qt.binding( function() { return _speechObj.voiceTypeList } )
+                voiceTypeList = Qt.binding( function() { return speechObj.voiceTypeList } )
                 cardList = Qt.binding( function() { return speechObj.cardList } )
 
                 // c++ property 의 경우  client side 에서 cache 되므로 변경시 강제 업데이트 수행

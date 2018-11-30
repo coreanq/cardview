@@ -52,7 +52,6 @@ class Speech : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isDebug MEMBER m_isDebug NOTIFY DebugChanged)
-    Q_PROPERTY(QString fruitList MEMBER m_fruitList NOTIFY fruitListChanged)
     Q_PROPERTY(QString voiceLanguageList MEMBER m_voiceLanguageList NOTIFY voiceLanguageListChanged)
     Q_PROPERTY(QString voiceTypeList MEMBER m_voiceTypeList NOTIFY voiceTypeListChanged)
     Q_PROPERTY(QString cardList MEMBER m_cardList NOTIFY cardListChanged)
@@ -72,7 +71,7 @@ signals:
     void fruitListChanged();
     void voiceTypeListChanged();
     void voiceLanguageListChanged();
-    void voicecardListChanged();
+    void cardListChanged();
     void voiceRateChanged();
     void voicePitchChanged();
 

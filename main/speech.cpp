@@ -147,6 +147,7 @@ Speech::Speech(QObject *parent)
 
     // make jsarray
     m_cardList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    emit cardListChanged();
 
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;
