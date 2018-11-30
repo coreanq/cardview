@@ -33,14 +33,47 @@ App {
             console.log(json)
         }
     }
+    JSONListModel {
+        id: _modelItems
+        json: _cppInterface.speechObj.fruitList
+        query: ""
+        onJsonChanged: {
+            console.log(json)
+        }
+    }
+
+//    SortFilterProxyModel {
+//        id: _modelAnminal
+//        sourceModel: _modelItems.model
+
+//        // configure filters
+//        filters: [
+//          ValueFilter {
+//            roleName: "type"
+//            value: "animal"
+//            enabled: true
+//          }
+//          ]
+//    }
+    SortFilterProxyModel {
+        id: _modelFruit
+        sourceModel: _modelItems.model
+
+        // configure filters
+        filters: [
+            ValueFilter {
+                roleName: "type"
+                value: "vegetable"
+            }
+        ]
+    }
     Item {
         id: _fruitPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
 
-        property Component fruitPage: FruitPage {
-            id: _item
-            model: JSON.parse(_cppInterface.speechObj.fruitList)
+        property Component list: FruitPage {
+            model: _modelItems
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
@@ -49,6 +82,20 @@ App {
         }
     }
 
+//    Item {
+//        id: _animalPage
+//        signal startAutomatedScroll()
+//        signal endAutomatedScroll()
+
+//        property Component list: FruitPage {
+//            model: JSON.parse(_cppInterface.speechObj.fruitList)
+//            Component.onCompleted: {
+//                _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
+//                _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
+//                automatedScrollEnded.connect(_btnAuto.clicked )
+//            }
+//        }
+//    }
 
     AdBanner {
         id: _adBanner
@@ -67,7 +114,7 @@ App {
                 icon: IconType.apple
 
                 Loader {
-                    sourceComponent: _fruitPage.fruitPage
+                    sourceComponent: _fruitPage.list
                 }
             }
             NavigationItem {
@@ -75,7 +122,7 @@ App {
                 icon: IconType.githubalt
 
                 Loader {
-                    sourceComponent: _fruitPage.fruitPage
+                    sourceComponent: _animalPage.list
                 }
             }
             NavigationItem {

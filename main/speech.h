@@ -55,6 +55,7 @@ class Speech : public QObject
     Q_PROPERTY(QString fruitList MEMBER m_fruitList NOTIFY fruitListChanged)
     Q_PROPERTY(QString voiceLanguageList MEMBER m_voiceLanguageList NOTIFY voiceLanguageListChanged)
     Q_PROPERTY(QString voiceTypeList MEMBER m_voiceTypeList NOTIFY voiceTypeListChanged)
+    Q_PROPERTY(QString cardList MEMBER m_cardList NOTIFY cardListChanged)
     Q_PROPERTY(int voiceRate MEMBER m_rate NOTIFY voiceRateChanged)
     Q_PROPERTY(int voicePitch MEMBER m_pitch NOTIFY voicePitchChanged)
 
@@ -71,6 +72,7 @@ signals:
     void fruitListChanged();
     void voiceTypeListChanged();
     void voiceLanguageListChanged();
+    void voicecardListChanged();
     void voiceRateChanged();
     void voicePitchChanged();
 
@@ -98,9 +100,9 @@ public slots:
 
 private:
     bool 	m_isDebug;
-    QString m_fruitList;
     QString m_voiceLanguageList;
     QString m_voiceTypeList;
+    QString m_cardList;
 
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;

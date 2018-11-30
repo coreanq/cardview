@@ -53,7 +53,7 @@ Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0),
     m_rate(0),
-    m_pitch(0)
+    m_pitch(-2)
 {
 
 #ifdef QT_DEBUG
@@ -146,7 +146,7 @@ Speech::Speech(QObject *parent)
     auto jsonDoc = QJsonDocument(jsonArray);
 
     // make jsarray
-    m_fruitList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    m_cardList = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
 
     foreach (QString engine, QTextToSpeech::availableEngines()){
         qDebug() << "engine name" << engine;

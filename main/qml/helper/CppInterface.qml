@@ -7,6 +7,7 @@ WebSocket {
     id: _root
     property var onmessage
     property var speechObj
+    property string cardList
     property string voiceTypeList
     property string voiceLanguageList
     signal connected()
@@ -29,7 +30,7 @@ WebSocket {
         case WebSocket.Error:
             console.log("Error: " + _root.errorString);
             break;
-        case WebSocket.Closed:
+        case WebSocket.Closed :
             console.log("Error: Socket at " + url + " closed.");
             break;
         case WebSocket.Open:
@@ -38,10 +39,11 @@ WebSocket {
                 console.log( url + " opened.");
                 // cpp main object
                 speechObj = ch.objects.speech
-                voiceLanguageList = speechObj.voiceLanguageList
-                voiceTypeList = speechObj.voiceTypeList
+                voiceLanguageList = Qt.binding( function() { return speechObj.voiceLanguageList } )
+                voiceTypeList = Qt.binding( function() { return _speechObj.voiceTypeList } )
+                cardList = Qt.binding( function() { return speechObj.cardList } )
 
-                // c++ property 의 경우  client side 에서  cache 되므로 변경시 강제 업데이트 수행
+                // c++ property 의 경우  client side 에서 cache 되므로 변경시 강제 업데이트 수행
                 //signal to signal connection
                 speechObj.voiceLanguageListChanged.connect( function() {
                     voiceLanguageList = speechObj.voiceLanguageList
@@ -50,7 +52,10 @@ WebSocket {
 
                 speechObj.voiceTypeListChanged.connect( function() {
                     voiceTypeList = speechObj.voiceTypeList
-//                    voiceTypeList = Qt.binding(function() { return speechObj.voiceTypeList } )
+                })
+
+                speechObj.cardListChanged.connect( function() {
+                    cardList = speechObj.cardList
                 })
                 // Invoke a method:
 //                foo.myMethod(arg1, arg2, function(returnValue) {
