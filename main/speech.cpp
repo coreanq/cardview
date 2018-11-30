@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
@@ -95,6 +95,36 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("grape,vegetable,포도");
     fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
+    fruitList << QString::fromUtf8("dog,animal,개");
+    fruitList << QString::fromUtf8("sheep,animal,양");
+    fruitList << QString::fromUtf8("mouse,animal,쥐");
+    fruitList << QString::fromUtf8("frog,animal,개구리");
+    fruitList << QString::fromUtf8("rabbit,animal,토끼");
+    fruitList << QString::fromUtf8("pig,animal,돼지");
+    fruitList << QString::fromUtf8("lion,animal,사자");
+    fruitList << QString::fromUtf8("whale,animal,고래");
+    fruitList << QString::fromUtf8("chicken,animal,닭");
+    fruitList << QString::fromUtf8("cat,animal,고양이");
+    fruitList << QString::fromUtf8("snake,animal,뱀");
+    fruitList << QString::fromUtf8("goose,animal,거위");
+    fruitList << QString::fromUtf8("cow,animal,소");
+    fruitList << QString::fromUtf8("horse,animal,말");
+    fruitList << QString::fromUtf8("donkey,animal,당나귀");
+    fruitList << QString::fromUtf8("camel,animal,낙타");
+    fruitList << QString::fromUtf8("crocodile,animal,악어");
+    fruitList << QString::fromUtf8("pandas,animal,팬더");
+    fruitList << QString::fromUtf8("elephant,animal,코끼리");
+    fruitList << QString::fromUtf8("bear,animal,곰");
+    fruitList << QString::fromUtf8("giraffe,animal,기린");
+    fruitList << QString::fromUtf8("fox,animal,여우");
+    fruitList << QString::fromUtf8("wolf,animal,늑대");
+    fruitList << QString::fromUtf8("cheetah,animal,치타");
+    fruitList << QString::fromUtf8("tiger,animal,호랑이");
+    fruitList << QString::fromUtf8("rhino,animal,코뿔소");
+    fruitList << QString::fromUtf8("zebra,animal,얼룩말");
+    fruitList << QString::fromUtf8("squirrel,animal,다람쥐");
+    fruitList << QString::fromUtf8("skunk,animal,스컹크");
+    fruitList << QString::fromUtf8("raccoon,animal,너구리");
 
     auto jsonArray = QJsonArray();
     foreach (QString item, fruitList){
