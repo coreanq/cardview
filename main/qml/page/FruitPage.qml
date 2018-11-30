@@ -125,6 +125,6 @@ AppListView {
         }
     }
 
-    Card { id: _card  }
+    Card { id: _card }
     delegate: _card.cardItem
 }

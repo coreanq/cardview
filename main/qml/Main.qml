@@ -34,11 +34,11 @@ App {
         }
     }
     JSONListModel {
-        id: _modelItems
+        id: _cardModel
         json: _cppInterface.cardList
         query: ""
         onJsonChanged: {
-            console.log(json)
+//            console.log(json)
         }
     }
 
@@ -55,25 +55,25 @@ App {
 //          }
 //          ]
 //    }
-    SortFilterProxyModel {
-        id: _modelFruit
-        sourceModel: _modelItems.model
+//    SortFilterProxyModel {
+//        id: _modelFruit
+//        sourceModel: _modelItems.model
 
-        // configure filters
-        filters: [
-            ValueFilter {
-                roleName: "type"
-                value: "vegetable"
-            }
-        ]
-    }
+//        // configure filters
+//        filters: [
+//            ValueFilter {
+//                roleName: "type"
+//                value: "vegetable"
+//            }
+//        ]
+//    }
     Item {
         id: _fruitPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
-            model: _modelItems
+            model: _cardModel.model
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )

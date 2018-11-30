@@ -4,12 +4,13 @@ import "../helper"
 
 Item {
     id: _root
+    property ListModel cardModel
     // use attached property when it use for ListView
     property Component cardItem: Rectangle {
         id: _item
         property var parentListView: _item.ListView.view
-        property string name: model.modelData.korean
-        property string imgName: Constants.assetsPath + model.modelData.front_img_name
+        property string name: korean
+        property string imgName: Constants.assetsPath + front_img_name
         property bool isCurrentItem : _item.ListView.isCurrentItem
 
         width: parentListView.width
