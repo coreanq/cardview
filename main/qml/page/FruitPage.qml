@@ -6,7 +6,9 @@ import "../helper"
 AppListView {
     id: _root
     anchors.fill: parent
-    signal triggerAutomatedScroll()
+    signal startAutomatedScroll()
+    signal endAutomatedScroll()
+    signal automatedScrollEnded()
 
     spacing: 20
 //    Component {
@@ -35,7 +37,7 @@ AppListView {
             id: _standby
             DSM.SignalTransition {
                 targetState: _running
-                signal : triggerAutomatedScroll
+                signal : startAutomatedScroll
             }
 
             onEntered: {
@@ -43,7 +45,7 @@ AppListView {
             }
             onExited: {
                 currentItem.state = "normalized"
-                currentIndex = 0;
+                currentIndex = 25;
             }
         }
         DSM.State {
@@ -51,7 +53,12 @@ AppListView {
             initialState: _currentIndexing
             DSM.SignalTransition {
                 targetState: _standby
-                signal : triggerAutomatedScroll
+                signal : automatedScrollEnded
+
+            }
+            DSM.SignalTransition {
+                targetState: _standby
+                signal : endAutomatedScroll
 
             }
             onExited: {
@@ -111,7 +118,7 @@ AppListView {
                     currentItem.state = "normalized"
                     incrementCurrentIndex()
                     if( previousIndex == currentIndex ) {
-                        _root.triggerAutomatedScroll()
+                        _root.automatedScrollEnded()
                     }
                 }
             }

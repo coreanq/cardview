@@ -35,12 +35,16 @@ App {
     }
     Item {
         id: _fruitPage
-        signal toggle()
+        signal startAutomatedScroll()
+        signal endAutomatedScroll()
 
         property Component fruitPage: FruitPage {
+            id: _item
             model: JSON.parse(_cppInterface.speechObj.fruitList)
             Component.onCompleted: {
-                _fruitPage.toggle.connect( triggerAutomatedScroll )
+                _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
+                _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
+                automatedScrollEnded.connect(_btnAuto.clicked )
             }
         }
     }
@@ -108,12 +112,12 @@ App {
             if (running == false) {
                 console.log("automated on")
                 running = true
-                _fruitPage.toggle()
+                _fruitPage.startAutomatedScroll()
                 icon = IconType.close
             } else {
                 running = false
                 console.log("automated off")
-                _fruitPage.toggle()
+                _fruitPage.endAutomatedScroll()
                 icon = IconType.font
             }
         }
