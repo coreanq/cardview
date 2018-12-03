@@ -45,7 +45,7 @@ AppListView {
             }
             onExited: {
                 currentItem.state = "normalized"
-                currentIndex = 25;
+                currentIndex = 0;
             }
         }
         DSM.State {

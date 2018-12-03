@@ -9,6 +9,7 @@ App {
     id: _main
     visible: true
     licenseKey: Constants.vplaylicenseKey
+    property var pageList: []
 
     CppInterface {
         id: _cppInterface
@@ -93,6 +94,20 @@ App {
         }
     }
 
+    Item {
+        id: _settingPage
+        SettingView {
+            anchors.fill: parent
+            voiceLanguageViewModel: _voiceLanguageModel.model
+            voiceTypeViewModel: _voiceTypeModel.model
+        }
+    }
+
+    Component.onCompleted: {
+        pageList = [_fruitPage, _animalPage, _settingPage]
+    }
+
+
     AdBanner {
         id: _adBanner
         anchors.bottom: parent.bottom
@@ -101,6 +116,7 @@ App {
         id: _naviWndContainer
         visible: true
         anchors.bottom: _adBanner.top
+        property alias currentIndex : _naviWnd.currentIndex
         clip: true
         Navigation {
             id: _naviWnd
@@ -124,12 +140,13 @@ App {
             NavigationItem {
                 title: "설정"
                 icon: IconType.cog
-
-                SettingView {
-                    anchors.fill: parent
-                    voiceLanguageViewModel: _voiceLanguageModel.model
-                    voiceTypeViewModel: _voiceTypeModel.model
+                Loader {
+                    sourceComponent: _settingPage.page
                 }
+
+            }
+            onCurrentIndexChanged: {
+                _naviWndContainer.currentIndexChanged(currentIndex)
             }
         }
     }
@@ -151,19 +168,6 @@ App {
         visible: true
         anchors.right: _btnDrawer.left
         anchors.bottom: _adBanner.top
-        onClicked: {
-            if (running == false) {
-                console.log("automated on")
-                running = true
-                _fruitPage.startAutomatedScroll()
-                icon = IconType.close
-            } else {
-                running = false
-                console.log("automated off")
-                _fruitPage.endAutomatedScroll()
-                icon = IconType.font
-            }
-        }
     }
     // 가로 보기시
     onPortraitChanged: {
@@ -186,6 +190,45 @@ App {
         }
     }
 
+    DSM.StateMachine {
+        id: _MainDSM
+        initialState: _standby
+        running: true
+        DSM.State{
+            id: _standby
+            DSM.SignalTransition {
+                targetState: _automatedRunning
+                signal : _btnAuto.clicked
+            }
+
+            onEntered: {
+                console.log("standby")
+                _btnAuto.icon = IconType.font
+
+                console.log(pageList)
+                for ( var i = 0; i < pageList.length; i ++ ) {
+                    pageList[i].endAutomatedScroll()
+                }
+
+            }
+        }
+        DSM.State {
+            id: _automatedRunning
+            DSM.SignalTransition {
+                targetState: _standby
+                signal : _btnAuto.clicked
+            }
+            DSM.SignalTransition {
+                targetState: _standby
+                signal : _naviWndContainer.currentIndexChanged
+            }
+            onEntered: {
+                console.log("automatedRunning")
+                _btnAuto.icon = IconType.close
+                pageList[_naviWndContainer.currentIndex].startAutomatedScroll()
+            }
+        }
+    }
 
 
     onApplicationPaused: {
