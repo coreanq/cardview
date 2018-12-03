@@ -233,7 +233,7 @@ void Speech::engineSelected(QString engineName)
         //qDebug() << itemSplit;
         auto jsonObj = QJsonObject();
         jsonObj["language"] = itemSplit.at(0).trimmed();
-        jsonObj["selected"] = itemSplit.at(1).trimmed() == "true" ?  true : false;
+        jsonObj["current"] = itemSplit.at(1).trimmed() == "true" ?  true : false;
 
 //        qDebug() << jsonObj.value("korean").toString();
 
@@ -268,10 +268,10 @@ void Speech::languageSelected(int index)
             auto jsonObj = jsonArray[i].toObject(); // no refernece value
 //            qDebug() << Q_FUNC_INFO << index << jsonObj["language"].toString();
             if( i == index ){
-                jsonObj["selected"] = true;
+                jsonObj["current"] = true;
             }
             else{
-                jsonObj["selected"] = false;
+                jsonObj["current"] = false;
             }
             jsonArray[i] = jsonObj;
         }
@@ -320,7 +320,7 @@ void Speech::makeVoiceTypeList()
         jsonObj["name"] = itemSplit.at(0).trimmed();
         jsonObj["gender"] = itemSplit.at(1).trimmed();
         jsonObj["age"] = itemSplit.at(2).trimmed();
-        jsonObj["selected"] = itemSplit.at(3).trimmed() == "true" ? true : false;
+        jsonObj["current"] = itemSplit.at(3).trimmed() == "true" ? true : false;
 
 //        qDebug() << jsonObj.value("korean").toString();
 
