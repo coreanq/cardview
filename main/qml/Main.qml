@@ -42,38 +42,34 @@ App {
         }
     }
 
-//    SortFilterProxyModel {
-//        id: _modelAnminal
-//        sourceModel: _modelItems.model
+    SortFilterProxyModel {
+        id: _modelAnminal
+        sourceModel: _cardModel.model
 
-//        // configure filters
-//        filters: [
-//          ValueFilter {
-//            roleName: "type"
-//            value: "animal"
-//            enabled: true
-//          }
-//          ]
-//    }
-//    SortFilterProxyModel {
-//        id: _modelFruit
-//        sourceModel: _modelItems.model
+        // configure filters
+        filters: ValueFilter {
+            roleName: "type"
+            value: "animal"
+        }
+    }
+    SortFilterProxyModel {
+        id: _modelFruit
+        sourceModel: _cardModel.model
 
-//        // configure filters
-//        filters: [
-//            ValueFilter {
-//                roleName: "type"
-//                value: "vegetable"
-//            }
-//        ]
-//    }
+        // configure filters
+        filters: ValueFilter {
+                roleName: "type"
+                value: "vegetable"
+        }
+
+    }
     Item {
         id: _fruitPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
-            model: _cardModel.model
+            model: _modelFruit
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
@@ -82,20 +78,20 @@ App {
         }
     }
 
-//    Item {
-//        id: _animalPage
-//        signal startAutomatedScroll()
-//        signal endAutomatedScroll()
+    Item {
+        id: _animalPage
+        signal startAutomatedScroll()
+        signal endAutomatedScroll()
 
-//        property Component list: FruitPage {
-//            model: JSON.parse(_cppInterface.speechObj.fruitList)
-//            Component.onCompleted: {
-//                _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
-//                _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
-//                automatedScrollEnded.connect(_btnAuto.clicked )
-//            }
-//        }
-//    }
+        property Component list: FruitPage {
+            model: _modelAnminal
+            Component.onCompleted: {
+                _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
+                _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
+                automatedScrollEnded.connect(_btnAuto.clicked )
+            }
+        }
+    }
 
     AdBanner {
         id: _adBanner
