@@ -103,7 +103,6 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("pig,animal,돼지");
     fruitList << QString::fromUtf8("lion,animal,사자");
     fruitList << QString::fromUtf8("whale,animal,고래");
-    fruitList << QString::fromUtf8("chicken,animal,닭");
     fruitList << QString::fromUtf8("cat,animal,고양이");
     fruitList << QString::fromUtf8("snake,animal,뱀");
     fruitList << QString::fromUtf8("goose,animal,거위");
@@ -211,18 +210,25 @@ void Speech::engineSelected(QString engineName)
         m_speech = new QTextToSpeech(engineName, this);
 
     auto voiceLanguageList = QStringList();
-    m_locales = m_speech->availableLocales();
-
     auto currentLocale = m_speech->locale();
 
     // make back data
-    foreach (const QLocale &locale, m_locales) {
-        voiceLanguageList.append(
+    foreach (const QLocale &locale, m_speech->availableLocales() ) {
+        auto languageType =
             QString::fromUtf8("%1 %2,%3")
                  .arg(QLocale::languageToString(locale.language()))
                  .arg(QLocale::countryToString(locale.country()))
-                 .arg(currentLocale == locale ? "true" : "false")
-            );
+                 .arg(currentLocale == locale ? "true" : "false");
+
+        if(
+            languageType.contains("English") == true ||
+            languageType.contains("Korean") == true ||
+            languageType.contains("Japanese") == true ||
+            languageType.contains("Chinese") == true
+                ){
+            m_locales.append(locale);
+            voiceLanguageList.append( languageType );
+        }
     }
 
 
