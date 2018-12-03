@@ -57,7 +57,7 @@ Item {
         delegate: SimpleRow {
             id: row
             property string roleLanguage : language
-            property bool roleSelected : selected
+            property bool roleSelected : current
             text: roleLanguage
             style.showDisclosure: false // disble right arrow in ios
             Icon {
@@ -66,7 +66,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 icon: IconType.check
                 size: dp(14)
-                visible: selected
+                visible: roleSelected
             }
             onSelected: {
                 // do not modify cpp models data
@@ -85,7 +85,7 @@ Item {
         model: voiceTypeViewModel
         delegate: SimpleRow {
             property string roleTypeName : name
-            property bool roleSelected : selected
+            property bool roleSelected : current
             text: roleTypeName
             style.showDisclosure: false // disble right arrow in ios
             Icon {
@@ -94,7 +94,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 icon: IconType.check
                 size: dp(14)
-                visible: selected
+                visible: roleSelected
             }
             onSelected: {
                 // do not modify cpp models data
@@ -112,6 +112,7 @@ Item {
             anchors.centerIn: parent
             Column {
                 // show slider
+                visible: false
                 AppSlider {
                     id: _rateSlider
                     onPositionChanged: {
@@ -126,7 +127,7 @@ Item {
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Rate: " + (Math.round(
+                    text: "rate: " + (Math.round(
                                           _rateSlider.position * 20) - 10)
                 }
             } // column
@@ -146,7 +147,7 @@ Item {
                 // display slider position
                 AppText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Pitch: " + (Math.round(
+                    text: "음높이: " + (Math.round(
                                            _pitchSlider.position * 20) - 10)
                 }
             } // Column
