@@ -96,7 +96,7 @@ App {
 
     Item {
         id: _settingPage
-        SettingView {
+        property Component page: SettingView {
             anchors.fill: parent
             voiceLanguageViewModel: _voiceLanguageModel.model
             voiceTypeViewModel: _voiceTypeModel.model

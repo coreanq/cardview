@@ -27,12 +27,16 @@ Item {
         Image {
             id: _item_image
             anchors.centerIn: parent
-            width: parent.width * 0.815
-            height: parent.height * 0.815
+//            width: parent.width * 0.815
+//            height: parent.height * 0.815
 
             clip: true
             source: Qt.resolvedUrl(_item.imgName)
             fillMode: Image.PreserveAspectFit
+            Component.onCompleted:  {
+                width = parent.width * 0.815
+                height = parent.height * 0.815
+            }
         }
         Text {
             id: _item_text
