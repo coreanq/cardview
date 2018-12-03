@@ -52,8 +52,8 @@
 Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0),
-    m_rate(0),
-    m_pitch(-2)
+    m_rate(-1),
+    m_pitch(-4)
 {
 
 #ifdef QT_DEBUG
