@@ -117,10 +117,11 @@ App {
         visible: true
         anchors.bottom: _adBanner.top
         property alias currentIndex : _naviWnd.currentIndex
+        property alias drawer : _naviWnd.drawer
         clip: true
         Navigation {
             id: _naviWnd
-            navigationMode: navigationModeDrawer
+            navigationMode: navigationModeTabs
             NavigationItem {
                 title: "야채와 과일"
                 icon: IconType.apple
@@ -149,25 +150,25 @@ App {
                 _naviWndContainer.currentIndexChanged(currentIndex)
             }
         }
-    }
-    FloatingActionButton {
-        id: _btnDrawer
-        icon: IconType.cog
-        visible: true
-        anchors.bottom: _naviWndContainer.bottom
-        onClicked: {
-            _naviWnd.drawer.toggle()
-        }
-    }
+//        FloatingActionButton {
+//            id: _btnDrawer
+//            icon: IconType.cog
+//            visible: true
+//            y:  _naviWnd.drawer.y - _naviWnd.drawer.height - 100
+//            onClicked: {
+//                _naviWnd.drawer.toggle()
+//            }
+//        }
 
-    // auto mated list scrolling
-    FloatingActionButton {
-        property bool running: false
-        id: _btnAuto
-        icon: IconType.font
-        visible: true
-        anchors.right: _btnDrawer.left
-        anchors.bottom: _adBanner.top
+        // auto mated list scrolling
+        FloatingActionButton {
+            property bool running: false
+            id: _btnAuto
+            icon: IconType.font
+            visible: true
+            anchors.right: parent.right
+            anchors.bottom: _naviWnd.drawer.top
+        }
     }
     // 가로 보기시
     onPortraitChanged: {
