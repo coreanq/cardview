@@ -167,7 +167,8 @@ App {
             icon: IconType.font
             visible: true
             anchors.right: parent.right
-            anchors.bottom: _naviWnd.tabs.top
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: dp(50)
         }
     }
     // 가로 보기시
