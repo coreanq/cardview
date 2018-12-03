@@ -52,7 +52,7 @@
 Speech::Speech(QObject *parent)
     : QObject(parent),
     m_speech(0),
-    m_rate(-1),
+    m_rate(0),
     m_pitch(-4)
 {
 
@@ -96,17 +96,17 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
     fruitList << QString::fromUtf8("dog,animal,개");
-    fruitList << QString::fromUtf8("sheep,animal,양");
-    fruitList << QString::fromUtf8("mouse,animal,쥐");
     fruitList << QString::fromUtf8("frog,animal,개구리");
     fruitList << QString::fromUtf8("rabbit,animal,토끼");
     fruitList << QString::fromUtf8("pig,animal,돼지");
     fruitList << QString::fromUtf8("lion,animal,사자");
+    fruitList << QString::fromUtf8("sheep,animal,양");
     fruitList << QString::fromUtf8("whale,animal,고래");
     fruitList << QString::fromUtf8("cat,animal,고양이");
     fruitList << QString::fromUtf8("snake,animal,뱀");
     fruitList << QString::fromUtf8("goose,animal,거위");
-    fruitList << QString::fromUtf8("cow,animal,소");
+    //fruitList << QString::fromUtf8("cow,animal,소");
+    fruitList << QString::fromUtf8("deer,animal,사슴");
     fruitList << QString::fromUtf8("horse,animal,말");
     fruitList << QString::fromUtf8("donkey,animal,당나귀");
     fruitList << QString::fromUtf8("camel,animal,낙타");
@@ -119,8 +119,10 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("wolf,animal,늑대");
     fruitList << QString::fromUtf8("cheetah,animal,치타");
     fruitList << QString::fromUtf8("tiger,animal,호랑이");
+    fruitList << QString::fromUtf8("mouse,animal,쥐");
     fruitList << QString::fromUtf8("rhino,animal,코뿔소");
     fruitList << QString::fromUtf8("zebra,animal,얼룩말");
+    fruitList << QString::fromUtf8("monkey,animal,원숭이");
     fruitList << QString::fromUtf8("squirrel,animal,다람쥐");
     fruitList << QString::fromUtf8("skunk,animal,스컹크");
     fruitList << QString::fromUtf8("raccoon,animal,너구리");
@@ -214,6 +216,10 @@ void Speech::engineSelected(QString engineName)
 
     // make back data
     foreach (const QLocale &locale, m_speech->availableLocales() ) {
+
+        if( QLocale::languageToString(locale.language() ).contains("Korean") == true ){
+            currentLocale = locale;
+        }
         auto languageType =
             QString::fromUtf8("%1 %2,%3")
                  .arg(QLocale::languageToString(locale.language()))
@@ -229,6 +235,7 @@ void Speech::engineSelected(QString engineName)
             m_locales.append(locale);
             voiceLanguageList.append( languageType );
         }
+
     }
 
 
@@ -258,6 +265,8 @@ void Speech::engineSelected(QString engineName)
     connect(m_speech, &QTextToSpeech::localeChanged, this, &Speech::localeChanged);
 
     localeChanged(currentLocale);
+    setPitch(m_pitch );
+    setRate(m_rate);
 }
 
 void Speech::languageSelected(int index)

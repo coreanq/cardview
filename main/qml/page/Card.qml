@@ -53,6 +53,8 @@ Item {
             icon: IconType.close
             anchors.right: parent.right
             anchors.top: parent.top
+            anchors.margins: 10
+            scale: 2
             onClicked: {
                 console.log("normal")
                 _item.state = "normalized"
@@ -72,7 +74,7 @@ Item {
             visible: false
             onTopbottomSwipe: {
 //                console.log(moveRatio)
-                if (1 - moveRatio < 0.8) {
+                if (1 - moveRatio < 0.85) {
                     _item.state = "normalized"
                 } else if (1 - moveRatio < 0.95)
                     // do not affect when click input captured
@@ -80,7 +82,7 @@ Item {
             }
             onBottomtopSwipe: {
 //                console.log(moveRatio)
-                if (1 - moveRatio < 0.8) {
+                if (1 - moveRatio < 0.85) {
                     _item.state = "normalized"
                 } else if (1 - moveRatio < 0.95)
                     _item.scale = 1 - moveRatio
