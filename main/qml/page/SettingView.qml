@@ -35,7 +35,7 @@ Item {
                 "group": "음성"
             }, {
                 "text": "특성",
-                "icon": IconType.language,
+                "icon": IconType.barchart,
                 "group": "음성"
             }]
 
