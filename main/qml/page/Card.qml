@@ -54,6 +54,7 @@ Item {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.margins: 10
+            z: _maximized_mouse_area.z + 1
             scale: 2
             onClicked: {
                 console.log("normal")
