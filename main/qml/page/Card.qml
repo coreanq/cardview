@@ -10,7 +10,7 @@ Item {
         id: _item
         property var parentListView: _item.ListView.view
         property string name: korean
-        property string imgName: Constants.assetsPath + front_img_name + '.jpg'
+        property string imgName: Constants.assetsPath + front_img_name + ".jpg"
         property bool isCurrentItem : _item.ListView.isCurrentItem
 
         width: parentListView.width
