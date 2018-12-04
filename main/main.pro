@@ -37,15 +37,14 @@ ios {
     QMAKE_INFO_PLIST = ios/Project-Info.plist
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
+    assetsFolder.source = assets
+    DEPLOYMENTFOLDERS += assetsFolder
 
     CONFIG(debug, debug|release) {
         # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
         # 설치 폴더로 복사
         qmlFolder.source = qml
         DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
-
-        assetsFolder.source = assets
-        DEPLOYMENTFOLDERS += assetsFolder
 
     }
     CONFIG(release, debug|release) {
