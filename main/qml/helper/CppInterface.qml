@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtWebSockets 1.0
 import QtQml.Models 2.11
 import "qwebchannel.js"  as WebChannel
+import Constants 1.0
 
 WebSocket {
     id: _root

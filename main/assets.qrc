@@ -1,34 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>assets/grape.jpg</file>
-        <file>assets/orange.jpg</file>
-        <file>assets/pineapple.jpg</file>
-        <file>assets/aubergine.jpg</file>
-        <file>assets/banana.jpg</file>
-        <file>assets/blueberries.jpg</file>
-        <file>assets/broccoli.jpg</file>
-        <file>assets/cabbage.jpg</file>
-        <file>assets/carrot.jpg</file>
-        <file>assets/cherry.jpg</file>
-        <file>assets/cucumber.jpg</file>
-        <file>assets/grapefruit.jpg</file>
-        <file>assets/kimchi cabbage.jpg</file>
-        <file>assets/kiwi.jpg</file>
-        <file>assets/lemon.jpg</file>
-        <file>assets/melon.jpg</file>
-        <file>assets/mushroom.jpg</file>
-        <file>assets/onion.jpg</file>
-        <file>assets/paprika.jpg</file>
-        <file>assets/peach.jpg</file>
-        <file>assets/pear.jpg</file>
-        <file>assets/pepper.jpg</file>
-        <file>assets/persimmon.jpg</file>
-        <file>assets/pomegranate.jpg</file>
-        <file>assets/pumpkin.jpg</file>
-        <file>assets/strawberry.jpg</file>
-        <file>assets/sweet potato.jpg</file>
-        <file>assets/tengerine.jpg</file>
-        <file>assets/water melon.jpg</file>
         <file>qml/Main.qml</file>
         <file>qml/config.json</file>
         <file>qml/helper/Constants.qml</file>
@@ -42,5 +13,68 @@
         <file>qml/helper/JSONListModel/JSONListModel.qml</file>
         <file>qml/helper/JSONListModel/jsonpath.js</file>
         <file>qml/page/Card.qml</file>
+        <file>assets/apple.jpg</file>
+        <file>assets/aubergine.jpg</file>
+        <file>assets/background.jpg</file>
+        <file>assets/banana.jpg</file>
+        <file>assets/bear.jpg</file>
+        <file>assets/blueberries.jpg</file>
+        <file>assets/broccoli.jpg</file>
+        <file>assets/cabbage.jpg</file>
+        <file>assets/camel.jpg</file>
+        <file>assets/card_back.jpg</file>
+        <file>assets/carrot.jpg</file>
+        <file>assets/cat.jpg</file>
+        <file>assets/cheetah.jpg</file>
+        <file>assets/cherry.jpg</file>
+        <file>assets/chicken.jpg</file>
+        <file>assets/cow.jpg</file>
+        <file>assets/crocodile.jpg</file>
+        <file>assets/cucumber.jpg</file>
+        <file>assets/dog.jpg</file>
+        <file>assets/donkey.jpg</file>
+        <file>assets/elephant.jpg</file>
+        <file>assets/fox.jpg</file>
+        <file>assets/frog.jpg</file>
+        <file>assets/giraffe.jpg</file>
+        <file>assets/goose.jpg</file>
+        <file>assets/grape.jpg</file>
+        <file>assets/grapefruit.jpg</file>
+        <file>assets/horse.jpg</file>
+        <file>assets/kimchi cabbage.jpg</file>
+        <file>assets/kiwi.jpg</file>
+        <file>assets/lemon.jpg</file>
+        <file>assets/lion.jpg</file>
+        <file>assets/melon.jpg</file>
+        <file>assets/mouse.jpg</file>
+        <file>assets/mushroom.jpg</file>
+        <file>assets/onion.jpg</file>
+        <file>assets/orange.jpg</file>
+        <file>assets/pandas.jpg</file>
+        <file>assets/paprika.jpg</file>
+        <file>assets/peach.jpg</file>
+        <file>assets/pear.jpg</file>
+        <file>assets/pepper.jpg</file>
+        <file>assets/persimmon.jpg</file>
+        <file>assets/pig.jpg</file>
+        <file>assets/pineapple.jpg</file>
+        <file>assets/pomegranate.jpg</file>
+        <file>assets/pumpkin.jpg</file>
+        <file>assets/rabbit.jpg</file>
+        <file>assets/raccoon.jpg</file>
+        <file>assets/rhino.jpg</file>
+        <file>assets/sheep.jpg</file>
+        <file>assets/skunk.jpg</file>
+        <file>assets/snake.jpg</file>
+        <file>assets/squirrel.jpg</file>
+        <file>assets/strawberry.jpg</file>
+        <file>assets/sweet potato.jpg</file>
+        <file>assets/tengerine.jpg</file>
+        <file>assets/tiger.jpg</file>
+        <file>assets/tomato.jpg</file>
+        <file>assets/water melon.jpg</file>
+        <file>assets/whale.jpg</file>
+        <file>assets/wolf.jpg</file>
+        <file>assets/zebra.jpg</file>
     </qresource>
 </RCC>

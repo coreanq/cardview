@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQmlEngine>
 #include <VPApplication>
 #include <VPLiveClient>
 
@@ -66,6 +67,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     vplay.initialize(&engine);
+    qDebug() << "qml import path " <<  engine.importPathList();
+    qmlRegisterSingletonType(QUrl("qrc:/qml/helper/Constants.qml"), "Constants", 1, 0, "Constants" );
 
 #ifndef VPLAY_LIVE_SERVER
     // use this during development

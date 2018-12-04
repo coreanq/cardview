@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import VPlayPlugins 1.0
 import "../helper"
+import Constants 1.0
 
 AdMobBanner{
     id: _root

@@ -4,6 +4,7 @@ import VPlayApps 1.0
 import "helper"
 import "page"
 import "helper/JSONListModel"
+import Constants 1.0
 
 App {
     id: _main
