@@ -95,7 +95,7 @@ Speech::Speech(QObject *parent)
     fruitList << QString::fromUtf8("grape,vegetable,포도");
     fruitList << QString::fromUtf8("orange,vegetable,오렌지");
 
-    fruitList << QString::fromUtf8("dog,animal,개");
+    fruitList << QString::fromUtf8("dog,animal,강아지");
     fruitList << QString::fromUtf8("frog,animal,개구리");
     fruitList << QString::fromUtf8("rabbit,animal,토끼");
     fruitList << QString::fromUtf8("pig,animal,돼지");
