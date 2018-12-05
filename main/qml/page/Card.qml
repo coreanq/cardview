@@ -5,6 +5,7 @@ import Constants 1.0
 Item {
     id: _root
     property ListModel cardModel
+    signal itemSizeChanged(bool isMaximized)
     // use attached property when it use for ListView
     property Component cardItem: Rectangle {
         id: _item
@@ -96,6 +97,17 @@ Item {
                 _item.scale = 1
             }
         }
+
+        onStateChanged: {
+            if( state == "normalized" ){
+                _root.itemSizeChanged(false)
+            }else {
+                _root.itemSizeChanged(true)
+            }
+
+
+        }
+
         states: [
             State {
                 name: "maximized"

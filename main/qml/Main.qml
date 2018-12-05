@@ -79,6 +79,15 @@ App {
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
+            onItemSizeChanged: {
+                if( isMaximized == true ){
+                    _adbanner.visible = false;
+                }
+                else {
+                    _adbanner.visible = true;
+                }
+
+            }
         }
     }
 
@@ -96,6 +105,15 @@ App {
                 _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
+            onItemSizeChanged: {
+                if( isMaximized == true ){
+                    _adbanner.visible = false;
+                }
+                else {
+                    _adbanner.visible = true;
+                }
+
+            }
         }
     }
 
@@ -110,13 +128,6 @@ App {
     Item {
         id: _adbanner
         property Component banner:  AdBanner {
-            Rectangle {
-                anchors.fill: parent
-                visible: false
-                color: "black"
-                opacity: 0.1
-            }
-            z: parent.z + 1
         }
     }
 

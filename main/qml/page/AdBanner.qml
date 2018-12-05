@@ -10,10 +10,9 @@ AdMobBanner{
     testDeviceIds: Constants.admobTestDeviceIds
     banner: AdMobBanner.Smart
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottom: parent.bottom
     Rectangle {
         anchors.fill: parent
-        color: "black"
+        color: "lightgray"
         opacity: 0.5
     }
 }

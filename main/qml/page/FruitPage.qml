@@ -9,25 +9,12 @@ AppListView {
     signal startAutomatedScroll()
     signal endAutomatedScroll()
     signal automatedScrollEnded()
+    signal itemSizeChanged(bool isMaximized)
 
     spacing: 20
-//    Component {
-//         id: highlight
-//         Rectangle {
-//             width: currentItem.width; height: currentItem.height
-//             color: "lightsteelblue"; radius: 40
-//             y: currentItem.y
-//             Behavior on y {
-//                 SpringAnimation {
-//                     spring: 3
-//                     damping: 0.2
-//                 }
-//             }
-//         }
-//     }
-
-//    highlight: highlight
-//     highlightFollowsCurrentItem: false
+    Component.onCompleted: {
+        _card.itemSizeChanged.connect(_root.itemSizeChanged)
+    }
 
     DSM.StateMachine {
         id: _automatedScrollDSM
