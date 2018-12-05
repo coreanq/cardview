@@ -71,6 +71,8 @@ App {
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
+            header: _adbanner.banner
+            footer: _adbanner.banner
             model: _modelFruit
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
@@ -86,6 +88,8 @@ App {
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
+            header: _adbanner.banner
+            footer: _adbanner.banner
             model: _modelAnminal
             Component.onCompleted: {
                 _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
@@ -103,26 +107,37 @@ App {
             voiceTypeViewModel: _voiceTypeModel.model
         }
     }
+    Item {
+        id: _adbanner
+        property Component banner:  AdBanner {
+            Rectangle {
+                anchors.fill: parent
+                visible: false
+                color: "black"
+                opacity: 0.1
+            }
+            z: parent.z + 1
+        }
+    }
 
     Component.onCompleted: {
         pageList = [_fruitPage, _animalPage, _settingPage]
     }
 
 
-    AdBanner {
-        id: _adBanner
-        anchors.bottom: parent.bottom
-    }
     Page {
         id: _naviWndContainer
         visible: true
-        anchors.bottom: _adBanner.top
+        anchors.fill: parent
         property alias currentIndex : _naviWnd.currentIndex
         property alias drawer : _naviWnd.drawer
         clip: true
+
         Navigation {
             id: _naviWnd
-            navigationMode: navigationModeTabs
+            navigationMode: navigationModeTabsAndDrawer
+            clip: true
+
             NavigationItem {
                 title: "야채와 과일"
                 icon: IconType.apple
@@ -145,7 +160,6 @@ App {
                 Loader {
                     sourceComponent: _settingPage.page
                 }
-
             }
             onCurrentIndexChanged: {
                 _naviWndContainer.currentIndexChanged(currentIndex)
@@ -165,11 +179,11 @@ App {
         FloatingActionButton {
             property bool running: false
             id: _btnAuto
-            icon: IconType.font
+            icon: IconType.playcircleo
             visible: true
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: dp(50)
+            anchors.bottomMargin: dp(55)
         }
     }
     // 가로 보기시
@@ -206,7 +220,7 @@ App {
 
             onEntered: {
                 console.log("standby")
-                _btnAuto.icon = IconType.font
+                _btnAuto.icon = IconType.playcircleo
 
                 console.log(pageList)
                 for ( var i = 0; i < pageList.length; i ++ ) {
@@ -227,7 +241,7 @@ App {
             }
             onEntered: {
                 console.log("automatedRunning")
-                _btnAuto.icon = IconType.close
+                _btnAuto.icon = IconType.stop
                 pageList[_naviWndContainer.currentIndex].startAutomatedScroll()
             }
         }
