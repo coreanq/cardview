@@ -4,3 +4,13 @@ build-test_dummy_server-V_Play_Desktop_Qt_5_11_1_MinGW-Debug/
 main/debug/
 
 main/ios/GoogleMobileAds\.framework/Headers/
+
+build-main-Qt_5_11_1_iOS_V_Play-Debug/\.xcode/main\.build/Debug-iphoneos/main\.build/
+
+build-main-Qt_5_11_1_iOS_V_Play-Debug/\.xcode/main\.build/Debug-iphoneos/Qt Preprocess\.build/
+
+build-main-Qt_5_11_1_iOS_V_Play-Debug/Debug-iphoneos/main\.app/_CodeSignature/
+
+build-main-Qt_5_11_1_iOS_V_Play-Debug/
+
+build-main-Qt_5_11_1_iOS_V_Play-Release/
