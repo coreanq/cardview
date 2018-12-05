@@ -14,3 +14,17 @@ build-main-Qt_5_11_1_iOS_V_Play-Debug/Debug-iphoneos/main\.app/_CodeSignature/
 build-main-Qt_5_11_1_iOS_V_Play-Debug/
 
 build-main-Qt_5_11_1_iOS_V_Play-Release/
+
+lib/
+
+main/\.xcode/main\.build/
+
+main/ios/GoogleMobileAds\.framework/
+
+main/ios/GoogleMobileAdsSdkiOS-7\.35\.2/
+
+main/ios/googlemobileadssdkios\.zip
+
+main/main\.pro\.user
+
+main/VPlayLive/Imports\.qml
