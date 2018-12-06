@@ -71,7 +71,6 @@ App {
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
-            header: _adbanner.banner
             footer: _adbanner.banner
             model: _modelFruit
             Component.onCompleted: {
@@ -97,7 +96,6 @@ App {
         signal endAutomatedScroll()
 
         property Component list: FruitPage {
-            header: _adbanner.banner
             footer: _adbanner.banner
             model: _modelAnminal
             Component.onCompleted: {
