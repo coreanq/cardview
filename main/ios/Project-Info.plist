@@ -17,7 +17,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>2</string>
+    <string>3</string>
     <key>UIStatusBarHidden</key> <true/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
@@ -63,6 +63,8 @@
         <string>{768, 1024}</string>
     </dict>
     </array> -->
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>App would like to access the library.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>App would like to access the library.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
