@@ -40,18 +40,6 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-
-    <key>CFBundleIconFiles</key>
-    <array>
-        <string>Icon-60.png</string>
-        <string>Icon-60@2x.png</string>
-        <string>Icon-60@3x.png</string>
-        <string>Icon-58.png</string>
-        <string>Icon-87.png</string>
-        <string>Icon-Small-40.png</string>
-        <string>Icon-Small-40@2x.png</string>
-    </array>
-
 <!--    <key>UILaunchImages</key>
     <array>
     <dict>

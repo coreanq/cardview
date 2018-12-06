@@ -13,6 +13,8 @@ SOURCES += main.cpp \
     webchannel_interface/websocketclientwrapper.cpp \
     webchannel_interface/websockettransport.cpp
 
+QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
+QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
 #DEFINES += VPLAY_LIVE_SERVER
 
