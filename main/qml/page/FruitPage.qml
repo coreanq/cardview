@@ -10,10 +10,12 @@ AppListView {
     signal endAutomatedScroll()
     signal automatedScrollEnded()
     signal itemSizeChanged(bool isMaximized)
+    signal itemCardLanguageChanged(string language)
 
     spacing: 20
     Component.onCompleted: {
         _card.itemSizeChanged.connect(_root.itemSizeChanged)
+        _root.itemCardLanguageChanged.connect( _card.itemCardLanguageChanged )
     }
 
     DSM.StateMachine {

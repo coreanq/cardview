@@ -6,13 +6,27 @@ Item {
     id: _root
     property ListModel cardModel
     signal itemSizeChanged(bool isMaximized)
+    signal itemCardLanguageChanged(string language)
+
     // use attached property when it use for ListView
     property Component cardItem: Rectangle {
         id: _item
+        signal itemCardLanguageChanged(string language)
         property var parentListView: _item.ListView.view
-        property string name: Constants.cardLanguage === "Korean" ? korean : english
+        property string name: korean
         property string imgName: Constants.assetsPath + front_img_name + ".jpg"
         property bool isCurrentItem : _item.ListView.isCurrentItem
+        Component.onCompleted: {
+            _root.itemCardLanguageChanged.connect( itemCardLanguageChanged )
+        }
+        onItemCardLanguageChanged: {
+            if( language === "Korean"){
+                _item.name = korean
+            }
+            else if( language === "English" ){
+                _item.name = english
+            }
+        }
 
         width: parentListView.width
         height: parentListView.height * 0.65

@@ -74,12 +74,12 @@ Item {
                 console.log("Clicked Item #" + index + " " + JSON.stringify( model.modelData ))
                 _cppInterface.speechObj.languageSelected(index)
                 if( language.includes("Korean") ){
-                    Constants.cardLanguage = "Korean"
-                    Constants.cardLanguageChanged()
+                    _fruitPage.itemCardLanguageChanged("Korean")
+                    _animalPage.itemCardLanguageChanged("Korean")
                 }
                 else if( language.includes("English") ) {
-                    Constants.cardLanguage = "English"
-                    Constants.cardLanguageChanged()
+                    _fruitPage.itemCardLanguageChanged("English")
+                    _animalPage.itemCardLanguageChanged("English")
                 }
 
             }

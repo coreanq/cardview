@@ -4,7 +4,7 @@ import VPlayApps 1.0
 import "helper"
 import "page"
 import "helper/JSONListModel"
-import Constants 1.0
+//import Constants 1.0
 
 App {
     id: _main
@@ -69,6 +69,7 @@ App {
         id: _fruitPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
+        signal itemCardLanguageChanged(string language)
 
         property Component list: FruitPage {
             footer: _adbanner.banner
@@ -76,16 +77,10 @@ App {
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
+                _fruitPage.itemCardLanguageChanged.connect(itemCardLanguageChanged)
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
             onItemSizeChanged: {
-                if( isMaximized == true ){
-                    _adbanner.visible = false;
-                }
-                else {
-                    _adbanner.visible = true;
-                }
-
             }
         }
     }
@@ -94,6 +89,7 @@ App {
         id: _animalPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
+        signal itemCardLanguageChanged(string language)
 
         property Component list: FruitPage {
             footer: _adbanner.banner
@@ -101,17 +97,12 @@ App {
             Component.onCompleted: {
                 _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
+                _animalPage.itemCardLanguageChanged.connect(itemCardLanguageChanged)
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
             onItemSizeChanged: {
-                if( isMaximized == true ){
-                    _adbanner.visible = false;
-                }
-                else {
-                    _adbanner.visible = true;
-                }
-
             }
+
         }
     }
 
