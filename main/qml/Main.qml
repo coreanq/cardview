@@ -144,7 +144,7 @@ App {
 
         Navigation {
             id: _naviWnd
-            navigationMode: navigationModeTabsAndDrawer
+            navigationMode: navigationModeTabs
             clip: true
 
             NavigationItem {

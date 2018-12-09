@@ -73,6 +73,15 @@ Item {
                 // should do in cpp code
                 console.log("Clicked Item #" + index + " " + JSON.stringify( model.modelData ))
                 _cppInterface.speechObj.languageSelected(index)
+                if( language.includes("Korean") ){
+                    Constants.cardLanguage = "Korean"
+                    Constants.cardLanguageChanged()
+                }
+                else if( language.includes("English") ) {
+                    Constants.cardLanguage = "English"
+                    Constants.cardLanguageChanged()
+                }
+
             }
         }
         onModelChanged: {

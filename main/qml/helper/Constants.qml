@@ -6,6 +6,7 @@ QtObject {
     // assets path for debug or release mode
 
     property string assetsPath: ""
+    property string cardLanguage: "Korean"
 
     // detect debug mode
     property bool isDebugMode: false

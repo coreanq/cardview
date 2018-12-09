@@ -10,7 +10,7 @@ Item {
     property Component cardItem: Rectangle {
         id: _item
         property var parentListView: _item.ListView.view
-        property string name: korean
+        property string name: Constants.cardLanguage === "Korean" ? korean : english
         property string imgName: Constants.assetsPath + front_img_name + ".jpg"
         property bool isCurrentItem : _item.ListView.isCurrentItem
 

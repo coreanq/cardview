@@ -228,9 +228,9 @@ void Speech::engineSelected(QString engineName)
 
         if(
             languageType.contains("English") == true ||
-            languageType.contains("Korean") == true ||
-            languageType.contains("Japanese") == true ||
-            languageType.contains("Chinese") == true
+            languageType.contains("Korean") == true
+        //    languageType.contains("Japanese") == true ||
+        //    languageType.contains("Chinese") == true
                 ){
             m_locales.append(locale);
             voiceLanguageList.append( languageType );
