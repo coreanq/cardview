@@ -110,7 +110,7 @@ App {
     }
 
     Component.onCompleted: {
-        pageList = [_fruitPage, _animalPage, _settingPage]
+        pageList = [_fruitPage, _animalPage ]
     }
 
     Page {
