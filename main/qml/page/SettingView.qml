@@ -71,17 +71,15 @@ Item {
             onSelected: {
                 // do not modify cpp models data
                 // should do in cpp code
-                console.log("Clicked Item #" + index + " " + JSON.stringify( model.modelData ))
                 _cppInterface.speechObj.languageSelected(index)
                 if( language.includes("Korean") ){
-                    _fruitPage.itemCardLanguageChanged("Korean")
-                    _animalPage.itemCardLanguageChanged("Korean")
+                    console.log("Clicked Item #" + index + " Korean")
+                    _main.cardLanguage = "Korean"
                 }
                 else if( language.includes("English") ) {
-                    _fruitPage.itemCardLanguageChanged("English")
-                    _animalPage.itemCardLanguageChanged("English")
+                    console.log("Clicked Item #" + index + " English")
+                    _main.cardLanguage = "English"
                 }
-
             }
         }
         onModelChanged: {

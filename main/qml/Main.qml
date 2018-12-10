@@ -10,6 +10,7 @@ App {
     id: _main
     visible: true
     licenseKey: Constants.vplaylicenseKey
+    property string cardLanguage: "Korean"
     property var pageList: []
 
     CppInterface {
@@ -69,7 +70,6 @@ App {
         id: _fruitPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
-        signal itemCardLanguageChanged(string language)
 
         property Component list: FruitPage {
             footer: _adbanner.banner
@@ -77,7 +77,6 @@ App {
             Component.onCompleted: {
                 _fruitPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _fruitPage.endAutomatedScroll.connect( endAutomatedScroll )
-                _fruitPage.itemCardLanguageChanged.connect(itemCardLanguageChanged)
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
             onItemSizeChanged: {
@@ -89,7 +88,6 @@ App {
         id: _animalPage
         signal startAutomatedScroll()
         signal endAutomatedScroll()
-        signal itemCardLanguageChanged(string language)
 
         property Component list: FruitPage {
             footer: _adbanner.banner
@@ -97,7 +95,6 @@ App {
             Component.onCompleted: {
                 _animalPage.startAutomatedScroll.connect( startAutomatedScroll )
                 _animalPage.endAutomatedScroll.connect( endAutomatedScroll )
-                _animalPage.itemCardLanguageChanged.connect(itemCardLanguageChanged)
                 automatedScrollEnded.connect(_btnAuto.clicked )
             }
             onItemSizeChanged: {
@@ -107,14 +104,6 @@ App {
     }
 
     Item {
-        id: _settingPage
-        property Component page: SettingView {
-            anchors.fill: parent
-            voiceLanguageViewModel: _voiceLanguageModel.model
-            voiceTypeViewModel: _voiceTypeModel.model
-        }
-    }
-    Item {
         id: _adbanner
         property Component banner:  AdBanner {
         }
@@ -123,7 +112,6 @@ App {
     Component.onCompleted: {
         pageList = [_fruitPage, _animalPage, _settingPage]
     }
-
 
     Page {
         id: _naviWndContainer
@@ -137,6 +125,7 @@ App {
             id: _naviWnd
             navigationMode: navigationModeTabs
             clip: true
+
 
             NavigationItem {
                 title: "야채와 과일"
@@ -157,8 +146,11 @@ App {
             NavigationItem {
                 title: "설정"
                 icon: IconType.cog
-                Loader {
-                    sourceComponent: _settingPage.page
+                SettingView {
+                    id: _settingPage
+                    anchors.fill: parent
+                    voiceLanguageViewModel: _voiceLanguageModel.model
+                    voiceTypeViewModel: _voiceTypeModel.model
                 }
             }
             onCurrentIndexChanged: {
