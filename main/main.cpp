@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 #if 1
 
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
-    if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
+    if( server.listen(QHostAddress::Any, 12345) != true ){
         qFatal("Failed to open web socket server"); 
         return 1;
     } 
