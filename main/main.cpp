@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         qFatal("Failed to open web socket server"); 
         return 1;
     } 
-    qDebug() << server.serverAddress();
+    qDebug() << server.serverAddress() << server.serverAddress().protocol();
      // wrap WebSocket clients in QWebChannelAbstractTransport objects
     WebSocketClientWrapper clientWrapper(&server);
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
                         qDebug() << state;
                         if( state == Qt::ApplicationActive ){
                             if( server.isListening() == false ) {
-                                if( server.listen(QHostAddress::AnyIPv4, 12345) != true ){
+                                if( server.listen(QHostAddress::Any, 12345) != true ){
                                     qFatal("Failed to open web socket server");
                                     return 1;
                                 }

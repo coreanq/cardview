@@ -10,7 +10,7 @@ QtObject {
     // detect debug mode
     property bool isDebugMode: false
     // ip address in release mode should be 127.0.0.1
-    readonly property string cppInterfaceServerIpAddr: "ws://127.0.0.1:12345"
+    readonly property string cppInterfaceServerIpAddr: "ws://localhost:12345"
 //    readonly property string cppInterfaceServerIpAddr: "ws://192.168.137.1:12345"
 
     // v-play licenseKey
