@@ -30,7 +30,7 @@ Rectangle{
     border.color: "gray"
 
     Component.onCompleted: {
-        console.log( _cppInterface.assetsPath +  front_img_name)
+        console.log( _cppInterface.assetsPath +  front_img_name + ".jpg")
     }
     Image {
         id: _item_image

@@ -72,11 +72,11 @@ Item {
                 // do not modify cpp models data
                 // should do in cpp code
                 _cppInterface.languageSelected(index)
-                if( language.includes("Korean") ){
+                if( roleLanguage.includes("Korean") ){
                     console.log("Clicked Item #" + index + " Korean")
                     _main.cardLanguage = "Korean"
                 }
-                else if( language.includes("English") ) {
+                else if( roleLanguage.includes("English") ) {
                     console.log("Clicked Item #" + index + " English")
                     _main.cardLanguage = "English"
                 }
