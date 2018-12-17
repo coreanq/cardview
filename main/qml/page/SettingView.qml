@@ -51,7 +51,7 @@ Item {
     }
 
     property Component audioLanguagePage: ListPage {
-        title: "Audio language"
+        title: "음성 언어"
 
         model: voiceLanguageViewModel
         delegate: SimpleRow {
@@ -88,7 +88,7 @@ Item {
     }
 
     property Component audioTypePage: ListPage {
-        title: "Audio type"
+        title: "음성 타입"
         model: voiceTypeViewModel
         delegate: SimpleRow {
             property string roleTypeName : name
@@ -113,7 +113,7 @@ Item {
     }
     // do not confuse Qtquick's Page and V-play Page
     property Component audioSpecificPage: Page {
-        title: "Audio specific"
+        title: "음성 특성"
         Column {
 
             anchors.centerIn: parent
@@ -122,10 +122,13 @@ Item {
                 visible: false
                 AppSlider {
                     id: _rateSlider
-                    onPositionChanged: {
+                    onMoved: {
                         console.log(position)
                         _cppInterface.setRate(
                                     Math.round(_rateSlider.position * 20) - 10)
+                    }
+                    onPositionChanged: {
+                        // when first init position changed
                     }
                     from: -10
                     to: 10
@@ -142,10 +145,13 @@ Item {
                 // show slider
                 AppSlider {
                     id: _pitchSlider
-                    onPositionChanged: {
-                        console.log(position)
+                    onMoved: {
                         _cppInterface.setPitch(
                                     Math.round(_pitchSlider.position * 20) - 10)
+                    }
+
+                    onPositionChanged: {
+                        // when first init position changed
                     }
                     from: -10
                     to: 10

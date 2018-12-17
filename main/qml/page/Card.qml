@@ -29,9 +29,9 @@ Rectangle{
 //        border.color: isCurrentItem ? "gray" : "blue"
     border.color: "gray"
 
-    Component.onCompleted: {
-        console.log( _cppInterface.assetsPath +  front_img_name + ".jpg")
-    }
+//    Component.onCompleted: {
+//        console.log( _cppInterface.assetsPath +  front_img_name + ".jpg")
+//    }
     Image {
         id: _item_image
         anchors.centerIn: parent
