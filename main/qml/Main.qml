@@ -141,6 +141,8 @@ App {
 
                 Loader {
                     sourceComponent: _fruitPage.list
+                    asynchronous: true
+                    visible: status == Loader.Ready
                 }
             }
             NavigationItem {
@@ -149,6 +151,8 @@ App {
 
                 Loader {
                     sourceComponent: _animalPage.list
+                    asynchronous: true
+                    visible: status == Loader.Ready
                 }
             }
             NavigationItem {

@@ -5,7 +5,7 @@ import io.qt.backend 1.0
 
 BackEnd {
     id: _root
-    property string assetsPath :"qrc:/assets/"
+    property string assetsPath : undefined
 }
 //import QtWebSockets 1.0
 //import "qwebchannel.js"  as WebChannel
