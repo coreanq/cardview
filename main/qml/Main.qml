@@ -4,7 +4,7 @@ import VPlayApps 1.0
 import "helper"
 import "page"
 import "helper/JSONListModel"
-//import Constants 1.0
+import Constants 1.0
 
 App {
     id: _main
@@ -13,11 +13,22 @@ App {
     property string cardLanguage: "Korean"
     property var pageList: []
 
-    CppInterface {
-        id: _cppInterface
-        Component.onCompleted: {
-            console.log("_cppInterface create!")
+
+    Component.onCompleted: {
+        pageList = [_fruitPage, _animalPage ]
+        if( _cppInterface.isDebug === true ){
+            _cppInterface.assetsPath = "../../assets/"
         }
+        else{
+           _cppInterface.assetsPath  = "qrc:/assets/"
+        }
+        console.log("!!!!!!! asset path: " +  _cppInterface.assetsPath )
+        console.log("!!!!!!! Debug: " + _cppInterface.isDebug)
+
+    }
+
+    BackEnd {
+        id: _cppInterface
     }
 
     JSONListModel {
@@ -109,9 +120,6 @@ App {
         }
     }
 
-    Component.onCompleted: {
-        pageList = [_fruitPage, _animalPage ]
-    }
 
     Page {
         id: _naviWndContainer

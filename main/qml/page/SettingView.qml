@@ -71,7 +71,7 @@ Item {
             onSelected: {
                 // do not modify cpp models data
                 // should do in cpp code
-                _cppInterface.speechObj.languageSelected(index)
+                _cppInterface.languageSelected(index)
                 if( language.includes("Korean") ){
                     console.log("Clicked Item #" + index + " Korean")
                     _main.cardLanguage = "Korean"
@@ -107,7 +107,7 @@ Item {
                 // do not modify cpp models data
                 // should do in cpp code
                 console.log("Clicked Item #" + index + " " + JSON.stringify( model.modelData ))
-                _cppInterface.speechObj.voiceSelected(index)
+                _cppInterface.voiceSelected(index)
             }
         }
     }
@@ -124,7 +124,7 @@ Item {
                     id: _rateSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.speechObj.setRate(
+                        _cppInterface.setRate(
                                     Math.round(_rateSlider.position * 20) - 10)
                     }
                     from: -10
@@ -144,7 +144,7 @@ Item {
                     id: _pitchSlider
                     onPositionChanged: {
                         console.log(position)
-                        _cppInterface.speechObj.setPitch(
+                        _cppInterface.setPitch(
                                     Math.round(_pitchSlider.position * 20) - 10)
                     }
                     from: -10
@@ -160,10 +160,10 @@ Item {
             } // Column
         }
         Component.onCompleted: {
-            console.log("audio specific rate " + _cppInterface.speechObj.voiceRate
-                        + " pitch " + (_cppInterface.speechObj.voicePitch))
-            _rateSlider.value = (_cppInterface.speechObj.voiceRate)
-            _pitchSlider.value = (_cppInterface.speechObj.voicePitch)
+            console.log("audio specific rate " + _cppInterface.voiceRate
+                        + " pitch " + (_cppInterface.voicePitch))
+            _rateSlider.value = (_cppInterface.voiceRate)
+            _pitchSlider.value = (_cppInterface.voicePitch)
         }
     }
 }

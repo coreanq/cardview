@@ -3,7 +3,6 @@
         <file>qml/Main.qml</file>
         <file>qml/config.json</file>
         <file>qml/helper/Constants.qml</file>
-        <file>qml/helper/CppInterface.qml</file>
         <file>qml/helper/qmldir</file>
         <file>qml/helper/SwipeArea.qml</file>
         <file>qml/page/AdBanner.qml</file>
@@ -76,5 +75,6 @@
         <file>assets/whale.jpg</file>
         <file>assets/wolf.jpg</file>
         <file>assets/zebra.jpg</file>
+        <file>qml/helper/BackEnd.qml</file>
     </qresource>
 </RCC>

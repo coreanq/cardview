@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
     // using QApplication classs for QWidget class using in AdMobs lib 
     QApplication app(argc, argv);
 
-#if 1
+#if 0
 
     QWebSocketServer server(QStringLiteral("QWebChannel server"), QWebSocketServer::NonSecureMode );
-    if( server.listen(QHostAddress::Any, 12345) != true ){
+    if( server.listen(QHostAddress::LocalHostIPv6, 17061 ) != true ){
         qFatal("Failed to open web socket server"); 
         return 1;
     } 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
                         qDebug() << state;
                         if( state == Qt::ApplicationActive ){
                             if( server.isListening() == false ) {
-                                if( server.listen(QHostAddress::Any, 12345) != true ){
+                                if( server.listen(QHostAddress::LocalHostIPv6, 17061) != true ){
                                     qFatal("Failed to open web socket server");
                                     return 1;
                                 }
@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     vplay.initialize(&engine);
-    qDebug() << "qml import path " <<  engine.importPathList();
+
+
     qmlRegisterSingletonType(QUrl("qrc:/qml/helper/Constants.qml"), "Constants", 1, 0, "Constants" );
 
 #ifndef VPLAY_LIVE_SERVER
@@ -82,6 +83,7 @@ int main(int argc, char *argv[])
     // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
     // also see the .pro file for more details
 #ifndef QT_DEBUG
+    qmlRegisterType<Speech>("io.qt.backend", 1, 0, "BackEnd");
     vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 #endif
 

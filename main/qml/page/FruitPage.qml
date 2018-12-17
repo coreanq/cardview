@@ -86,7 +86,7 @@ AppListView {
 
                 onEntered: {
                     console.log("speaking " )
-                    _cppInterface.speechObj.speak(currentItem.name)
+                    _cppInterface.speak(currentItem.name)
                 }
             }
             DSM.State{

@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import VPlayApps 1.0
 import "../helper"
-import Constants 1.0
 
 Rectangle{
     id: _item
@@ -17,7 +16,7 @@ Rectangle{
             return english
     }
 
-    property string imgName: Constants.assetsPath + front_img_name + ".jpg"
+    property string imgName: _cppInterface.assetsPath + front_img_name + ".jpg"
     property bool isCurrentItem : _item.ListView.isCurrentItem
 
 
@@ -30,9 +29,9 @@ Rectangle{
 //        border.color: isCurrentItem ? "gray" : "blue"
     border.color: "gray"
 
-    //            Component.onCompleted: {
-    //                console.log( Constants.assetsPath +  model.modelData.front_img_name)
-    //            }
+    Component.onCompleted: {
+        console.log( _cppInterface.assetsPath +  front_img_name)
+    }
     Image {
         id: _item_image
         anchors.centerIn: parent
@@ -98,7 +97,7 @@ Rectangle{
                 _item.scale = 1 - moveRatio
         }
         onClicked: {
-            _cppInterface.speechObj.speak(_item.name)
+            _cppInterface.speak(_item.name)
             console.log("clicked " + _item.name)
         }
         onReleased: {
