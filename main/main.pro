@@ -9,9 +9,7 @@ SOURCES += main.cpp \
     webchannel_interface/websocketclientwrapper.cpp \
     webchannel_interface/websockettransport.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
-    qml_interface_model/qmlstandarditemmodel.cpp \
-    webchannel_interface/websocketclientwrapper.cpp \
-    webchannel_interface/websockettransport.cpp
+    qml_interface_model/qmlstandarditemmodel.cpp
 
 QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
 QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
@@ -66,8 +64,6 @@ HEADERS += \
     webchannel_interface/websockettransport.h \
     qml_interface_model/qmlsortfilterproxymodel.h \
     qml_interface_model/qmlstandarditemmodel.h \
-    webchannel_interface/websocketclientwrapper.h \
-    webchannel_interface/websockettransport.h \
     speech.h
 
 OTHER_FILES += \
