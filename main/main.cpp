@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
     vplay.initialize(&engine);
 
 
+    qmlRegisterType<Speech>("io.qt.backend", 1, 0, "BackEnd");
     qmlRegisterSingletonType(QUrl("qrc:/qml/helper/Constants.qml"), "Constants", 1, 0, "Constants" );
 
 #ifndef VPLAY_LIVE_SERVER
@@ -83,7 +84,6 @@ int main(int argc, char *argv[])
     // to avoid deployment of your qml files and images, also comment the DEPLOYMENTFOLDERS command in the .pro file
     // also see the .pro file for more details
 #ifndef QT_DEBUG
-    qmlRegisterType<Speech>("io.qt.backend", 1, 0, "BackEnd");
     vplay.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 #endif
 
