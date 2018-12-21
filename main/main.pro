@@ -11,8 +11,6 @@ SOURCES += main.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp
 
-QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
-QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
 #DEFINES += VPLAY_LIVE_SERVER
 
@@ -29,6 +27,19 @@ PRODUCT_IDENTIFIER = "com.home.cardview"
 
 
 # Default rules for deployment.
+assetsFolder.source = assets
+DEPLOYMENTFOLDERS += assetsFolder
+
+CONFIG(debug, debug|release) {
+    # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
+    # 설치 폴더로 복사
+    qmlFolder.source = qml
+    DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
+
+}
+CONFIG(release, debug|release) {
+    RESOURCES += assets.qrc
+}
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
@@ -37,19 +48,9 @@ ios {
     QMAKE_INFO_PLIST = ios/Project-Info.plist
     OTHER_FILES += $$QMAKE_INFO_PLIST
     VPLAY_PLUGINS += admob
-    assetsFolder.source = assets
-    DEPLOYMENTFOLDERS += assetsFolder
+    QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
-    CONFIG(debug, debug|release) {
-        # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
-        # 설치 폴더로 복사
-        qmlFolder.source = qml
-        DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
-
-    }
-    CONFIG(release, debug|release) {
-        RESOURCES += assets.qrc
-    }
 }
 win32 {
     #RC_FILE += win/app_icon.rc
