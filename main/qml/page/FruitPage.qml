@@ -1,9 +1,8 @@
 import QtQuick 2.11
 import QtQml.StateMachine 1.0 as DSM
-import VPlayApps 1.0
 import "../helper"
 
-AppListView {
+ListView {
     id: _root
     anchors.fill: parent
     signal startAutomatedScroll()

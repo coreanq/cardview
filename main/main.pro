@@ -14,7 +14,14 @@ SOURCES += main.cpp \
 
 #DEFINES += VPLAY_LIVE_SERVER
 
-PRODUCT_IDENTIFIER = "com.home.cardview"
+contains(DEFINES, VPLAY_LIVE_SERVER){
+    message("~~~~vplay_liver_server")
+    PRODUCT_IDENTIFIER = "com.home.liveload"
+}
+else {
+    message("~~~~normal application")
+    PRODUCT_IDENTIFIER = "com.home.cardview"
+}
 
 # NOTE: for PUBLISHING, perform the following steps:
 # 1. comment the DEPLOYMENTFOLDERS += qmlFolder line above, to avoid shipping your qml files with the application (instead they get compiled to the app binary)

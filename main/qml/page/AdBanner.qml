@@ -9,7 +9,6 @@ AdMobBanner{
     adUnitId: Constants.admobBannerAdUnitId
     testDeviceIds: Constants.admobTestDeviceIds
     banner: AdMobBanner.Smart
-    anchors.horizontalCenter: parent.horizontalCenter
     Rectangle {
         anchors.fill: parent
         color: "lightgray"
