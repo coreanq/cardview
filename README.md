@@ -24,8 +24,4 @@
 
 ## 사용 예
 
-## License
-Licensed under MIT:
-https://opensource.org/licenses/MIT
-
 
