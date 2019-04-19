@@ -124,14 +124,15 @@ App {
     Page {
         id: _naviWndContainer
         visible: true
-        anchors.fill: parent
+        useSafeArea: true
+        anchors.fill: parent.safeArea
         property alias currentIndex : _naviWnd.currentIndex
         property alias drawer : _naviWnd.drawer
         clip: true
 
         Navigation {
             id: _naviWnd
-            navigationMode: navigationModeTabs
+            navigationMode: navigationModeDefault
             clip: true
 
 
@@ -254,7 +255,7 @@ App {
 
     onApplicationPaused: {
         console.log("paused")
-        _cppInterface.active = false
+        //_cppInterface.active = false
     }
     onApplicationResumed: {
         console.log("resumed")

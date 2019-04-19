@@ -2,7 +2,7 @@
     "title": "card view",
     "identifier": "com.home.cardview",
     "orientation": "auto",
-    "versioncode": 1,
+    "versioncode": 7,
     "versionname": "1.0",
-    "stage": "publish"
+    "stage": "test"
 }

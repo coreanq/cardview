@@ -1,6 +1,7 @@
 import QtQuick 2.0
-import VPlayApps 1.0
+import QtQuick.Controls 2.0
 import "../helper"
+
 
 Rectangle{
     id: _item
@@ -55,7 +56,7 @@ Rectangle{
         anchors.margins: 30
         font.pointSize: 25
     }
-    IconButton {
+    Button {
         id: _item_close_btn
         visible: false
         icon: IconType.close
