@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import Constants 1.0
 import io.qt.backend 1.0
 

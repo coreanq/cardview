@@ -1,6 +1,6 @@
 import QtQuick 2.8
 import QtQml.StateMachine 1.0 as DSM
-import VPlayApps 1.0
+import Felgo 3.0
 import "helper"
 import "page"
 import "helper/JSONListModel"

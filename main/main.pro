@@ -1,7 +1,5 @@
 TEMPLATE = app
-CONFIG += c++14
-CONFIG += v-play
-CONFIG += v-play-live
+CONFIG += felgo
 QT += widgets qml quick websockets webchannel texttospeech
 
 SOURCES += main.cpp \
@@ -11,11 +9,28 @@ SOURCES += main.cpp \
     qml_interface_model/qmlsortfilterproxymodel.cpp \
     qml_interface_model/qmlstandarditemmodel.cpp
 
+# allows to add DEPLOYMENTFOLDERS and links to the Felgo library and QtCreator auto-completion
 
-#DEFINES += VPLAY_LIVE_SERVER
+# uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
+# for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
+# CONFIG += felgo-live
 
-contains(DEFINES, VPLAY_LIVE_SERVER){
-    message("~~~~vplay_liver_server")
+# Project identifier and version
+# More information: https://felgo.com/doc/felgo-publishing/#project-configuration
+#PRODUCT_IDENTIFIER = com.home.cardview
+PRODUCT_VERSION_NAME = 1.0.0
+PRODUCT_VERSION_CODE = 7
+
+# Optionally set a license key that is used instead of the license key from
+# main.qml file (App::licenseKey for your app or GameWindow::licenseKey for your game)
+# Only used for local builds and Felgo Cloud Builds (https://felgo.com/cloud-builds)
+# Not used if using Felgo Live
+#PRODUCT_LICENSE_KEY = "9ACDE3BAEEE6541A95EA3F67F154FAEB23CFFA10C41975B2212A8BE906182167F7BD326F8CB03CD22E4430D6F15A7D2C1E681B32F5B11CFD539CC4B82D3A4C1F2B984F6BA487D3F7A8B491794F52DC38B56358A8B20B65C1C5C2983863270987A58A733D26A211729B3B31A1514FB523FA4660092359851D87D83A358160129937852AB17A55FB7DDC36C3011F5C6A7C843210942D1A26E2CDB632CD0DC81C4E10E08908FFC95B662963CC9AD738E437187206AF72DD345359C1C24F3E63924CFED190F0570E5183041A1ACAA5E1968EBB5DC3F48DC39468653141F93CD0E0D4BFCC61B926D801B1476785314B074FE180233D1C2601923B8BEE5D9D175276E0B220D7DE14986AEA98049896C18E1B77257E70AAC7A20789820B1107E5C9841333DE124CCBA2D1F8F7D963A70E969084C0DFA3E10EA55274D229DB22504BD437"
+
+#DEFINES += FELGO_LIVE_SERVER
+
+contains(DEFINES, FELGO_LIVE_SERVER){
+    message("~~~~felgo_liver_server")
     PRODUCT_IDENTIFIER = "com.home.liveload"
 }
 else {
@@ -37,6 +52,8 @@ else {
 assetsFolder.source = assets
 DEPLOYMENTFOLDERS += assetsFolder
 
+FELGO_PLUGINS += admob
+
 CONFIG(debug, debug|release) {
     # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
     # 설치 폴더로 복사
@@ -54,7 +71,6 @@ android {
 ios {
     QMAKE_INFO_PLIST = ios/Project-Info.plist
     OTHER_FILES += $$QMAKE_INFO_PLIST
-    VPLAY_PLUGINS += admob
     QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
     QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 

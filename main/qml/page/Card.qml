@@ -1,5 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick 2.12
+import QtQuick.Controls 2.5
+import Felgo 3.0
 import "../helper"
 
 
@@ -66,6 +67,7 @@ Rectangle{
         z: _maximized_mouse_area.z + 1
         scale: 2
         onClicked: {
+            console.log(IconType.close)
             console.log("normal")
             _item.state = "normalized"
         }

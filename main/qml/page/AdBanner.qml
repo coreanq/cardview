@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import VPlayPlugins 1.0
+import QtQuick 2.12
+import Felgo 3.0
 import "../helper"
 import Constants 1.0
 
