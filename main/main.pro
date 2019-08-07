@@ -49,16 +49,17 @@ else {
 
 
 # Default rules for deployment.
-assetsFolder.source = assets
-DEPLOYMENTFOLDERS += assetsFolder
+assetsFolder.files = $$files(assets, true)  # source folder or file
+assetsFolder.path = # destination folder name in bundle
+QMAKE_BUNDLE_DATA += assetsFolder
 
 FELGO_PLUGINS += admob
 
 CONFIG(debug, debug|release) {
     # QMAKE_BUNDLE_DATA Specifies the data that will be installed with a library bundle
-    # 설치 폴더로 복사
-    qmlFolder.source = qml
-    DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
+    qmlFolder.files = $$files(qml, true) # $$file 에 폴더명을 지정하는 경우 폴더 복사함, 2번째 인자는 recursive
+    qmlFolder.path =  # 복사한 폴더이름 폴더 복사의 경우 폴더째 통째로 되므로 생략가능
+    QMAKE_BUNDLE_DATA += qmlFolder # comment for publishing
 
 }
 CONFIG(release, debug|release) {
@@ -74,6 +75,9 @@ ios {
     QMAKE_ASSET_CATALOGS = $$PWD/ios/Images.xcassets
     QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
+    plugins.files = $$PWD/ios/PlugIns/widget.appex
+    plugins.path = PlugIns  # 파일만 지정하였으므로 폴더를 만들어서 복사해줌:ㅈ
+    QMAKE_BUNDLE_DATA += plugins
 }
 win32 {
     #RC_FILE += win/app_icon.rc
